@@ -58,38 +58,29 @@ class BasaltServer: AbstractVerticle() {
         val dsn = basalt["sentryDsn"]
         if (dsn != null)
             Sentry.init(dsn.textValue())
-
         password = basalt["password"]!!.textValue()
         sourceManager = DefaultAudioPlayerManager()
-        val rawYouTube = sources["youtube"]
-        val rawSoundCloud = sources["soundcloud"]
-        val rawBandcamp = sources["bandcamp"]
-        val rawTwitch = sources["twitch"]
-        val rawVimeo = sources["vimeo"]
-        val rawMixer = sources["mixer"]
-        val rawHttp = sources["http"]
-        val rawLocal = sources["local"]
 
-        if (rawYouTube?.booleanValue() == true) {
+        if (sources["youtube"]?.booleanValue() == true) {
             val manager = YoutubeAudioSourceManager(true)
             val playlistLimit = basalt["playlistPageLimit"]
             if (playlistLimit != null)
                 manager.setPlaylistPageCount(playlistLimit.intValue())
             sourceManager.registerSourceManager(manager)
         }
-        if (rawSoundCloud?.booleanValue() == true)
+        if (sources["soundcloud"]?.booleanValue() == true)
             sourceManager.registerSourceManager(SoundCloudAudioSourceManager(true))
-        if (rawBandcamp?.booleanValue() == true)
+        if (sources["bandcamp"]?.booleanValue() == true)
             sourceManager.registerSourceManager(BandcampAudioSourceManager())
-        if (rawTwitch?.booleanValue() == true)
+        if (sources["twitch"]?.booleanValue() == true)
             sourceManager.registerSourceManager(TwitchStreamAudioSourceManager())
-        if (rawVimeo?.booleanValue() == true)
+        if (sources["vimeo"]?.booleanValue() == true)
             sourceManager.registerSourceManager(VimeoAudioSourceManager())
-        if (rawMixer?.booleanValue() == true)
+        if (sources["mixer"]?.booleanValue() == true)
             sourceManager.registerSourceManager(BeamAudioSourceManager())
-        if (rawHttp?.booleanValue() == true)
+        if (sources["http"]?.booleanValue() == true)
             sourceManager.registerSourceManager(HttpAudioSourceManager())
-        if (rawLocal?.booleanValue() == true)
+        if (sources["local"]?.booleanValue() == true)
             sourceManager.registerSourceManager(LocalAudioSourceManager())
 
         val websocketHandler = websocket {exchange, channel ->
