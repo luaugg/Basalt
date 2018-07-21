@@ -4,3 +4,5 @@ gradle
 build
 basalt.yml
 src/main/resources
+
+Basalt.iml
