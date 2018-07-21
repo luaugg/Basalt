@@ -10,7 +10,7 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason
 import org.slf4j.LoggerFactory
 import space.npstr.magma.MagmaApi
 
-class BasaltPlayer: AudioEventAdapter() {
+class BasaltPlayer(val userId: String): AudioEventAdapter() {
 
     override fun onTrackStart(player: AudioPlayer?, track: AudioTrack?) {
         super.onTrackStart(player, track)
@@ -31,7 +31,6 @@ class BasaltPlayer: AudioEventAdapter() {
         super.onPlayerResume(player)
     }
     companion object {
-        private val magma = MagmaApi.of {AsyncPacketProviderFactory.adapt(NativeAudioSendFactory())}
         private val logger = LoggerFactory.getLogger(BasaltPlayer::class.java)
     }
 }

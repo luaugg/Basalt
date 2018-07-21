@@ -1,4 +1,4 @@
-package basalt.server.messages
+package basalt.messages.server
 
 import basalt.player.LoadResult
 import com.jsoniter.annotation.JsonIgnore

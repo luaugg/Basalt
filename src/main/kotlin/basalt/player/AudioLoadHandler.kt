@@ -1,7 +1,7 @@
 package basalt.player
 
 import basalt.server.BasaltServer
-import basalt.server.messages.TrackPair
+import basalt.messages.server.TrackPair
 import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist

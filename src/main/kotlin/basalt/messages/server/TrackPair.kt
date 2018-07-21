@@ -1,4 +1,4 @@
-package basalt.server.messages
+package basalt.messages.server
 
 import com.jsoniter.annotation.JsonIgnore
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack

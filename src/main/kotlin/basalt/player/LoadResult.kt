@@ -1,6 +1,6 @@
 package basalt.player
 
-import basalt.server.messages.TrackPair
+import basalt.messages.server.TrackPair
 import org.slf4j.LoggerFactory
 
 @Suppress("UNUSED")

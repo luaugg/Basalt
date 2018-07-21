@@ -2,7 +2,7 @@ package basalt.server
 
 import basalt.player.AudioLoadHandler
 import basalt.player.BasaltPlayer
-import basalt.server.messages.LoadTrackResponse
+import basalt.messages.server.LoadTrackResponse
 import basalt.util.AudioTrackUtil
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
@@ -89,14 +89,23 @@ class BasaltServer: AbstractVerticle() {
             val userId = exchange.getRequestHeader("User-Id")
             if (auth == null) {
                 LOGGER.error("Missing Authorization Header!")
+                channel.closeCode = 4001
+                channel.closeReason = "Missing Headers"
+                channel.close()
                 return@websocket
             }
             if (userId == null) {
                 LOGGER.error("Missing User-Id Header!")
+                channel.closeCode = 4001
+                channel.closeReason = "Missing Headers"
+                channel.close()
                 return@websocket
             }
             if (auth != basalt["password"]!!.textValue()) {
                 LOGGER.error("Invalid Authorization Header!")
+                channel.closeCode = 4002
+                channel.closeReason = "Invalid Headers"
+                channel.close()
                 return@websocket
             }
             val host = channel.sourceAddress
@@ -158,9 +167,6 @@ class BasaltServer: AbstractVerticle() {
                         response.putHeader("content-type", "application/json")
                         response.end(json)
                     }
-        }
-        router.get("/decodetrack/:identifier").handler { context ->
-
         }
     }
     companion object {
