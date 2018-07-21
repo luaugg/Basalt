@@ -107,6 +107,7 @@ ext {
     sentry_logback_version = '1.7.5'
     undertow_websocket_version = '2.0.10.Final'
     fastutil_version = '8.2.1'
+    javassist_version = '3.23.1-GA'
 }
 
 dependencies {
@@ -123,6 +124,7 @@ dependencies {
     compile group: 'io.sentry', name: 'sentry-logback', version: sentry_logback_version
     compile group: 'io.undertow', name: 'undertow-websockets-jsr', version: undertow_websocket_version
     compile group: 'it.unimi.dsi', name: 'fastutil', version: fastutil_version
+    compile group: 'org.javassist', name: 'javassist', version: javassist_version
 }
 
 compileKotlin {
