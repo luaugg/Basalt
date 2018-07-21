@@ -58,32 +58,40 @@ class BasaltServer: AbstractVerticle() {
         val dsn = basalt["sentryDsn"]
         if (dsn != null)
             Sentry.init(dsn.textValue())
+
         password = basalt["password"]!!.textValue()
         sourceManager = DefaultAudioPlayerManager()
-        val iterator = sources.fields().iterator()
-        // Painfully slow code.
-        for (i in 1..8) {
-            val entry = iterator.next()
-            val name = entry.key
-            val value = entry.value.booleanValue()
-            when(name) {
-                "youtube" -> if (value) {
-                    val manager = YoutubeAudioSourceManager(true)
-                    val playlistLimit = basalt["playlistPageLimit"]
-                    if (playlistLimit != null)
-                        manager.setPlaylistPageCount(playlistLimit.intValue())
-                    sourceManager.registerSourceManager(manager)
-                }
-                "soundcloud" -> if (value) sourceManager.registerSourceManager(SoundCloudAudioSourceManager(true))
-                "bandcamp" ->   if (value) sourceManager.registerSourceManager(BandcampAudioSourceManager())
-                "twitch" ->     if (value) sourceManager.registerSourceManager(TwitchStreamAudioSourceManager())
-                "vimeo" ->      if (value) sourceManager.registerSourceManager(VimeoAudioSourceManager())
-                "mixer" ->      if (value) sourceManager.registerSourceManager(BeamAudioSourceManager())
-                "http" ->       if (value) sourceManager.registerSourceManager(HttpAudioSourceManager())
-                "local" ->      if (value) sourceManager.registerSourceManager(LocalAudioSourceManager())
-                else -> LOGGER.warn("Unknown Source: {}", name)
-            }
+        val rawYouTube = sources["youtube"]
+        val rawSoundCloud = sources["soundcloud"]
+        val rawBandcamp = sources["bandcamp"]
+        val rawTwitch = sources["twitch"]
+        val rawVimeo = sources["vimeo"]
+        val rawMixer = sources["mixer"]
+        val rawHttp = sources["http"]
+        val rawLocal = sources["local"]
+
+        if (rawYouTube?.booleanValue() == true) {
+            val manager = YoutubeAudioSourceManager(true)
+            val playlistLimit = basalt["playlistPageLimit"]
+            if (playlistLimit != null)
+                manager.setPlaylistPageCount(playlistLimit.intValue())
+            sourceManager.registerSourceManager(manager)
         }
+        if (rawSoundCloud?.booleanValue() == true)
+            sourceManager.registerSourceManager(SoundCloudAudioSourceManager(true))
+        if (rawBandcamp?.booleanValue() == true)
+            sourceManager.registerSourceManager(BandcampAudioSourceManager())
+        if (rawTwitch?.booleanValue() == true)
+            sourceManager.registerSourceManager(TwitchStreamAudioSourceManager())
+        if (rawVimeo?.booleanValue() == true)
+            sourceManager.registerSourceManager(VimeoAudioSourceManager())
+        if (rawMixer?.booleanValue() == true)
+            sourceManager.registerSourceManager(BeamAudioSourceManager())
+        if (rawHttp?.booleanValue() == true)
+            sourceManager.registerSourceManager(HttpAudioSourceManager())
+        if (rawLocal?.booleanValue() == true)
+            sourceManager.registerSourceManager(LocalAudioSourceManager())
+
         val websocketHandler = websocket {exchange, channel ->
             val auth = exchange.getRequestHeader("Authorization")
             val userId = exchange.getRequestHeader("User-Id")
@@ -107,6 +115,7 @@ class BasaltServer: AbstractVerticle() {
             channel.receiveSetter.set(WebSocketListener(this))
             channel.resumeReceives()
         }
+
         this.server = vertx.createHttpServer()
         router = Router.router(vertx)
         initRoutes()
@@ -133,15 +142,13 @@ class BasaltServer: AbstractVerticle() {
             if (auth == null) {
                 response.statusCode = 401
                 response.statusMessage = "Unauthorized"
-                response.putHeader("content-type", "text/plain")
-                response.end("Unauthorized - Specify a valid Authorization Header")
+                response.end()
                 return@handler
             }
             if (auth != password) {
                 response.statusCode = 403
                 response.statusMessage = "Forbidden"
-                response.putHeader("content-type", "text/plain")
-                response.end("Forbidden - Invalid password")
+                response.end()
                 return@handler
             }
             val identifier = context.request().getParam("identifier")
