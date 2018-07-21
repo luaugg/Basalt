@@ -33,6 +33,7 @@ import java.io.File
 import io.undertow.Handlers.websocket
 import io.undertow.websockets.core.WebSocketChannel
 import io.vertx.core.http.HttpServer
+import io.vertx.core.http.HttpServerResponse
 import io.vertx.ext.web.Router
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap
 
@@ -124,24 +125,29 @@ class BasaltServer: AbstractVerticle() {
         socket.stop()
         server.close()
     }
+    private fun checkAuthorization(auth: String?, response: HttpServerResponse): Boolean {
+        if (auth == null) {
+            response.statusCode = 401
+            response.statusMessage = "Unauthorized"
+            response.end()
+            return true
+        }
+        if (auth != password) {
+            response.statusCode = 403
+            response.statusMessage = "Forbidden"
+            response.end()
+            return true
+        }
+        return false
+    }
     private fun initRoutes() {
         router.exceptionHandler { LOGGER.error("Error during HTTP Response!", it) }
         router.get("/loadtracks/:identifier").handler { context ->
             val request = context.request()
             val response = context.response()
             val auth = request.getHeader("Authorization")
-            if (auth == null) {
-                response.statusCode = 401
-                response.statusMessage = "Unauthorized"
-                response.end()
+            if (checkAuthorization(auth, response))
                 return@handler
-            }
-            if (auth != password) {
-                response.statusCode = 403
-                response.statusMessage = "Forbidden"
-                response.end()
-                return@handler
-            }
             val identifier = context.request().getParam("identifier")
             AudioLoadHandler(this)
                     .load(identifier)
@@ -152,6 +158,9 @@ class BasaltServer: AbstractVerticle() {
                         response.putHeader("content-type", "application/json")
                         response.end(json)
                     }
+        }
+        router.get("/decodetrack/:identifier").handler { context ->
+
         }
     }
     companion object {

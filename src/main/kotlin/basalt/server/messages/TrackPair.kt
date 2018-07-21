@@ -8,12 +8,15 @@ data class TrackPair(val data: String, @field:JsonIgnore private val tr: AudioTr
     val track = TrackPairData()
     @Suppress("UNUSED")
     inner class TrackPairData {
-        @JsonIgnore private val info = this@TrackPair.tr.info
-        val title: String = info.title
-        val author: String = info.author
-        val identifier: String = info.identifier
-        val uri: String = info.uri
-        val isStream: Boolean = info.isStream
-        val length: Long = info.length
+        @JsonIgnore private val track = this@TrackPair.tr
+        @JsonIgnore private val info = track.info!!
+        val title = info.title!!
+        val author = info.author!!
+        val identifier = info.identifier!!
+        val uri = info.uri!!
+        val stream = info.isStream
+        val seekable = track.isSeekable
+        val position = track.position
+        val length = info.length
     }
 }
