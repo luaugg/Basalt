@@ -1,0 +1,132 @@
+buildscript {
+    ext.dokka_version = '0.9.17'
+    ext.shadow_version = '2.0.4'
+    ext.kotlin_version = '1.2.51'
+    ext.versions_version = '0.20.0'
+    repositories {
+        jcenter()
+        mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "org.jetbrains.dokka:dokka-gradle-plugin:$dokka_version"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "com.github.jengelman.gradle.plugins:shadow:$shadow_version"
+        classpath "com.github.ben-manes:gradle-versions-plugin:$versions_version"
+    }
+}
+
+apply plugin: 'kotlin'
+apply plugin: 'org.jetbrains.dokka'
+apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: 'com.github.ben-manes.versions'
+apply plugin: 'maven-publish'
+apply plugin: 'idea'
+apply plugin: 'application'
+
+group 'basalt'
+version '0.1'
+description = 'A high-performance, distributed audio node server based on Lavaplayer, Magma and the Vert.x Framework.'
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+mainClassName = 'basalt.MainKt'
+
+repositories {
+    jcenter()
+    maven {url 'https://jitpack.io'}
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task dokkaJavadoc(type: org.jetbrains.dokka.gradle.DokkaTask) {
+    outputFormat = 'javadoc'
+    outputDirectory = javadoc.destinationDir
+    inputs.dir 'src/main/kotlin'
+}
+
+task javadocJar(type: Jar, dependsOn: dokkaJavadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.8.1'
+}
+
+shadowJar {
+    classifier = 'withDependencies'
+}
+
+dokka {
+    includes = ['module.md']
+
+    moduleName = 'Basalt'
+    outputFormat = 'javadoc'
+    outputDirectory = "$buildDir/docs"
+    jdkVersion = 8
+
+    linkMapping {
+        dir = 'src/main/kotlin'
+        url = 'https://github.com/SamOphis/Basalt/blob/master/src/main/kotlin'
+        suffix = '#L'
+    }
+}
+
+build {
+    dependsOn clean
+    dependsOn jar
+    dependsOn sourcesJar
+    dependsOn javadocJar
+    dependsOn shadowJar
+    dependsOn test
+
+    jar.mustRunAfter clean
+    javadocJar.mustRunAfter jar
+    sourcesJar.mustRunAfter javadocJar
+    shadowJar.mustRunAfter sourcesJar
+}
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
+}
+
+ext {
+    vertx_version = '3.5.3'
+    magma_version = '0.4.4'
+    jda_async_provider_version = '1.2'
+    jda_native_audio_send_version = '1.0.6'
+    lavaplayer_version = '1.3.7'
+    jsoniter_version = '0.9.23'
+    jackson_yaml_version = '2.9.6'
+    sentry_logback_version = '1.7.5'
+    undertow_websocket_version = '2.0.10.Final'
+    fastutil_version = '8.2.1'
+}
+
+dependencies {
+    compile group: 'space.npstr', name: 'Magma', version: magma_version
+    compile group: 'io.vertx', name: 'vertx-core', version: vertx_version
+    compile group: 'io.vertx', name: 'vertx-lang-kotlin', version: vertx_version
+    compile group: 'io.vertx', name: 'vertx-web', version: vertx_version
+    compile group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib-jdk8', version: kotlin_version
+    compile group: 'com.github.shredder121', name: 'jda-async-packetprovider', version: jda_async_provider_version
+    compile group: 'com.sedmelluq', name: 'jda-nas', version: jda_native_audio_send_version
+    compile group: 'com.sedmelluq', name: 'lavaplayer', version: lavaplayer_version
+    compile group: 'com.jsoniter', name: 'jsoniter', version: jsoniter_version
+    compile group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: jackson_yaml_version
+    compile group: 'io.sentry', name: 'sentry-logback', version: sentry_logback_version
+    compile group: 'io.undertow', name: 'undertow-websockets-jsr', version: undertow_websocket_version
+    compile group: 'it.unimi.dsi', name: 'fastutil', version: fastutil_version
+}
+
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
