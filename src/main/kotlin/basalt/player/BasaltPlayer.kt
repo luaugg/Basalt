@@ -12,7 +12,7 @@ import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledFuture
 import java.util.concurrent.TimeUnit
 
-class BasaltPlayer internal constructor(private val context: SocketContext, private val guildId: String,
+class BasaltPlayer internal constructor(internal val context: SocketContext, private val guildId: String,
                                         internal val audioPlayer: AudioPlayer): AudioEventAdapter() {
 
     private val threadPool = Executors.newSingleThreadScheduledExecutor()
@@ -25,6 +25,7 @@ class BasaltPlayer internal constructor(private val context: SocketContext, priv
     override fun onTrackStart(player: AudioPlayer, track: AudioTrack) {
         val trackData = context.server.trackUtil.fromAudioTrack(track)
         val response = DispatchResponse(guildId = guildId, name = "TRACK_STARTED", data = TrackPair(trackData, track))
+        val response = DispatchResponse(context = context, guildId = guildId, name = "TRACK_STARTED", data = TrackPair(trackData, track))
         WebSockets.sendText(JsonStream.serialize(response), context.channel, null)
         updateTask = threadPool.scheduleAtFixedRate({
             if (!context.channel.isOpen) {
@@ -38,29 +39,29 @@ class BasaltPlayer internal constructor(private val context: SocketContext, priv
     }
 
     override fun onTrackEnd(player: AudioPlayer, track: AudioTrack, endReason: AudioTrackEndReason) {
-        val response = DispatchResponse(guildId = guildId, name = "TRACK_ENDED", data = TrackEndResponse(context.server, track, endReason))
+        val response = DispatchResponse(context = context, guildId = guildId, name = "TRACK_ENDED", data = TrackEndResponse(context.server, track, endReason))
         WebSockets.sendText(JsonStream.serialize(response), context.channel, null)
         updateTask?.cancel(false)
         updateTask = null
     }
 
     override fun onTrackException(player: AudioPlayer, track: AudioTrack, exception: FriendlyException) {
-        val response = DispatchResponse(guildId = guildId, name = "TRACK_EXCEPTION", data = TrackExceptionResponse(context.server, track, exception))
+        val response = DispatchResponse(context = context, guildId = guildId, name = "TRACK_EXCEPTION", data = TrackExceptionResponse(context.server, track, exception))
         WebSockets.sendText(JsonStream.serialize(response), context.channel, null)
     }
 
     override fun onTrackStuck(player: AudioPlayer, track: AudioTrack, thresholdMs: Long) {
-        val response = DispatchResponse(guildId = guildId, name = "TRACK_STUCK", data = TrackStuckResponse(context.server, track, thresholdMs))
+        val response = DispatchResponse(context = context, guildId = guildId, name = "TRACK_STUCK", data = TrackStuckResponse(context.server, track, thresholdMs))
         WebSockets.sendText(JsonStream.serialize(response), context.channel, null)
     }
 
     override fun onPlayerPause(player: AudioPlayer?) {
-        val response = DispatchResponse(guildId = guildId, name = "PLAYER_PAUSE", data = true)
+        val response = DispatchResponse(context = context, guildId = guildId, name = "PLAYER_PAUSE", data = true)
         WebSockets.sendText(JsonStream.serialize(response), context.channel, null)
     }
 
     override fun onPlayerResume(player: AudioPlayer?) {
-        val response = DispatchResponse(guildId = guildId, name = "PLAYER_PAUSE", data = false)
+        val response = DispatchResponse(context = context, guildId = guildId, name = "PLAYER_PAUSE", data = false)
         WebSockets.sendText(JsonStream.serialize(response), context.channel, null)
     }
 }
