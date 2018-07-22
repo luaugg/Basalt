@@ -112,7 +112,6 @@ dependencies {
     compile group: 'space.npstr', name: 'Magma', version: magma_version
     compile group: 'io.vertx', name: 'vertx-core', version: vertx_version
     compile group: 'io.vertx', name: 'vertx-lang-kotlin', version: vertx_version
-    compile group: 'io.vertx', name: 'vertx-web', version: vertx_version
     compile group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib-jdk8', version: kotlin_version
     compile group: 'com.github.shredder121', name: 'jda-async-packetprovider', version: jda_async_provider_version
     compile group: 'com.sedmelluq', name: 'jda-nas', version: jda_native_audio_send_version
