@@ -9,5 +9,5 @@ class TrackStuckResponse internal constructor(@field:JsonIgnore private val serv
                                               @field:JsonIgnore private val tr: AudioTrack,
                                               val thresholdMs: Long) {
     val serverBufferDuration = server.bufferDurationMs
-    val track = JsonTrack(tr)
+    val track = server.trackUtil.fromAudioTrack(tr)
 }
