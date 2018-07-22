@@ -13,7 +13,7 @@ import java.util.concurrent.ScheduledFuture
 import java.util.concurrent.TimeUnit
 
 class BasaltPlayer internal constructor(private val context: SocketContext, private val guildId: String,
-                                        audioPlayer: AudioPlayer): AudioEventAdapter() {
+                                        internal val audioPlayer: AudioPlayer): AudioEventAdapter() {
 
     private val threadPool = Executors.newSingleThreadScheduledExecutor()
     @Volatile private var updateTask: ScheduledFuture<*>? = null
