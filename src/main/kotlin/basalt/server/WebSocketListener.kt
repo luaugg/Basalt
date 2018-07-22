@@ -71,6 +71,16 @@ class WebSocketListener(val server: BasaltServer): AbstractReceiveListener() {
                     player.context.seq.incrementAndGet()
                     player.audioPlayer.playTrack(server.trackUtil.toAudioTrack(play.track))
                 }
+                "pause" -> {
+                    val pause = JsonIterator.deserialize(message.data, SetPausedRequest::class.java)
+                    val player = server.contexts[channel]?.players?.get(pause.guildId)
+                    if (player == null) {
+                        LOGGER.error("Player or SocketContext is null for Guild ID: {} (Try initializing first!)", pause.guildId)
+                        return
+                    }
+                    player.context.seq.incrementAndGet()
+                    player.audioPlayer.isPaused = pause.paused
+                }
                 "stop" -> {
                     val stop = JsonIterator.deserialize(message.data, StopRequest::class.java)
                     val player = server.contexts[channel]?.players?.get(stop.guildId)
