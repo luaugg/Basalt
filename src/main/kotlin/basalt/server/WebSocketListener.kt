@@ -39,6 +39,10 @@ class WebSocketListener(val server: BasaltServer): AbstractReceiveListener() {
                         LOGGER.error("SocketContext is null for Guild ID: {}\nThis should never happen!", init.guildId)
                         return
                     }
+                    if (context.players[init.guildId] != null) {
+                        LOGGER.error("Player already initialized for User ID: {} and Guild ID: {}", context.userId, init.guildId)
+                        return
+                    }
                     context.seq.incrementAndGet()
                     val member = MagmaMember.builder()
                             .guildId(init.guildId)
@@ -76,6 +80,19 @@ class WebSocketListener(val server: BasaltServer): AbstractReceiveListener() {
                     }
                     player.context.seq.incrementAndGet()
                     player.audioPlayer.stopTrack()
+                }
+                "destroy" -> {
+                    val destroy = JsonIterator.deserialize(message.data, DestroyRequest::class.java)
+                    val player = server.contexts[channel]?.players?.get(destroy.guildId)
+                    if (player == null) {
+                        LOGGER.error("Player or SocketContext is null for Guild ID: {} (Try initializing first!)", destroy.guildId)
+                        return
+                    }
+                    player.context.seq.incrementAndGet()
+                    player.audioPlayer.destroy()
+                    player.context.players.remove(destroy.guildId)
+                    val response = DispatchResponse(player.context, destroy.guildId, "DESTROYED")
+                    WebSockets.sendText(JsonStream.serialize(response), channel, null)
                 }
                 "volume" -> {
                     val volume = JsonIterator.deserialize(message.data, SetVolumeRequest::class.java)
