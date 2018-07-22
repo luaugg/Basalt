@@ -102,6 +102,12 @@ class WebSocketListener(val server: BasaltServer): AbstractReceiveListener() {
                     player.context.seq.incrementAndGet()
                     player.audioPlayer.destroy()
                     player.context.players.remove(destroy.guildId)
+                    val member = MagmaMember.builder()
+                            .guildId(destroy.guildId)
+                            .userId(player.context.userId)
+                            .build()
+                    server.magma.removeSendHandler(member)
+                    server.magma.closeConnection(member)
                     val response = DispatchResponse(player.context, destroy.guildId, "DESTROYED")
                     WebSockets.sendText(JsonStream.serialize(response), channel, null)
                 }
