@@ -54,6 +54,11 @@ task javadocJar(type: Jar, dependsOn: dokkaJavadoc) {
     from javadoc.destinationDir
 }
 
+task updateDocs(type: Copy, dependsOn: javadocJar) {
+    from "${buildDir}/docs/javadoc"
+    into "docs"
+}
+
 task wrapper(type: Wrapper) {
     gradleVersion = '4.8.1'
 }
@@ -81,6 +86,7 @@ build {
     dependsOn sourcesJar
     dependsOn javadocJar
     dependsOn shadowJar
+    dependsOn updateDocs
     dependsOn test
 
     jar.mustRunAfter clean
