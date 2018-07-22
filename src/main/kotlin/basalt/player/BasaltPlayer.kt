@@ -8,9 +8,16 @@ import com.sedmelluq.discord.lavaplayer.tools.FriendlyException
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason
 import io.undertow.websockets.core.WebSockets
+import java.util.concurrent.Executors
+import java.util.concurrent.ScheduledFuture
+import java.util.concurrent.TimeUnit
 
 class BasaltPlayer internal constructor(private val context: SocketContext, private val guildId: String,
-                                        internal val audioPlayer: AudioPlayer): AudioEventAdapter() {
+                                        audioPlayer: AudioPlayer): AudioEventAdapter() {
+
+    private val threadPool = Executors.newSingleThreadScheduledExecutor()
+    @Volatile private var updateTask: ScheduledFuture<*>? = null
+
     init {
         audioPlayer.addListener(this)
     }
@@ -19,11 +26,22 @@ class BasaltPlayer internal constructor(private val context: SocketContext, priv
         val trackData = context.server.trackUtil.fromAudioTrack(track)
         val response = DispatchResponse(guildId = guildId, name = "TRACK_STARTED", data = TrackPair(trackData, track))
         WebSockets.sendText(JsonStream.serialize(response), context.channel, null)
+        updateTask = threadPool.scheduleAtFixedRate({
+            if (!context.channel.isOpen) {
+                updateTask?.cancel(false)
+                updateTask = null
+                return@scheduleAtFixedRate
+            }
+            val resp = PlayerUpdate(guildId, track.position, System.currentTimeMillis())
+            WebSockets.sendText(JsonStream.serialize(resp), context.channel, null)
+        }, 0, 5, TimeUnit.SECONDS)
     }
 
     override fun onTrackEnd(player: AudioPlayer, track: AudioTrack, endReason: AudioTrackEndReason) {
         val response = DispatchResponse(guildId = guildId, name = "TRACK_ENDED", data = TrackEndResponse(context.server, track, endReason))
         WebSockets.sendText(JsonStream.serialize(response), context.channel, null)
+        updateTask?.cancel(false)
+        updateTask = null
     }
 
     override fun onTrackException(player: AudioPlayer, track: AudioTrack, exception: FriendlyException) {
