@@ -94,7 +94,7 @@ class WebSocketListener(val server: BasaltServer): AbstractReceiveListener() {
                     val response = DispatchResponse(player.context, volume.guildId, "VOLUME_UPDATE", volume.volume)
                     WebSockets.sendText(JsonStream.serialize(response), channel, null)
                 }
-                "loadIdentifiers" -> {
+                "load" -> {
                     val load = JsonIterator.deserialize(message.data, LoadRequest::class.java)
                     val context = server.contexts[channel]
                     if (context == null) {
