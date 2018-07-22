@@ -46,10 +46,10 @@ class WebSocketListener(val server: BasaltServer): AbstractReceiveListener() {
                             .build()
                     server.magma.provideVoiceServerUpdate(member, update)
                     server.magma.setSendHandler(member, AudioSender(server.sourceManager.createPlayer()))
-                    val response = DispatchResponse(name = "INITIALIZED", data = null)
+                    val response = DispatchResponse(guildId = init.guildId, name = "INITIALIZED")
                     WebSockets.sendText(JsonStream.serialize(response), channel, null)
                     LOGGER.info("Initialized connection from User ID: {} and Guild ID: {}", member.userId, member.guildId)
-                    
+
                 }
                 "play" -> {
                     val play = JsonIterator.deserialize(message.data, PlayRequest::class.java)
