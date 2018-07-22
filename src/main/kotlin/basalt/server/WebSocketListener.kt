@@ -3,6 +3,7 @@ package basalt.server
 import basalt.messages.client.*
 import basalt.messages.server.DispatchResponse
 import basalt.messages.server.LoadTrackResponse
+import basalt.messages.server.PlayerUpdate
 import basalt.messages.server.TrackPair
 import basalt.player.AudioLoadHandler
 import basalt.player.BasaltPlayer
@@ -108,7 +109,7 @@ class WebSocketListener(val server: BasaltServer): AbstractReceiveListener() {
                     val volume = JsonIterator.deserialize(message.data, SetVolumeRequest::class.java)
                     val player = server.contexts[channel]?.players?.get(volume.guildId)
                     if (player == null) {
-                        LOGGER.error("Player or SocketContext is null for Guild ID: {} (Try initializing first)!", volume.guildId)
+                        LOGGER.error("Player or SocketContext is null for Guild ID: {} (Try initializing first!)", volume.guildId)
                         return
                     }
                     if (volume.volume < 0 || volume.volume > 1000) {
@@ -119,6 +120,33 @@ class WebSocketListener(val server: BasaltServer): AbstractReceiveListener() {
                     player.context.seq.incrementAndGet()
                     player.audioPlayer.volume = volume.volume
                     val response = DispatchResponse(player.context, volume.guildId, "VOLUME_UPDATE", volume.volume)
+                    WebSockets.sendText(JsonStream.serialize(response), channel, null)
+                }
+                "seek" -> {
+                    val seek = JsonIterator.deserialize(message.data, SeekRequest::class.java)
+                    val player = server.contexts[channel]?.players?.get(seek.guildId)
+                    if (player == null) {
+                        LOGGER.error("Player or SocketContext is null for Guild ID: {} (Try initializing first!)", seek.guildId)
+                        return
+                    }
+                    val track = player.audioPlayer.playingTrack
+                    if (track == null) {
+                        LOGGER.error("Track is null (attempt to seek through a non-existent track). User ID: {}, Guild ID: {}",
+                                player.context.userId, seek.guildId)
+                        return
+                    }
+                    if (!track.isSeekable) {
+                        LOGGER.error("Track cannot be seeked through. User ID: {}, Guild ID: {}", player.context.userId, seek.guildId)
+                        return
+                    }
+                    if (seek.position < 0 || seek.position > track.duration) {
+                        LOGGER.error("Seek position cannot be negative or larger than the duration of the track. User ID: {}, Guild ID: {}",
+                                player.context.userId, seek.guildId)
+                        return
+                    }
+                    player.context.seq.incrementAndGet()
+                    player.audioPlayer.playingTrack.position = seek.position
+                    val response = PlayerUpdate(seek.guildId, seek.position, System.currentTimeMillis())
                     WebSockets.sendText(JsonStream.serialize(response), channel, null)
                 }
                 "load" -> {
