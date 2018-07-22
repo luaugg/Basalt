@@ -34,11 +34,12 @@ import space.npstr.magma.MagmaApi
 import java.io.File
 
 import io.undertow.Handlers.websocket
+import io.undertow.websockets.core.WebSocketChannel
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap
 
 class BasaltServer: AbstractVerticle() {
     private val mapper = ObjectMapper(YAMLFactory())
-    internal val contexts = Object2ObjectOpenHashMap<String, SocketContext>()
+    internal val contexts = Object2ObjectOpenHashMap<WebSocketChannel, SocketContext>()
     internal var bufferDurationMs: Int = -1
     private lateinit var password: String
     internal lateinit var magma: MagmaApi
