@@ -5,7 +5,8 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason
 
 @Suppress("UNUSED")
-class TrackEndResponse(@field:JsonIgnore private val tr: AudioTrack, @field:JsonIgnore private val rs: AudioTrackEndReason) {
+class TrackEndResponse internal constructor(@field:JsonIgnore private val tr: AudioTrack,
+                                            @field:JsonIgnore private val rs: AudioTrackEndReason) {
     val track = JsonTrack(tr)
     val reason = ReasonData()
     inner class ReasonData {

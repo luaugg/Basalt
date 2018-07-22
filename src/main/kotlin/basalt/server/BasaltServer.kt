@@ -1,6 +1,6 @@
 package basalt.server
 
-import basalt.player.BasaltPlayer
+import basalt.player.SocketContext
 import basalt.util.AudioTrackUtil
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
@@ -34,17 +34,17 @@ import space.npstr.magma.MagmaApi
 import java.io.File
 
 import io.undertow.Handlers.websocket
-import io.undertow.websockets.core.WebSocketChannel
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap
 
 class BasaltServer: AbstractVerticle() {
     private val mapper = ObjectMapper(YAMLFactory())
-    internal val players: MutableMap<WebSocketChannel, BasaltPlayer> = Object2ObjectOpenHashMap()
+    internal val contexts = Object2ObjectOpenHashMap<String, SocketContext>()
+    internal var bufferDurationMs: Int = -1
     private lateinit var password: String
     internal lateinit var magma: MagmaApi
     internal lateinit var sourceManager: AudioPlayerManager
     private lateinit var socket: Undertow
-    val trackUtil = AudioTrackUtil(this)
+    internal val trackUtil = AudioTrackUtil(this)
 
     override fun start(startFuture: Future<Void>) {
         JsonIterator.setMode(DecodingMode.DYNAMIC_MODE_AND_MATCH_FIELD_WITH_HASH)
@@ -58,6 +58,7 @@ class BasaltServer: AbstractVerticle() {
             Sentry.init(dsn.textValue())
         password = basalt["password"]!!.textValue()
         sourceManager = DefaultAudioPlayerManager()
+        bufferDurationMs = basalt["bufferDurationMs"]!!.intValue()
 
         if (sources["youtube"]?.booleanValue() == true) {
             val manager = YoutubeAudioSourceManager(true)
@@ -113,7 +114,7 @@ class BasaltServer: AbstractVerticle() {
             channel.receiveSetter.set(WebSocketListener(this))
             channel.resumeReceives()
         }
-        magma = MagmaApi.of {AsyncPacketProviderFactory.adapt(NativeAudioSendFactory(basalt["bufferDurationMs"]!!.intValue()))}
+        magma = MagmaApi.of {AsyncPacketProviderFactory.adapt(NativeAudioSendFactory(bufferDurationMs))}
         socket = Undertow.builder()
                 .addHttpListener(ws["port"]!!.intValue(), ws["host"]!!.textValue(), websocketHandler)
                 .build()
@@ -122,7 +123,7 @@ class BasaltServer: AbstractVerticle() {
     }
 
     override fun stop() {
-        LOGGER.info("Closing the Basalt Server ({} connected players)", players.size)
+        LOGGER.info("Closing the Basalt Server ({} connected sockets)", contexts.size)
         magma.shutdown()
         socket.stop()
     }
