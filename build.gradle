@@ -27,7 +27,7 @@ apply plugin: 'idea'
 apply plugin: 'application'
 
 group 'basalt'
-version '0.1'
+version '1.0'
 description = 'A high-performance, distributed audio node server based on Lavaplayer, Magma and the Vert.x Framework.'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -60,7 +60,7 @@ task updateDocs(type: Copy, dependsOn: javadocJar) {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '4.8.1'
+    gradleVersion = '4.9'
 }
 
 shadowJar {
@@ -109,7 +109,7 @@ ext {
     jsoniter_version = '0.9.23'
     jackson_yaml_version = '2.9.6'
     sentry_logback_version = '1.7.5'
-    undertow_websocket_version = '2.0.10.Final'
+    undertow_websocket_version = '2.0.11.Final'
     fastutil_version = '8.2.1'
     javassist_version = '3.23.1-GA'
 }
