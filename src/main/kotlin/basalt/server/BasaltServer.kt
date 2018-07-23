@@ -39,6 +39,7 @@ import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap
 
 class BasaltServer: AbstractVerticle() {
     private val mapper = ObjectMapper(YAMLFactory())
+    private val listener = WebSocketListener(this)
     internal val contexts = Object2ObjectOpenHashMap<WebSocketChannel, SocketContext>()
     internal var bufferDurationMs: Int = -1
     private lateinit var password: String
@@ -112,7 +113,7 @@ class BasaltServer: AbstractVerticle() {
                     .replaceFirst("/", "")
                     .replaceFirst("0:0:0:0:0:0:0:1", "localhost")
             LOGGER.info("Connection opened from {} using WebSocket Protocol Version {}", host, channel.version.toHttpHeaderValue())
-            channel.receiveSetter.set(WebSocketListener(this))
+            channel.receiveSetter.set(listener)
             channel.resumeReceives()
         }
         magma = MagmaApi.of {AsyncPacketProviderFactory.adapt(NativeAudioSendFactory(bufferDurationMs))}
