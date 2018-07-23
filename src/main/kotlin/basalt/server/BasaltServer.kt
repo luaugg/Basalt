@@ -37,10 +37,12 @@ import io.undertow.Handlers.websocket
 import io.undertow.websockets.core.WebSocketChannel
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap
 
+typealias SocketContextMap = Object2ObjectOpenHashMap<WebSocketChannel, SocketContext>
+
 class BasaltServer: AbstractVerticle() {
     private val mapper = ObjectMapper(YAMLFactory())
     private val listener = WebSocketListener(this)
-    internal val contexts = Object2ObjectOpenHashMap<WebSocketChannel, SocketContext>()
+    internal val contexts = SocketContextMap()
     internal var bufferDurationMs: Int = -1
     private lateinit var password: String
     internal lateinit var magma: MagmaApi
