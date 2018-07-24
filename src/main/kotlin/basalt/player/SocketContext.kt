@@ -15,6 +15,10 @@ typealias PlayerMap = Object2ObjectOpenHashMap<String, BasaltPlayer>
  * Context class which stores a reference to the [BasaltServer], a WebSocketChannel and the User ID associated
  * with that channel, as well as a [PlayerMap] and a Sequence Number of Sent, Successful Events.
  *
+ * @property server A [BasaltServer] reference.
+ * @property channel An Undertow WebSocketChannel.
+ * @property userId The User ID associated with the WebSocketChannel (provided as a header).
+ *
  * @author Sam Pritchard
  * @since 1.0
  * @constructor Constructs a SocketContext from a [BasaltServer], a WebSocketChannel and a User ID String.

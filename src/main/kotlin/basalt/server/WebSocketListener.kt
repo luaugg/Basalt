@@ -17,6 +17,8 @@ import space.npstr.magma.MagmaServerUpdate
 /**
  * The listener class which responds to WebSocket Events, including (but not limited to) incoming messages.
  *
+ * @property server A [BasaltServer] reference used mainly to access information.
+ *
  * @author Sam Pritchard
  * @since 1.0
  * @constructor Constructs a WebSocketListener from a [BasaltServer] instance.

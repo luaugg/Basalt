@@ -8,6 +8,8 @@ import net.dv8tion.jda.core.audio.AudioSendHandler
  * Sender class which takes in Opus frames from Lavaplayer and passes them to Magma, where they are then
  * subsequently sent to Discord.
  *
+ * @param player A Lavaplayer AudioPlayer instance.
+ *
  * @constructor Constructs an AudioSender instance from an AudioPlayer.
  * @author Sam Pritchard
  * @since 1.0
