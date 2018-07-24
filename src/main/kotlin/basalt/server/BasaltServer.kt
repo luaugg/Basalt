@@ -37,19 +37,65 @@ import io.undertow.Handlers.websocket
 import io.undertow.websockets.core.WebSocketChannel
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap
 
+/**
+ * Type alias which is equal to `Object2ObjectOpenHashMap<WebSocketChannel, SocketContext>`
+ */
+
 typealias SocketContextMap = Object2ObjectOpenHashMap<WebSocketChannel, SocketContext>
 
+/**
+ * Server instance which is the starting point for every other part of Basalt.
+ *
+ * This class is only meant to run/started up once, although it *technically* allows multiple start ups.
+ * From this class, the Undertow WebSocket is created and the configuration options are parsed and applied.
+ *
+ * The Jsoniter options are also set upon this server being started, as well as Magma being setup too.
+ *
+ * @author Sam Pritchard
+ * @since 1.0
+ */
+
 class BasaltServer: AbstractVerticle() {
+    /**
+     * The Jackson Object Mapper used to parse the YAML Configuration File.
+     */
     private val mapper = ObjectMapper(YAMLFactory())
+    /**
+     * The raw [WebSocketListener] which every open socket uses to handle events.
+     */
     private val listener = WebSocketListener(this)
+    /**
+     * The [SocketContextMap] used to associate WebSocketChannels with [SocketContext]s.
+     */
     internal val contexts = SocketContextMap()
+    /**
+     * @suppress
+     */
     internal var bufferDurationMs: Int = -1
+    /**
+     * The password uses to successfully open a WebSocket Connection to this server.
+     */
     private lateinit var password: String
+    /**
+     * The raw MagmaApi instance used to actually send and update voice data/state.
+     */
     internal lateinit var magma: MagmaApi
+    /**
+     * The Lavaplayer SourceManager used to actually load sources.
+     */
     internal lateinit var sourceManager: AudioPlayerManager
+    /**
+     * The Undertow WebSocket instance.
+     */
     private lateinit var socket: Undertow
+    /**
+     * The [AudioTrackUtil] instance externally to encode tracks and vice versa.
+     */
     internal val trackUtil = AudioTrackUtil(this)
 
+    /**
+     * Called by Vert.x when this Verticle is deployed (which it is in the Main class).
+     */
     override fun start(startFuture: Future<Void>) {
         JsonIterator.setMode(DecodingMode.DYNAMIC_MODE_AND_MATCH_FIELD_WITH_HASH)
         JsonStream.setMode(EncodingMode.DYNAMIC_MODE)
@@ -126,12 +172,22 @@ class BasaltServer: AbstractVerticle() {
         startFuture.complete()
     }
 
+    /**
+     * Called when the Verticle is stopped, which Basalt doesn't do normally except in the shutdown hook.
+     */
     override fun stop() {
         LOGGER.info("Closing the Basalt Server ({} connected sockets)", contexts.size)
         magma.shutdown()
         socket.stop()
     }
+
+    /**
+     * @suppress
+     */
     companion object {
+        /**
+         * @suppress
+         */
         private val LOGGER = LoggerFactory.getLogger(BasaltServer::class.java)
     }
 }
