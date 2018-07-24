@@ -13,7 +13,7 @@ import java.util.concurrent.atomic.AtomicBoolean
 
 // Credit to Napster (@npstr) for the original Java Completion Code.
 
-class AudioLoadHandler(private val server: BasaltServer): AudioLoadResultHandler {
+class AudioLoadHandler internal constructor(private val server: BasaltServer): AudioLoadResultHandler {
     private val future = CompletableFuture<LoadResult>()
     private val isUsed = AtomicBoolean(false)
     fun load(identifier: String): CompletionStage<LoadResult> {

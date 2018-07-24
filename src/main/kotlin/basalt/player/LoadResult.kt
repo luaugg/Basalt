@@ -4,7 +4,8 @@ import basalt.messages.server.TrackPair
 import org.slf4j.LoggerFactory
 
 @Suppress("UNUSED")
-class LoadResult(val playlistInfo: Pair<String, Int>?, val tracks: Array<TrackPair>, val result: ResultStatus) {
+class LoadResult internal constructor(internal val playlistInfo: Pair<String, Int>?,
+                                      internal val tracks: Array<TrackPair>, internal val result: ResultStatus) {
     init {
         if (result === ResultStatus.UNKNOWN) {
             LOGGER.error("Result Status is UNKNOWN!")

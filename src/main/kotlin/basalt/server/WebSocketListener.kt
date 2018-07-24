@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory
 import space.npstr.magma.MagmaMember
 import space.npstr.magma.MagmaServerUpdate
 
-class WebSocketListener(val server: BasaltServer): AbstractReceiveListener() {
+class WebSocketListener internal constructor(private val server: BasaltServer): AbstractReceiveListener() {
     override fun onClose(webSocketChannel: WebSocketChannel, channel: StreamSourceFrameChannel) {
         super.onClose(webSocketChannel, channel)
         server.contexts.remove(webSocketChannel)
