@@ -16,7 +16,7 @@ typealias PlayerMap = Object2ObjectOpenHashMap<String, BasaltPlayer>
  * with that channel, as well as a [PlayerMap] and a Sequence Number of Sent, Successful Events.
  *
  * @author Sam Pritchard
- * @version 1.0
+ * @since 1.0
  * @constructor Constructs a SocketContext from a [BasaltServer], a WebSocketChannel and a User ID String.
  */
 
