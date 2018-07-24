@@ -72,6 +72,7 @@ dokka {
     outputFormat = 'javadoc'
     outputDirectory = "$buildDir/docs"
     jdkVersion = 8
+    includeNonPublic = true
 
     linkMapping {
         dir = 'src/main/kotlin'
