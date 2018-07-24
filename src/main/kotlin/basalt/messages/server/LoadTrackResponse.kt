@@ -4,7 +4,7 @@ import basalt.player.LoadResult
 import com.jsoniter.annotation.JsonIgnore
 
 @Suppress("UNUSED")
-data class LoadTrackResponse(@field:JsonIgnore val result: LoadResult) {
+class LoadTrackResponse internal constructor(@field:JsonIgnore private val result: LoadResult) {
     val playlistInfo = if (result.playlistInfo != null) PlaylistInfo() else null
     val loadType = result.result
     val tracks = result.tracks
