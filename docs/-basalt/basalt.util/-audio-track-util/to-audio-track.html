@@ -1,0 +1,24 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>AudioTrackUtil.toAudioTrack - Basalt</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">Basalt</a>&nbsp;/&nbsp;<a href="../index.html">basalt.util</a>&nbsp;/&nbsp;<a href="index.html">AudioTrackUtil</a>&nbsp;/&nbsp;<a href="./to-audio-track.html">toAudioTrack</a><br/>
+<br/>
+<h1>toAudioTrack</h1>
+<a name="basalt.util.AudioTrackUtil$toAudioTrack(kotlin.String)"></a>
+<code><span class="keyword">fun </span><span class="identifier">toAudioTrack</span><span class="symbol">(</span><span class="identifier" id="basalt.util.AudioTrackUtil$toAudioTrack(kotlin.String)/data">data</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">AudioTrack</span></code>
+<p>Converts a <strong>not-null</strong> data representation of an AudioTrack into an AudioTrack, which is then used for various purposes.</p>
+<p>This track is only really used internally by Basalt in order to play the raw track
+itself (as opposed to the data representation which is used mainly to transport a track object over the net).</p>
+<p>Additionally, and similarly to the <a href="from-audio-track.html">fromAudioTrack</a> method, Basalt does not have to make any requests to resolve
+the track data as it is already contained inside the string.</p>
+<h3>Parameters</h3>
+<p><a name="data"></a>
+<code>data</code> - The encoded track data, to be decoded into an AudioTrack.</p>
+<p><strong>Return</strong><br/>
+The track object represented in the encoded data.</p>
+</BODY>
+</HTML>

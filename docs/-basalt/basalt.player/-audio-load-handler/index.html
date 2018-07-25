@@ -1,0 +1,112 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>AudioLoadHandler - Basalt</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">Basalt</a>&nbsp;/&nbsp;<a href="../index.html">basalt.player</a>&nbsp;/&nbsp;<a href="./index.html">AudioLoadHandler</a><br/>
+<br/>
+<h1>AudioLoadHandler</h1>
+<code><span class="keyword">class </span><span class="identifier">AudioLoadHandler</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">AudioLoadResultHandler</span></code>
+<p>Class which loads sources based on provided identifiers asynchronously.</p>
+<p>Each instance of this class can only be used once, and an exception will be thrown as well as an error log
+being produced each time this is used more than once -- which it is not, if using the normal, stable Basalt release.</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="keyword">internal</span> <span class="identifier">AudioLoadHandler</span><span class="symbol">(</span><span class="identifier" id="basalt.player.AudioLoadHandler$<init>(basalt.server.BasaltServer)/server">server</span><span class="symbol">:</span>&nbsp;<a href="../../basalt.server/-basalt-server/index.html"><span class="identifier">BasaltServer</span></a><span class="symbol">)</span></code>
+<p>Constructs an AudioLoadHandler from a <a href="../../basalt.server/-basalt-server/index.html">BasaltServer</a> instance.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="future.html">future</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">future</span><span class="symbol">: </span><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html"><span class="identifier">CompletableFuture</span></a><span class="symbol">&lt;</span><a href="../-load-result/index.html"><span class="identifier">LoadResult</span></a><span class="symbol">&gt;</span></code>
+<p>A CompletableFuture that can be completed with a <a href="../-load-result/index.html">LoadResult</a>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="is-used.html">isUsed</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">isUsed</span><span class="symbol">: </span><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/atomic/AtomicBoolean.html"><span class="identifier">AtomicBoolean</span></a></code>
+<p>An AtomicBoolean that atomically checks to see if this instance has already been used before.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="server.html">server</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">server</span><span class="symbol">: </span><a href="../../basalt.server/-basalt-server/index.html"><span class="identifier">BasaltServer</span></a></code>
+<p>A <a href="../../basalt.server/-basalt-server/index.html">BasaltServer</a> reference.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="load.html">load</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">load</span><span class="symbol">(</span><span class="identifier" id="basalt.player.AudioLoadHandler$load(kotlin.String)/identifier">identifier</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletionStage.html"><span class="identifier">CompletionStage</span></a><span class="symbol">&lt;</span><a href="../-load-result/index.html"><span class="identifier">LoadResult</span></a><span class="symbol">&gt;</span></code>
+<p>Loads a source based on a given identifier, returning a CompletionStage that is used internally for various purposes.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="load-failed.html">loadFailed</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">loadFailed</span><span class="symbol">(</span><span class="identifier" id="basalt.player.AudioLoadHandler$loadFailed(com.sedmelluq.discord.lavaplayer.tools.FriendlyException)/exception">exception</span><span class="symbol">:</span>&nbsp;<span class="identifier">FriendlyException</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Called by Lavaplayer whenever an error occurs while loading a source, completing the result.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="no-matches.html">noMatches</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">noMatches</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Called by Lavaplayer if no matches could be associated with the provided identifier, completing the result.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="playlist-loaded.html">playlistLoaded</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">playlistLoaded</span><span class="symbol">(</span><span class="identifier" id="basalt.player.AudioLoadHandler$playlistLoaded(com.sedmelluq.discord.lavaplayer.track.AudioPlaylist)/playlist">playlist</span><span class="symbol">:</span>&nbsp;<span class="identifier">AudioPlaylist</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Called by Lavaplayer whenever a playlist of tracks (including search results) is loaded successfully, completing the result.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="track-loaded.html">trackLoaded</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">trackLoaded</span><span class="symbol">(</span><span class="identifier" id="basalt.player.AudioLoadHandler$trackLoaded(com.sedmelluq.discord.lavaplayer.track.AudioTrack)/track">track</span><span class="symbol">:</span>&nbsp;<span class="identifier">AudioTrack</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Called by Lavaplayer whenever a single track is loaded successfully, completing the result.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

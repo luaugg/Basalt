@@ -1,0 +1,85 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>AudioSender - Basalt</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">Basalt</a>&nbsp;/&nbsp;<a href="../index.html">basalt.server</a>&nbsp;/&nbsp;<a href="./index.html">AudioSender</a><br/>
+<br/>
+<h1>AudioSender</h1>
+<code><span class="keyword">class </span><span class="identifier">AudioSender</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">AudioSendHandler</span></code>
+<p>Sender class which takes in Opus frames from Lavaplayer and passes them to Magma, where they are then
+subsequently sent to Discord.</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="keyword">internal</span> <span class="identifier">AudioSender</span><span class="symbol">(</span><span class="identifier" id="basalt.server.AudioSender$<init>(com.sedmelluq.discord.lavaplayer.player.AudioPlayer)/player">player</span><span class="symbol">:</span>&nbsp;<span class="identifier">AudioPlayer</span><span class="symbol">)</span></code>
+<p>Constructs an AudioSender instance from an AudioPlayer.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="data.html">data</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">data</span><span class="symbol">: </span><span class="identifier">AudioFrame</span><span class="symbol">?</span></code>
+<p>The latest AudioFrame of data to be sent.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="player.html">player</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">player</span><span class="symbol">: </span><span class="identifier">AudioPlayer</span></code>
+<p>A Lavaplayer AudioPlayer instance.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="can-provide.html">canProvide</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">canProvide</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code>
+<p>Grabs <strong>possibly-null</strong> provided data from the AudioPlayer instance, sets it and returns whether it's <code>null</code> or not.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="is-opus.html">isOpus</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">isOpus</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code>
+<p>Returns whether or not this send handler provides Opus-encoded data, which is automatically, and constantly, true
+as Lavaplayer already converts the data.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="provide20-ms-audio.html">provide20MsAudio</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">provide20MsAudio</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte-array/index.html"><span class="identifier">ByteArray</span></a></code>
+<p>Returns the raw array of bytes, representing 20 milliseconds of audio data, as set by the <a href="can-provide.html">canProvide</a> method.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

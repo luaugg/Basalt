@@ -1,0 +1,122 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>BasaltServer - Basalt</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">Basalt</a>&nbsp;/&nbsp;<a href="../index.html">basalt.server</a>&nbsp;/&nbsp;<a href="./index.html">BasaltServer</a><br/>
+<br/>
+<h1>BasaltServer</h1>
+<code><span class="keyword">class </span><span class="identifier">BasaltServer</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">AbstractVerticle</span></code>
+<p>Server instance which is the starting point for every other part of Basalt.</p>
+<p>This class is only meant to run/started up once, although it <em>technically</em> allows multiple start ups.
+From this class, the Undertow WebSocket is created and the configuration options are parsed and applied.</p>
+<p>The Jsoniter options are also set upon this server being started, as well as Magma being setup too.</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">BasaltServer</span><span class="symbol">(</span><span class="symbol">)</span></code>
+<p>Server instance which is the starting point for every other part of Basalt.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="listener.html">listener</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">listener</span><span class="symbol">: </span><a href="../-web-socket-listener/index.html"><span class="identifier">WebSocketListener</span></a></code>
+<p>The <a href="../-web-socket-listener/index.html">WebSocketListener</a> which every open WebSocketChannel uses to handle incoming requests.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="magma.html">magma</a></p>
+</td>
+<td>
+<code><span class="keyword">internal</span> <span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">magma</span><span class="symbol">: </span><span class="identifier">MagmaApi</span></code>
+<p>The raw MagmaApi instance used to actually send and update voice data/state.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="mapper.html">mapper</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">mapper</span><span class="symbol">: </span><span class="identifier">ObjectMapper</span></code>
+<p>The Jackson Object Mapper used to parse the YAML Configuration File.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="password.html">password</a></p>
+</td>
+<td>
+<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">password</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code>
+<p>The password used to successfully open a WebSocket Connection to this BasaltServer instance.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="socket.html">socket</a></p>
+</td>
+<td>
+<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">socket</span><span class="symbol">: </span><span class="identifier">Undertow</span></code>
+<p>The Undertow WebSocket instance.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="source-manager.html">sourceManager</a></p>
+</td>
+<td>
+<code><span class="keyword">internal</span> <span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">sourceManager</span><span class="symbol">: </span><span class="identifier">AudioPlayerManager</span></code>
+<p>The Lavaplayer SourceManager used to actually load sources.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="track-util.html">trackUtil</a></p>
+</td>
+<td>
+<code><span class="keyword">internal</span> <span class="keyword">val </span><span class="identifier">trackUtil</span><span class="symbol">: </span><a href="../../basalt.util/-audio-track-util/index.html"><span class="identifier">AudioTrackUtil</span></a></code>
+<p>The <a href="../../basalt.util/-audio-track-util/index.html">AudioTrackUtil</a> instance used externally to encode tracks and vice versa.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="start.html">start</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">start</span><span class="symbol">(</span><span class="identifier" id="basalt.server.BasaltServer$start(io.vertx.core.Future((java.lang.Void)))/startFuture">startFuture</span><span class="symbol">:</span>&nbsp;<span class="identifier">Future</span><span class="symbol">&lt;</span><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Void.html"><span class="identifier">Void</span></a><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Called by Vert.x when this Verticle is deployed (which it is in the Main class).</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="stop.html">stop</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">stop</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Called when the Verticle is stopped, which Basalt doesn't do normally except in the shutdown hook.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

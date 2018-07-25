@@ -1,0 +1,149 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>BasaltPlayer - Basalt</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">Basalt</a>&nbsp;/&nbsp;<a href="../index.html">basalt.player</a>&nbsp;/&nbsp;<a href="./index.html">BasaltPlayer</a><br/>
+<br/>
+<h1>BasaltPlayer</h1>
+<code><span class="keyword">class </span><span class="identifier">BasaltPlayer</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">AudioEventAdapter</span></code>
+<p>A player class associated with a <a href="../-socket-context/index.html">SocketContext</a> and a Guild ID, with a "lifecycle" determined by incoming requests.</p>
+<p>This class is created upon an <code>initialize</code> request, and destroyed as well as cleaned up upon a <code>destroy</code> request.
+Additionally, as tracks start, end, are paused, resumed, etc. this player will send events back across the WebSocket Connection.</p>
+<p>For example, when a track starts, Basalt:</p>
+<ul><li>Firstly encodes the track and creates a dispatch event (<code>TRACK_STARTED</code> name), additional info, etc.</li>
+<li>Sends the event across the WebSocketChannel (the connection between a client and Basalt).</li>
+<li>Starts a scheduled task which sends <code>PLAYER_UPDATE</code> events every 5 seconds until the task is cancelled.</li>
+</ul>
+<p>When a track ends, Basalt:</p>
+<ul><li>Dispatches a <code>TRACK_ENDED</code> event across the WebSocketChannel</li>
+<li>Cancels the update task from earlier on.</li>
+<li>Sets the task to <code>null</code>.</li>
+</ul>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="keyword">internal</span> <span class="identifier">BasaltPlayer</span><span class="symbol">(</span><span class="identifier" id="basalt.player.BasaltPlayer$<init>(basalt.player.SocketContext, kotlin.String, com.sedmelluq.discord.lavaplayer.player.AudioPlayer)/context">context</span><span class="symbol">:</span>&nbsp;<a href="../-socket-context/index.html"><span class="identifier">SocketContext</span></a><span class="symbol">, </span><span class="identifier" id="basalt.player.BasaltPlayer$<init>(basalt.player.SocketContext, kotlin.String, com.sedmelluq.discord.lavaplayer.player.AudioPlayer)/guildId">guildId</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="basalt.player.BasaltPlayer$<init>(basalt.player.SocketContext, kotlin.String, com.sedmelluq.discord.lavaplayer.player.AudioPlayer)/audioPlayer">audioPlayer</span><span class="symbol">:</span>&nbsp;<span class="identifier">AudioPlayer</span><span class="symbol">)</span></code>
+<p>Constructs a BasaltPlayer based on a provided <a href="../-socket-context/index.html">SocketContext</a>, a Guild ID and an AudioPlayer.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="audio-player.html">audioPlayer</a></p>
+</td>
+<td>
+<code><span class="keyword">internal</span> <span class="keyword">val </span><span class="identifier">audioPlayer</span><span class="symbol">: </span><span class="identifier">AudioPlayer</span></code>
+<p>A Lavaplayer AudioPlayer instance.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="context.html">context</a></p>
+</td>
+<td>
+<code><span class="keyword">internal</span> <span class="keyword">val </span><span class="identifier">context</span><span class="symbol">: </span><a href="../-socket-context/index.html"><span class="identifier">SocketContext</span></a></code>
+<p>The <a href="../-socket-context/index.html">SocketContext</a> that this player belongs to.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="guild-id.html">guildId</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">guildId</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code>
+<p>The ID of the Guild that audio is sent to.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="thread-pool.html">threadPool</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">threadPool</span><span class="symbol">: </span><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ScheduledExecutorService.html"><span class="identifier">ScheduledExecutorService</span></a></code>
+<p>The Java ScheduledExecutorService used to schedule the <code>PLAYER_UPDATE</code> task.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="update-task.html">updateTask</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">updateTask</span><span class="symbol">: </span><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ScheduledFuture.html"><span class="identifier">ScheduledFuture</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">?</span></code>
+<p>The actual update task itself that is eventually cancelled.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="on-player-pause.html">onPlayerPause</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">onPlayerPause</span><span class="symbol">(</span><span class="identifier" id="basalt.player.BasaltPlayer$onPlayerPause(com.sedmelluq.discord.lavaplayer.player.AudioPlayer)/player">player</span><span class="symbol">:</span>&nbsp;<span class="identifier">AudioPlayer</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Fired by Lavaplayer when the AudioPlayer is paused.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="on-player-resume.html">onPlayerResume</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">onPlayerResume</span><span class="symbol">(</span><span class="identifier" id="basalt.player.BasaltPlayer$onPlayerResume(com.sedmelluq.discord.lavaplayer.player.AudioPlayer)/player">player</span><span class="symbol">:</span>&nbsp;<span class="identifier">AudioPlayer</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Fired by Lavaplayer when the AudioPlayer is resumed.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="on-track-end.html">onTrackEnd</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">onTrackEnd</span><span class="symbol">(</span><span class="identifier" id="basalt.player.BasaltPlayer$onTrackEnd(com.sedmelluq.discord.lavaplayer.player.AudioPlayer, com.sedmelluq.discord.lavaplayer.track.AudioTrack, com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason)/player">player</span><span class="symbol">:</span>&nbsp;<span class="identifier">AudioPlayer</span><span class="symbol">, </span><span class="identifier" id="basalt.player.BasaltPlayer$onTrackEnd(com.sedmelluq.discord.lavaplayer.player.AudioPlayer, com.sedmelluq.discord.lavaplayer.track.AudioTrack, com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason)/track">track</span><span class="symbol">:</span>&nbsp;<span class="identifier">AudioTrack</span><span class="symbol">, </span><span class="identifier" id="basalt.player.BasaltPlayer$onTrackEnd(com.sedmelluq.discord.lavaplayer.player.AudioPlayer, com.sedmelluq.discord.lavaplayer.track.AudioTrack, com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason)/endReason">endReason</span><span class="symbol">:</span>&nbsp;<span class="identifier">AudioTrackEndReason</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Fired by Lavaplayer when an AudioTrack ends.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="on-track-exception.html">onTrackException</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">onTrackException</span><span class="symbol">(</span><span class="identifier" id="basalt.player.BasaltPlayer$onTrackException(com.sedmelluq.discord.lavaplayer.player.AudioPlayer, com.sedmelluq.discord.lavaplayer.track.AudioTrack, com.sedmelluq.discord.lavaplayer.tools.FriendlyException)/player">player</span><span class="symbol">:</span>&nbsp;<span class="identifier">AudioPlayer</span><span class="symbol">, </span><span class="identifier" id="basalt.player.BasaltPlayer$onTrackException(com.sedmelluq.discord.lavaplayer.player.AudioPlayer, com.sedmelluq.discord.lavaplayer.track.AudioTrack, com.sedmelluq.discord.lavaplayer.tools.FriendlyException)/track">track</span><span class="symbol">:</span>&nbsp;<span class="identifier">AudioTrack</span><span class="symbol">, </span><span class="identifier" id="basalt.player.BasaltPlayer$onTrackException(com.sedmelluq.discord.lavaplayer.player.AudioPlayer, com.sedmelluq.discord.lavaplayer.track.AudioTrack, com.sedmelluq.discord.lavaplayer.tools.FriendlyException)/exception">exception</span><span class="symbol">:</span>&nbsp;<span class="identifier">FriendlyException</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Fired by Lavaplayer when an exception was thrown during playback of an AudioTrack.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="on-track-start.html">onTrackStart</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">onTrackStart</span><span class="symbol">(</span><span class="identifier" id="basalt.player.BasaltPlayer$onTrackStart(com.sedmelluq.discord.lavaplayer.player.AudioPlayer, com.sedmelluq.discord.lavaplayer.track.AudioTrack)/player">player</span><span class="symbol">:</span>&nbsp;<span class="identifier">AudioPlayer</span><span class="symbol">, </span><span class="identifier" id="basalt.player.BasaltPlayer$onTrackStart(com.sedmelluq.discord.lavaplayer.player.AudioPlayer, com.sedmelluq.discord.lavaplayer.track.AudioTrack)/track">track</span><span class="symbol">:</span>&nbsp;<span class="identifier">AudioTrack</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Fired by Lavaplayer when an AudioTrack starts.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="on-track-stuck.html">onTrackStuck</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">onTrackStuck</span><span class="symbol">(</span><span class="identifier" id="basalt.player.BasaltPlayer$onTrackStuck(com.sedmelluq.discord.lavaplayer.player.AudioPlayer, com.sedmelluq.discord.lavaplayer.track.AudioTrack, kotlin.Long)/player">player</span><span class="symbol">:</span>&nbsp;<span class="identifier">AudioPlayer</span><span class="symbol">, </span><span class="identifier" id="basalt.player.BasaltPlayer$onTrackStuck(com.sedmelluq.discord.lavaplayer.player.AudioPlayer, com.sedmelluq.discord.lavaplayer.track.AudioTrack, kotlin.Long)/track">track</span><span class="symbol">:</span>&nbsp;<span class="identifier">AudioTrack</span><span class="symbol">, </span><span class="identifier" id="basalt.player.BasaltPlayer$onTrackStuck(com.sedmelluq.discord.lavaplayer.player.AudioPlayer, com.sedmelluq.discord.lavaplayer.track.AudioTrack, kotlin.Long)/thresholdMs">thresholdMs</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Fired by Lavaplayer when the track that was playing got stuck.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

@@ -1,0 +1,424 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>Module Contents</title>
+<link rel="stylesheet" href="../style.css">
+</HEAD>
+<BODY>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="./index"><span class="identifier">Basalt</span></a></a><br/>
+<ul>
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>Module Contents</title>
+<link rel="stylesheet" href="../style.css">
+</HEAD>
+<BODY>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="alltypes/index.html"><span class="identifier">alltypes</span></a></a><br/>
+<ul>
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>Module Contents</title>
+<link rel="stylesheet" href="../style.css">
+</HEAD>
+<BODY>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-audio-load-handler/index.html"><span class="keyword">class </span><span class="identifier">AudioLoadHandler</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">AudioLoadResultHandler</span></a></a><br/>
+<ul>
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>Module Contents</title>
+<link rel="stylesheet" href="../style.css">
+</HEAD>
+<BODY>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-audio-load-handler/-init-.html"><span class="keyword">internal</span> <span class="identifier">AudioLoadHandler</span><span class="symbol">(</span><span class="identifier" id="basalt.player.AudioLoadHandler$<init>(basalt.server.BasaltServer)/server">server</span><span class="symbol">:</span>&nbsp;<a href="basalt.server/-basalt-server/index.html"><span class="identifier">BasaltServer</span></a><span class="symbol">)</span></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-audio-load-handler/future.html"><span class="keyword">private</span> <span class="keyword">val </span><span class="identifier">future</span><span class="symbol">: </span><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html"><span class="identifier">CompletableFuture</span></a><span class="symbol">&lt;</span><a href="basalt.player/-load-result/index.html"><span class="identifier">LoadResult</span></a><span class="symbol">&gt;</span></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-audio-load-handler/is-used.html"><span class="keyword">private</span> <span class="keyword">val </span><span class="identifier">isUsed</span><span class="symbol">: </span><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/atomic/AtomicBoolean.html"><span class="identifier">AtomicBoolean</span></a></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-audio-load-handler/load.html"><span class="keyword">fun </span><span class="identifier">load</span><span class="symbol">(</span><span class="identifier" id="basalt.player.AudioLoadHandler$load(kotlin.String)/identifier">identifier</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletionStage.html"><span class="identifier">CompletionStage</span></a><span class="symbol">&lt;</span><a href="basalt.player/-load-result/index.html"><span class="identifier">LoadResult</span></a><span class="symbol">&gt;</span></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-audio-load-handler/load-failed.html"><span class="keyword">fun </span><span class="identifier">loadFailed</span><span class="symbol">(</span><span class="identifier" id="basalt.player.AudioLoadHandler$loadFailed(com.sedmelluq.discord.lavaplayer.tools.FriendlyException)/exception">exception</span><span class="symbol">:</span>&nbsp;<span class="identifier">FriendlyException</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-audio-load-handler/no-matches.html"><span class="keyword">fun </span><span class="identifier">noMatches</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-audio-load-handler/playlist-loaded.html"><span class="keyword">fun </span><span class="identifier">playlistLoaded</span><span class="symbol">(</span><span class="identifier" id="basalt.player.AudioLoadHandler$playlistLoaded(com.sedmelluq.discord.lavaplayer.track.AudioPlaylist)/playlist">playlist</span><span class="symbol">:</span>&nbsp;<span class="identifier">AudioPlaylist</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-audio-load-handler/server.html"><span class="keyword">private</span> <span class="keyword">val </span><span class="identifier">server</span><span class="symbol">: </span><a href="basalt.server/-basalt-server/index.html"><span class="identifier">BasaltServer</span></a></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-audio-load-handler/track-loaded.html"><span class="keyword">fun </span><span class="identifier">trackLoaded</span><span class="symbol">(</span><span class="identifier" id="basalt.player.AudioLoadHandler$trackLoaded(com.sedmelluq.discord.lavaplayer.track.AudioTrack)/track">track</span><span class="symbol">:</span>&nbsp;<span class="identifier">AudioTrack</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></a></a><br/>
+</BODY>
+</HTML>
+</ul>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.server/-audio-sender/index.html"><span class="keyword">class </span><span class="identifier">AudioSender</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">AudioSendHandler</span></a></a><br/>
+<ul>
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>Module Contents</title>
+<link rel="stylesheet" href="../style.css">
+</HEAD>
+<BODY>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.server/-audio-sender/-init-.html"><span class="keyword">internal</span> <span class="identifier">AudioSender</span><span class="symbol">(</span><span class="identifier" id="basalt.server.AudioSender$<init>(com.sedmelluq.discord.lavaplayer.player.AudioPlayer)/player">player</span><span class="symbol">:</span>&nbsp;<span class="identifier">AudioPlayer</span><span class="symbol">)</span></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.server/-audio-sender/can-provide.html"><span class="keyword">fun </span><span class="identifier">canProvide</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.server/-audio-sender/data.html"><span class="identifier">@Volatile</span> <span class="keyword">private</span> <span class="keyword">var </span><span class="identifier">data</span><span class="symbol">: </span><span class="identifier">AudioFrame</span><span class="symbol">?</span></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.server/-audio-sender/is-opus.html"><span class="keyword">fun </span><span class="identifier">isOpus</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.server/-audio-sender/player.html"><span class="keyword">private</span> <span class="keyword">val </span><span class="identifier">player</span><span class="symbol">: </span><span class="identifier">AudioPlayer</span></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.server/-audio-sender/provide20-ms-audio.html"><span class="keyword">fun </span><span class="identifier">provide20MsAudio</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte-array/index.html"><span class="identifier">ByteArray</span></a></a></a><br/>
+</BODY>
+</HTML>
+</ul>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.util/-audio-track-util/index.html"><span class="keyword">class </span><span class="identifier">AudioTrackUtil</span></a></a><br/>
+<ul>
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>Module Contents</title>
+<link rel="stylesheet" href="../style.css">
+</HEAD>
+<BODY>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.util/-audio-track-util/-init-.html"><span class="keyword">internal</span> <span class="identifier">AudioTrackUtil</span><span class="symbol">(</span><span class="identifier" id="basalt.util.AudioTrackUtil$<init>(basalt.server.BasaltServer)/server">server</span><span class="symbol">:</span>&nbsp;<a href="basalt.server/-basalt-server/index.html"><span class="identifier">BasaltServer</span></a><span class="symbol">)</span></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.util/-audio-track-util/from-audio-track.html"><span class="keyword">fun </span><span class="identifier">fromAudioTrack</span><span class="symbol">(</span><span class="identifier" id="basalt.util.AudioTrackUtil$fromAudioTrack(com.sedmelluq.discord.lavaplayer.track.AudioTrack)/track">track</span><span class="symbol">:</span>&nbsp;<span class="identifier">AudioTrack</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.util/-audio-track-util/server.html"><span class="keyword">private</span> <span class="keyword">val </span><span class="identifier">server</span><span class="symbol">: </span><a href="basalt.server/-basalt-server/index.html"><span class="identifier">BasaltServer</span></a></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.util/-audio-track-util/to-audio-track.html"><span class="keyword">fun </span><span class="identifier">toAudioTrack</span><span class="symbol">(</span><span class="identifier" id="basalt.util.AudioTrackUtil$toAudioTrack(kotlin.String)/data">data</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">AudioTrack</span></a></a><br/>
+</BODY>
+</HTML>
+</ul>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-basalt-player/index.html"><span class="keyword">class </span><span class="identifier">BasaltPlayer</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">AudioEventAdapter</span></a></a><br/>
+<ul>
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>Module Contents</title>
+<link rel="stylesheet" href="../style.css">
+</HEAD>
+<BODY>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-basalt-player/-init-.html"><span class="keyword">internal</span> <span class="identifier">BasaltPlayer</span><span class="symbol">(</span><span class="identifier" id="basalt.player.BasaltPlayer$<init>(basalt.player.SocketContext, kotlin.String, com.sedmelluq.discord.lavaplayer.player.AudioPlayer)/context">context</span><span class="symbol">:</span>&nbsp;<a href="basalt.player/-socket-context/index.html"><span class="identifier">SocketContext</span></a><span class="symbol">, </span><span class="identifier" id="basalt.player.BasaltPlayer$<init>(basalt.player.SocketContext, kotlin.String, com.sedmelluq.discord.lavaplayer.player.AudioPlayer)/guildId">guildId</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="basalt.player.BasaltPlayer$<init>(basalt.player.SocketContext, kotlin.String, com.sedmelluq.discord.lavaplayer.player.AudioPlayer)/audioPlayer">audioPlayer</span><span class="symbol">:</span>&nbsp;<span class="identifier">AudioPlayer</span><span class="symbol">)</span></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-basalt-player/audio-player.html"><span class="keyword">internal</span> <span class="keyword">val </span><span class="identifier">audioPlayer</span><span class="symbol">: </span><span class="identifier">AudioPlayer</span></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-basalt-player/context.html"><span class="keyword">internal</span> <span class="keyword">val </span><span class="identifier">context</span><span class="symbol">: </span><a href="basalt.player/-socket-context/index.html"><span class="identifier">SocketContext</span></a></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-basalt-player/guild-id.html"><span class="keyword">private</span> <span class="keyword">val </span><span class="identifier">guildId</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-basalt-player/on-player-pause.html"><span class="keyword">fun </span><span class="identifier">onPlayerPause</span><span class="symbol">(</span><span class="identifier" id="basalt.player.BasaltPlayer$onPlayerPause(com.sedmelluq.discord.lavaplayer.player.AudioPlayer)/player">player</span><span class="symbol">:</span>&nbsp;<span class="identifier">AudioPlayer</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-basalt-player/on-player-resume.html"><span class="keyword">fun </span><span class="identifier">onPlayerResume</span><span class="symbol">(</span><span class="identifier" id="basalt.player.BasaltPlayer$onPlayerResume(com.sedmelluq.discord.lavaplayer.player.AudioPlayer)/player">player</span><span class="symbol">:</span>&nbsp;<span class="identifier">AudioPlayer</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-basalt-player/on-track-end.html"><span class="keyword">fun </span><span class="identifier">onTrackEnd</span><span class="symbol">(</span><span class="identifier" id="basalt.player.BasaltPlayer$onTrackEnd(com.sedmelluq.discord.lavaplayer.player.AudioPlayer, com.sedmelluq.discord.lavaplayer.track.AudioTrack, com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason)/player">player</span><span class="symbol">:</span>&nbsp;<span class="identifier">AudioPlayer</span><span class="symbol">, </span><span class="identifier" id="basalt.player.BasaltPlayer$onTrackEnd(com.sedmelluq.discord.lavaplayer.player.AudioPlayer, com.sedmelluq.discord.lavaplayer.track.AudioTrack, com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason)/track">track</span><span class="symbol">:</span>&nbsp;<span class="identifier">AudioTrack</span><span class="symbol">, </span><span class="identifier" id="basalt.player.BasaltPlayer$onTrackEnd(com.sedmelluq.discord.lavaplayer.player.AudioPlayer, com.sedmelluq.discord.lavaplayer.track.AudioTrack, com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason)/endReason">endReason</span><span class="symbol">:</span>&nbsp;<span class="identifier">AudioTrackEndReason</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-basalt-player/on-track-exception.html"><span class="keyword">fun </span><span class="identifier">onTrackException</span><span class="symbol">(</span><span class="identifier" id="basalt.player.BasaltPlayer$onTrackException(com.sedmelluq.discord.lavaplayer.player.AudioPlayer, com.sedmelluq.discord.lavaplayer.track.AudioTrack, com.sedmelluq.discord.lavaplayer.tools.FriendlyException)/player">player</span><span class="symbol">:</span>&nbsp;<span class="identifier">AudioPlayer</span><span class="symbol">, </span><span class="identifier" id="basalt.player.BasaltPlayer$onTrackException(com.sedmelluq.discord.lavaplayer.player.AudioPlayer, com.sedmelluq.discord.lavaplayer.track.AudioTrack, com.sedmelluq.discord.lavaplayer.tools.FriendlyException)/track">track</span><span class="symbol">:</span>&nbsp;<span class="identifier">AudioTrack</span><span class="symbol">, </span><span class="identifier" id="basalt.player.BasaltPlayer$onTrackException(com.sedmelluq.discord.lavaplayer.player.AudioPlayer, com.sedmelluq.discord.lavaplayer.track.AudioTrack, com.sedmelluq.discord.lavaplayer.tools.FriendlyException)/exception">exception</span><span class="symbol">:</span>&nbsp;<span class="identifier">FriendlyException</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-basalt-player/on-track-start.html"><span class="keyword">fun </span><span class="identifier">onTrackStart</span><span class="symbol">(</span><span class="identifier" id="basalt.player.BasaltPlayer$onTrackStart(com.sedmelluq.discord.lavaplayer.player.AudioPlayer, com.sedmelluq.discord.lavaplayer.track.AudioTrack)/player">player</span><span class="symbol">:</span>&nbsp;<span class="identifier">AudioPlayer</span><span class="symbol">, </span><span class="identifier" id="basalt.player.BasaltPlayer$onTrackStart(com.sedmelluq.discord.lavaplayer.player.AudioPlayer, com.sedmelluq.discord.lavaplayer.track.AudioTrack)/track">track</span><span class="symbol">:</span>&nbsp;<span class="identifier">AudioTrack</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-basalt-player/on-track-stuck.html"><span class="keyword">fun </span><span class="identifier">onTrackStuck</span><span class="symbol">(</span><span class="identifier" id="basalt.player.BasaltPlayer$onTrackStuck(com.sedmelluq.discord.lavaplayer.player.AudioPlayer, com.sedmelluq.discord.lavaplayer.track.AudioTrack, kotlin.Long)/player">player</span><span class="symbol">:</span>&nbsp;<span class="identifier">AudioPlayer</span><span class="symbol">, </span><span class="identifier" id="basalt.player.BasaltPlayer$onTrackStuck(com.sedmelluq.discord.lavaplayer.player.AudioPlayer, com.sedmelluq.discord.lavaplayer.track.AudioTrack, kotlin.Long)/track">track</span><span class="symbol">:</span>&nbsp;<span class="identifier">AudioTrack</span><span class="symbol">, </span><span class="identifier" id="basalt.player.BasaltPlayer$onTrackStuck(com.sedmelluq.discord.lavaplayer.player.AudioPlayer, com.sedmelluq.discord.lavaplayer.track.AudioTrack, kotlin.Long)/thresholdMs">thresholdMs</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-basalt-player/thread-pool.html"><span class="keyword">private</span> <span class="keyword">val </span><span class="identifier">threadPool</span><span class="symbol">: </span><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ScheduledExecutorService.html"><span class="identifier">ScheduledExecutorService</span></a></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-basalt-player/update-task.html"><span class="identifier">@Volatile</span> <span class="keyword">private</span> <span class="keyword">var </span><span class="identifier">updateTask</span><span class="symbol">: </span><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ScheduledFuture.html"><span class="identifier">ScheduledFuture</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">?</span></a></a><br/>
+</BODY>
+</HTML>
+</ul>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.server/-basalt-server/index.html"><span class="keyword">class </span><span class="identifier">BasaltServer</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">AbstractVerticle</span></a></a><br/>
+<ul>
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>Module Contents</title>
+<link rel="stylesheet" href="../style.css">
+</HEAD>
+<BODY>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.server/-basalt-server/-init-.html"><span class="identifier">BasaltServer</span><span class="symbol">(</span><span class="symbol">)</span></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.server/-basalt-server/listener.html"><span class="keyword">private</span> <span class="keyword">val </span><span class="identifier">listener</span><span class="symbol">: </span><a href="basalt.server/-web-socket-listener/index.html"><span class="identifier">WebSocketListener</span></a></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.server/-basalt-server/magma.html"><span class="keyword">internal</span> <span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">magma</span><span class="symbol">: </span><span class="identifier">MagmaApi</span></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.server/-basalt-server/mapper.html"><span class="keyword">private</span> <span class="keyword">val </span><span class="identifier">mapper</span><span class="symbol">: </span><span class="identifier">ObjectMapper</span></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.server/-basalt-server/password.html"><span class="keyword">private</span> <span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">password</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.server/-basalt-server/socket.html"><span class="keyword">private</span> <span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">socket</span><span class="symbol">: </span><span class="identifier">Undertow</span></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.server/-basalt-server/source-manager.html"><span class="keyword">internal</span> <span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">sourceManager</span><span class="symbol">: </span><span class="identifier">AudioPlayerManager</span></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.server/-basalt-server/start.html"><span class="keyword">fun </span><span class="identifier">start</span><span class="symbol">(</span><span class="identifier" id="basalt.server.BasaltServer$start(io.vertx.core.Future((java.lang.Void)))/startFuture">startFuture</span><span class="symbol">:</span>&nbsp;<span class="identifier">Future</span><span class="symbol">&lt;</span><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Void.html"><span class="identifier">Void</span></a><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.server/-basalt-server/stop.html"><span class="keyword">fun </span><span class="identifier">stop</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.server/-basalt-server/track-util.html"><span class="keyword">internal</span> <span class="keyword">val </span><span class="identifier">trackUtil</span><span class="symbol">: </span><a href="basalt.util/-audio-track-util/index.html"><span class="identifier">AudioTrackUtil</span></a></a></a><br/>
+</BODY>
+</HTML>
+</ul>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-load-result/index.html"><span class="keyword">class </span><span class="identifier">LoadResult</span></a></a><br/>
+<ul>
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>Module Contents</title>
+<link rel="stylesheet" href="../style.css">
+</HEAD>
+<BODY>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-load-result/-init-.html"><span class="keyword">internal</span> <span class="identifier">LoadResult</span><span class="symbol">(</span><span class="identifier" id="basalt.player.LoadResult$<init>(kotlin.Pair((kotlin.String, kotlin.Int)), kotlin.Array((basalt.messages.server.TrackPair)), basalt.player.ResultStatus)/playlistInfo">playlistInfo</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-pair/index.html"><span class="identifier">Pair</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">&gt;</span><span class="symbol">?</span><span class="symbol">, </span><span class="identifier" id="basalt.player.LoadResult$<init>(kotlin.Pair((kotlin.String, kotlin.Int)), kotlin.Array((basalt.messages.server.TrackPair)), basalt.player.ResultStatus)/tracks">tracks</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html"><span class="identifier">Array</span></a><span class="symbol">&lt;</span><span class="identifier">TrackPair</span><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier" id="basalt.player.LoadResult$<init>(kotlin.Pair((kotlin.String, kotlin.Int)), kotlin.Array((basalt.messages.server.TrackPair)), basalt.player.ResultStatus)/result">result</span><span class="symbol">:</span>&nbsp;<a href="basalt.player/-result-status/index.html"><span class="identifier">ResultStatus</span></a><span class="symbol">)</span></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-load-result/playlist-info.html"><span class="keyword">internal</span> <span class="keyword">val </span><span class="identifier">playlistInfo</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-pair/index.html"><span class="identifier">Pair</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">&gt;</span><span class="symbol">?</span></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-load-result/result.html"><span class="keyword">internal</span> <span class="keyword">val </span><span class="identifier">result</span><span class="symbol">: </span><a href="basalt.player/-result-status/index.html"><span class="identifier">ResultStatus</span></a></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-load-result/tracks.html"><span class="keyword">internal</span> <span class="keyword">val </span><span class="identifier">tracks</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html"><span class="identifier">Array</span></a><span class="symbol">&lt;</span><span class="identifier">TrackPair</span><span class="symbol">&gt;</span></a></a><br/>
+</BODY>
+</HTML>
+</ul>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-player-map.html"><span class="keyword">typealias </span><span class="identifier">PlayerMap</span>&nbsp;<span class="symbol">=</span>&nbsp;<span class="identifier">Object2ObjectOpenHashMap</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">,</span>&nbsp;<a href="basalt.player/-basalt-player/index.html"><span class="identifier">BasaltPlayer</span></a><span class="symbol">&gt;</span></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-result-status/index.html"><span class="keyword">enum</span> <span class="keyword">class </span><span class="identifier">ResultStatus</span></a></a><br/>
+<ul>
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>Module Contents</title>
+<link rel="stylesheet" href="../style.css">
+</HEAD>
+<BODY>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-result-status/-l-o-a-d_-f-a-i-l-e-d.html"><span class="identifier">LOAD_FAILED</span></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-result-status/-n-o_-m-a-t-c-h-e-s.html"><span class="identifier">NO_MATCHES</span></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-result-status/-p-l-a-y-l-i-s-t_-l-o-a-d-e-d.html"><span class="identifier">PLAYLIST_LOADED</span></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-result-status/-s-e-a-r-c-h_-r-e-s-u-l-t.html"><span class="identifier">SEARCH_RESULT</span></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-result-status/-t-r-a-c-k_-l-o-a-d-e-d.html"><span class="identifier">TRACK_LOADED</span></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-result-status/-u-n-k-n-o-w-n.html"><span class="identifier">UNKNOWN</span></a></a><br/>
+</BODY>
+</HTML>
+</ul>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-socket-context/index.html"><span class="keyword">class </span><span class="identifier">SocketContext</span></a></a><br/>
+<ul>
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>Module Contents</title>
+<link rel="stylesheet" href="../style.css">
+</HEAD>
+<BODY>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-socket-context/-init-.html"><span class="keyword">internal</span> <span class="identifier">SocketContext</span><span class="symbol">(</span><span class="identifier" id="basalt.player.SocketContext$<init>(basalt.server.BasaltServer, io.undertow.websockets.core.WebSocketChannel, kotlin.String)/server">server</span><span class="symbol">:</span>&nbsp;<a href="basalt.server/-basalt-server/index.html"><span class="identifier">BasaltServer</span></a><span class="symbol">, </span><span class="identifier" id="basalt.player.SocketContext$<init>(basalt.server.BasaltServer, io.undertow.websockets.core.WebSocketChannel, kotlin.String)/channel">channel</span><span class="symbol">:</span>&nbsp;<span class="identifier">WebSocketChannel</span><span class="symbol">, </span><span class="identifier" id="basalt.player.SocketContext$<init>(basalt.server.BasaltServer, io.undertow.websockets.core.WebSocketChannel, kotlin.String)/userId">userId</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-socket-context/channel.html"><span class="keyword">val </span><span class="identifier">channel</span><span class="symbol">: </span><span class="identifier">WebSocketChannel</span></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-socket-context/seq.html"><span class="keyword">internal</span> <span class="keyword">val </span><span class="identifier">seq</span><span class="symbol">: </span><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/atomic/AtomicLong.html"><span class="identifier">AtomicLong</span></a></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-socket-context/server.html"><span class="keyword">val </span><span class="identifier">server</span><span class="symbol">: </span><a href="basalt.server/-basalt-server/index.html"><span class="identifier">BasaltServer</span></a></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-socket-context/user-id.html"><span class="keyword">val </span><span class="identifier">userId</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></a></a><br/>
+</BODY>
+</HTML>
+</ul>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.server/-socket-context-map.html"><span class="keyword">typealias </span><span class="identifier">SocketContextMap</span>&nbsp;<span class="symbol">=</span>&nbsp;<span class="identifier">Object2ObjectOpenHashMap</span><span class="symbol">&lt;</span><span class="identifier">WebSocketChannel</span><span class="symbol">,</span>&nbsp;<a href="basalt.player/-socket-context/index.html"><span class="identifier">SocketContext</span></a><span class="symbol">&gt;</span></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.server/-web-socket-listener/index.html"><span class="keyword">class </span><span class="identifier">WebSocketListener</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">AbstractReceiveListener</span></a></a><br/>
+<ul>
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>Module Contents</title>
+<link rel="stylesheet" href="../style.css">
+</HEAD>
+<BODY>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.server/-web-socket-listener/-init-.html"><span class="keyword">internal</span> <span class="identifier">WebSocketListener</span><span class="symbol">(</span><span class="identifier" id="basalt.server.WebSocketListener$<init>(basalt.server.BasaltServer)/server">server</span><span class="symbol">:</span>&nbsp;<a href="basalt.server/-basalt-server/index.html"><span class="identifier">BasaltServer</span></a><span class="symbol">)</span></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.server/-web-socket-listener/on-close.html"><span class="keyword">protected</span> <span class="keyword">fun </span><span class="identifier">onClose</span><span class="symbol">(</span><span class="identifier" id="basalt.server.WebSocketListener$onClose(io.undertow.websockets.core.WebSocketChannel, io.undertow.websockets.core.StreamSourceFrameChannel)/webSocketChannel">webSocketChannel</span><span class="symbol">:</span>&nbsp;<span class="identifier">WebSocketChannel</span><span class="symbol">, </span><span class="identifier" id="basalt.server.WebSocketListener$onClose(io.undertow.websockets.core.WebSocketChannel, io.undertow.websockets.core.StreamSourceFrameChannel)/channel">channel</span><span class="symbol">:</span>&nbsp;<span class="identifier">StreamSourceFrameChannel</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.server/-web-socket-listener/on-error.html"><span class="keyword">protected</span> <span class="keyword">fun </span><span class="identifier">onError</span><span class="symbol">(</span><span class="identifier" id="basalt.server.WebSocketListener$onError(io.undertow.websockets.core.WebSocketChannel, kotlin.Throwable)/channel">channel</span><span class="symbol">:</span>&nbsp;<span class="identifier">WebSocketChannel</span><span class="symbol">, </span><span class="identifier" id="basalt.server.WebSocketListener$onError(io.undertow.websockets.core.WebSocketChannel, kotlin.Throwable)/error">error</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-throwable/index.html"><span class="identifier">Throwable</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.server/-web-socket-listener/on-full-text-message.html"><span class="keyword">protected</span> <span class="keyword">fun </span><span class="identifier">onFullTextMessage</span><span class="symbol">(</span><span class="identifier" id="basalt.server.WebSocketListener$onFullTextMessage(io.undertow.websockets.core.WebSocketChannel, io.undertow.websockets.core.BufferedTextMessage)/channel">channel</span><span class="symbol">:</span>&nbsp;<span class="identifier">WebSocketChannel</span><span class="symbol">, </span><span class="identifier" id="basalt.server.WebSocketListener$onFullTextMessage(io.undertow.websockets.core.WebSocketChannel, io.undertow.websockets.core.BufferedTextMessage)/message">message</span><span class="symbol">:</span>&nbsp;<span class="identifier">BufferedTextMessage</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.server/-web-socket-listener/server.html"><span class="keyword">private</span> <span class="keyword">val </span><span class="identifier">server</span><span class="symbol">: </span><a href="basalt.server/-basalt-server/index.html"><span class="identifier">BasaltServer</span></a></a></a><br/>
+</BODY>
+</HTML>
+</ul>
+</BODY>
+</HTML>
+</ul>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt/index.html"><span class="keyword">package</span> <span class="identifier">basalt</span></a></a><br/>
+<ul>
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>Module Contents</title>
+<link rel="stylesheet" href="../style.css">
+</HEAD>
+<BODY>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt/main.html"><span class="keyword">fun </span><span class="identifier">main</span><span class="symbol">(</span><span class="identifier" id="basalt$main(kotlin.Array((kotlin.String)))/args">args</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html"><span class="identifier">Array</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></a></a><br/>
+</BODY>
+</HTML>
+</ul>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/index.html"><span class="keyword">package</span> <span class="identifier">basalt.player</span></a></a><br/>
+<ul>
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>Module Contents</title>
+<link rel="stylesheet" href="../style.css">
+</HEAD>
+<BODY>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-audio-load-handler/index.html"><span class="keyword">class </span><span class="identifier">AudioLoadHandler</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">AudioLoadResultHandler</span></a></a><br/>
+<ul>
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>Module Contents</title>
+<link rel="stylesheet" href="../style.css">
+</HEAD>
+<BODY>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-audio-load-handler/-init-.html"><span class="keyword">internal</span> <span class="identifier">AudioLoadHandler</span><span class="symbol">(</span><span class="identifier" id="basalt.player.AudioLoadHandler$<init>(basalt.server.BasaltServer)/server">server</span><span class="symbol">:</span>&nbsp;<a href="basalt.server/-basalt-server/index.html"><span class="identifier">BasaltServer</span></a><span class="symbol">)</span></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-audio-load-handler/future.html"><span class="keyword">private</span> <span class="keyword">val </span><span class="identifier">future</span><span class="symbol">: </span><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html"><span class="identifier">CompletableFuture</span></a><span class="symbol">&lt;</span><a href="basalt.player/-load-result/index.html"><span class="identifier">LoadResult</span></a><span class="symbol">&gt;</span></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-audio-load-handler/is-used.html"><span class="keyword">private</span> <span class="keyword">val </span><span class="identifier">isUsed</span><span class="symbol">: </span><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/atomic/AtomicBoolean.html"><span class="identifier">AtomicBoolean</span></a></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-audio-load-handler/load.html"><span class="keyword">fun </span><span class="identifier">load</span><span class="symbol">(</span><span class="identifier" id="basalt.player.AudioLoadHandler$load(kotlin.String)/identifier">identifier</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletionStage.html"><span class="identifier">CompletionStage</span></a><span class="symbol">&lt;</span><a href="basalt.player/-load-result/index.html"><span class="identifier">LoadResult</span></a><span class="symbol">&gt;</span></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-audio-load-handler/load-failed.html"><span class="keyword">fun </span><span class="identifier">loadFailed</span><span class="symbol">(</span><span class="identifier" id="basalt.player.AudioLoadHandler$loadFailed(com.sedmelluq.discord.lavaplayer.tools.FriendlyException)/exception">exception</span><span class="symbol">:</span>&nbsp;<span class="identifier">FriendlyException</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-audio-load-handler/no-matches.html"><span class="keyword">fun </span><span class="identifier">noMatches</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-audio-load-handler/playlist-loaded.html"><span class="keyword">fun </span><span class="identifier">playlistLoaded</span><span class="symbol">(</span><span class="identifier" id="basalt.player.AudioLoadHandler$playlistLoaded(com.sedmelluq.discord.lavaplayer.track.AudioPlaylist)/playlist">playlist</span><span class="symbol">:</span>&nbsp;<span class="identifier">AudioPlaylist</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-audio-load-handler/server.html"><span class="keyword">private</span> <span class="keyword">val </span><span class="identifier">server</span><span class="symbol">: </span><a href="basalt.server/-basalt-server/index.html"><span class="identifier">BasaltServer</span></a></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-audio-load-handler/track-loaded.html"><span class="keyword">fun </span><span class="identifier">trackLoaded</span><span class="symbol">(</span><span class="identifier" id="basalt.player.AudioLoadHandler$trackLoaded(com.sedmelluq.discord.lavaplayer.track.AudioTrack)/track">track</span><span class="symbol">:</span>&nbsp;<span class="identifier">AudioTrack</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></a></a><br/>
+</BODY>
+</HTML>
+</ul>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-basalt-player/index.html"><span class="keyword">class </span><span class="identifier">BasaltPlayer</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">AudioEventAdapter</span></a></a><br/>
+<ul>
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>Module Contents</title>
+<link rel="stylesheet" href="../style.css">
+</HEAD>
+<BODY>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-basalt-player/-init-.html"><span class="keyword">internal</span> <span class="identifier">BasaltPlayer</span><span class="symbol">(</span><span class="identifier" id="basalt.player.BasaltPlayer$<init>(basalt.player.SocketContext, kotlin.String, com.sedmelluq.discord.lavaplayer.player.AudioPlayer)/context">context</span><span class="symbol">:</span>&nbsp;<a href="basalt.player/-socket-context/index.html"><span class="identifier">SocketContext</span></a><span class="symbol">, </span><span class="identifier" id="basalt.player.BasaltPlayer$<init>(basalt.player.SocketContext, kotlin.String, com.sedmelluq.discord.lavaplayer.player.AudioPlayer)/guildId">guildId</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="basalt.player.BasaltPlayer$<init>(basalt.player.SocketContext, kotlin.String, com.sedmelluq.discord.lavaplayer.player.AudioPlayer)/audioPlayer">audioPlayer</span><span class="symbol">:</span>&nbsp;<span class="identifier">AudioPlayer</span><span class="symbol">)</span></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-basalt-player/audio-player.html"><span class="keyword">internal</span> <span class="keyword">val </span><span class="identifier">audioPlayer</span><span class="symbol">: </span><span class="identifier">AudioPlayer</span></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-basalt-player/context.html"><span class="keyword">internal</span> <span class="keyword">val </span><span class="identifier">context</span><span class="symbol">: </span><a href="basalt.player/-socket-context/index.html"><span class="identifier">SocketContext</span></a></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-basalt-player/guild-id.html"><span class="keyword">private</span> <span class="keyword">val </span><span class="identifier">guildId</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-basalt-player/on-player-pause.html"><span class="keyword">fun </span><span class="identifier">onPlayerPause</span><span class="symbol">(</span><span class="identifier" id="basalt.player.BasaltPlayer$onPlayerPause(com.sedmelluq.discord.lavaplayer.player.AudioPlayer)/player">player</span><span class="symbol">:</span>&nbsp;<span class="identifier">AudioPlayer</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-basalt-player/on-player-resume.html"><span class="keyword">fun </span><span class="identifier">onPlayerResume</span><span class="symbol">(</span><span class="identifier" id="basalt.player.BasaltPlayer$onPlayerResume(com.sedmelluq.discord.lavaplayer.player.AudioPlayer)/player">player</span><span class="symbol">:</span>&nbsp;<span class="identifier">AudioPlayer</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-basalt-player/on-track-end.html"><span class="keyword">fun </span><span class="identifier">onTrackEnd</span><span class="symbol">(</span><span class="identifier" id="basalt.player.BasaltPlayer$onTrackEnd(com.sedmelluq.discord.lavaplayer.player.AudioPlayer, com.sedmelluq.discord.lavaplayer.track.AudioTrack, com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason)/player">player</span><span class="symbol">:</span>&nbsp;<span class="identifier">AudioPlayer</span><span class="symbol">, </span><span class="identifier" id="basalt.player.BasaltPlayer$onTrackEnd(com.sedmelluq.discord.lavaplayer.player.AudioPlayer, com.sedmelluq.discord.lavaplayer.track.AudioTrack, com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason)/track">track</span><span class="symbol">:</span>&nbsp;<span class="identifier">AudioTrack</span><span class="symbol">, </span><span class="identifier" id="basalt.player.BasaltPlayer$onTrackEnd(com.sedmelluq.discord.lavaplayer.player.AudioPlayer, com.sedmelluq.discord.lavaplayer.track.AudioTrack, com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason)/endReason">endReason</span><span class="symbol">:</span>&nbsp;<span class="identifier">AudioTrackEndReason</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-basalt-player/on-track-exception.html"><span class="keyword">fun </span><span class="identifier">onTrackException</span><span class="symbol">(</span><span class="identifier" id="basalt.player.BasaltPlayer$onTrackException(com.sedmelluq.discord.lavaplayer.player.AudioPlayer, com.sedmelluq.discord.lavaplayer.track.AudioTrack, com.sedmelluq.discord.lavaplayer.tools.FriendlyException)/player">player</span><span class="symbol">:</span>&nbsp;<span class="identifier">AudioPlayer</span><span class="symbol">, </span><span class="identifier" id="basalt.player.BasaltPlayer$onTrackException(com.sedmelluq.discord.lavaplayer.player.AudioPlayer, com.sedmelluq.discord.lavaplayer.track.AudioTrack, com.sedmelluq.discord.lavaplayer.tools.FriendlyException)/track">track</span><span class="symbol">:</span>&nbsp;<span class="identifier">AudioTrack</span><span class="symbol">, </span><span class="identifier" id="basalt.player.BasaltPlayer$onTrackException(com.sedmelluq.discord.lavaplayer.player.AudioPlayer, com.sedmelluq.discord.lavaplayer.track.AudioTrack, com.sedmelluq.discord.lavaplayer.tools.FriendlyException)/exception">exception</span><span class="symbol">:</span>&nbsp;<span class="identifier">FriendlyException</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-basalt-player/on-track-start.html"><span class="keyword">fun </span><span class="identifier">onTrackStart</span><span class="symbol">(</span><span class="identifier" id="basalt.player.BasaltPlayer$onTrackStart(com.sedmelluq.discord.lavaplayer.player.AudioPlayer, com.sedmelluq.discord.lavaplayer.track.AudioTrack)/player">player</span><span class="symbol">:</span>&nbsp;<span class="identifier">AudioPlayer</span><span class="symbol">, </span><span class="identifier" id="basalt.player.BasaltPlayer$onTrackStart(com.sedmelluq.discord.lavaplayer.player.AudioPlayer, com.sedmelluq.discord.lavaplayer.track.AudioTrack)/track">track</span><span class="symbol">:</span>&nbsp;<span class="identifier">AudioTrack</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-basalt-player/on-track-stuck.html"><span class="keyword">fun </span><span class="identifier">onTrackStuck</span><span class="symbol">(</span><span class="identifier" id="basalt.player.BasaltPlayer$onTrackStuck(com.sedmelluq.discord.lavaplayer.player.AudioPlayer, com.sedmelluq.discord.lavaplayer.track.AudioTrack, kotlin.Long)/player">player</span><span class="symbol">:</span>&nbsp;<span class="identifier">AudioPlayer</span><span class="symbol">, </span><span class="identifier" id="basalt.player.BasaltPlayer$onTrackStuck(com.sedmelluq.discord.lavaplayer.player.AudioPlayer, com.sedmelluq.discord.lavaplayer.track.AudioTrack, kotlin.Long)/track">track</span><span class="symbol">:</span>&nbsp;<span class="identifier">AudioTrack</span><span class="symbol">, </span><span class="identifier" id="basalt.player.BasaltPlayer$onTrackStuck(com.sedmelluq.discord.lavaplayer.player.AudioPlayer, com.sedmelluq.discord.lavaplayer.track.AudioTrack, kotlin.Long)/thresholdMs">thresholdMs</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-basalt-player/thread-pool.html"><span class="keyword">private</span> <span class="keyword">val </span><span class="identifier">threadPool</span><span class="symbol">: </span><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ScheduledExecutorService.html"><span class="identifier">ScheduledExecutorService</span></a></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-basalt-player/update-task.html"><span class="identifier">@Volatile</span> <span class="keyword">private</span> <span class="keyword">var </span><span class="identifier">updateTask</span><span class="symbol">: </span><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ScheduledFuture.html"><span class="identifier">ScheduledFuture</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">?</span></a></a><br/>
+</BODY>
+</HTML>
+</ul>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-load-result/index.html"><span class="keyword">class </span><span class="identifier">LoadResult</span></a></a><br/>
+<ul>
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>Module Contents</title>
+<link rel="stylesheet" href="../style.css">
+</HEAD>
+<BODY>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-load-result/-init-.html"><span class="keyword">internal</span> <span class="identifier">LoadResult</span><span class="symbol">(</span><span class="identifier" id="basalt.player.LoadResult$<init>(kotlin.Pair((kotlin.String, kotlin.Int)), kotlin.Array((basalt.messages.server.TrackPair)), basalt.player.ResultStatus)/playlistInfo">playlistInfo</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-pair/index.html"><span class="identifier">Pair</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">&gt;</span><span class="symbol">?</span><span class="symbol">, </span><span class="identifier" id="basalt.player.LoadResult$<init>(kotlin.Pair((kotlin.String, kotlin.Int)), kotlin.Array((basalt.messages.server.TrackPair)), basalt.player.ResultStatus)/tracks">tracks</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html"><span class="identifier">Array</span></a><span class="symbol">&lt;</span><span class="identifier">TrackPair</span><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier" id="basalt.player.LoadResult$<init>(kotlin.Pair((kotlin.String, kotlin.Int)), kotlin.Array((basalt.messages.server.TrackPair)), basalt.player.ResultStatus)/result">result</span><span class="symbol">:</span>&nbsp;<a href="basalt.player/-result-status/index.html"><span class="identifier">ResultStatus</span></a><span class="symbol">)</span></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-load-result/playlist-info.html"><span class="keyword">internal</span> <span class="keyword">val </span><span class="identifier">playlistInfo</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-pair/index.html"><span class="identifier">Pair</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">&gt;</span><span class="symbol">?</span></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-load-result/result.html"><span class="keyword">internal</span> <span class="keyword">val </span><span class="identifier">result</span><span class="symbol">: </span><a href="basalt.player/-result-status/index.html"><span class="identifier">ResultStatus</span></a></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-load-result/tracks.html"><span class="keyword">internal</span> <span class="keyword">val </span><span class="identifier">tracks</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html"><span class="identifier">Array</span></a><span class="symbol">&lt;</span><span class="identifier">TrackPair</span><span class="symbol">&gt;</span></a></a><br/>
+</BODY>
+</HTML>
+</ul>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-player-map.html"><span class="keyword">typealias </span><span class="identifier">PlayerMap</span>&nbsp;<span class="symbol">=</span>&nbsp;<span class="identifier">Object2ObjectOpenHashMap</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">,</span>&nbsp;<a href="basalt.player/-basalt-player/index.html"><span class="identifier">BasaltPlayer</span></a><span class="symbol">&gt;</span></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-result-status/index.html"><span class="keyword">enum</span> <span class="keyword">class </span><span class="identifier">ResultStatus</span></a></a><br/>
+<ul>
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>Module Contents</title>
+<link rel="stylesheet" href="../style.css">
+</HEAD>
+<BODY>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-result-status/-l-o-a-d_-f-a-i-l-e-d.html"><span class="identifier">LOAD_FAILED</span></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-result-status/-n-o_-m-a-t-c-h-e-s.html"><span class="identifier">NO_MATCHES</span></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-result-status/-p-l-a-y-l-i-s-t_-l-o-a-d-e-d.html"><span class="identifier">PLAYLIST_LOADED</span></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-result-status/-s-e-a-r-c-h_-r-e-s-u-l-t.html"><span class="identifier">SEARCH_RESULT</span></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-result-status/-t-r-a-c-k_-l-o-a-d-e-d.html"><span class="identifier">TRACK_LOADED</span></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-result-status/-u-n-k-n-o-w-n.html"><span class="identifier">UNKNOWN</span></a></a><br/>
+</BODY>
+</HTML>
+</ul>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-socket-context/index.html"><span class="keyword">class </span><span class="identifier">SocketContext</span></a></a><br/>
+<ul>
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>Module Contents</title>
+<link rel="stylesheet" href="../style.css">
+</HEAD>
+<BODY>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-socket-context/-init-.html"><span class="keyword">internal</span> <span class="identifier">SocketContext</span><span class="symbol">(</span><span class="identifier" id="basalt.player.SocketContext$<init>(basalt.server.BasaltServer, io.undertow.websockets.core.WebSocketChannel, kotlin.String)/server">server</span><span class="symbol">:</span>&nbsp;<a href="basalt.server/-basalt-server/index.html"><span class="identifier">BasaltServer</span></a><span class="symbol">, </span><span class="identifier" id="basalt.player.SocketContext$<init>(basalt.server.BasaltServer, io.undertow.websockets.core.WebSocketChannel, kotlin.String)/channel">channel</span><span class="symbol">:</span>&nbsp;<span class="identifier">WebSocketChannel</span><span class="symbol">, </span><span class="identifier" id="basalt.player.SocketContext$<init>(basalt.server.BasaltServer, io.undertow.websockets.core.WebSocketChannel, kotlin.String)/userId">userId</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-socket-context/channel.html"><span class="keyword">val </span><span class="identifier">channel</span><span class="symbol">: </span><span class="identifier">WebSocketChannel</span></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-socket-context/seq.html"><span class="keyword">internal</span> <span class="keyword">val </span><span class="identifier">seq</span><span class="symbol">: </span><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/atomic/AtomicLong.html"><span class="identifier">AtomicLong</span></a></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-socket-context/server.html"><span class="keyword">val </span><span class="identifier">server</span><span class="symbol">: </span><a href="basalt.server/-basalt-server/index.html"><span class="identifier">BasaltServer</span></a></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.player/-socket-context/user-id.html"><span class="keyword">val </span><span class="identifier">userId</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></a></a><br/>
+</BODY>
+</HTML>
+</ul>
+</BODY>
+</HTML>
+</ul>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.server/index.html"><span class="keyword">package</span> <span class="identifier">basalt.server</span></a></a><br/>
+<ul>
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>Module Contents</title>
+<link rel="stylesheet" href="../style.css">
+</HEAD>
+<BODY>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.server/-audio-sender/index.html"><span class="keyword">class </span><span class="identifier">AudioSender</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">AudioSendHandler</span></a></a><br/>
+<ul>
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>Module Contents</title>
+<link rel="stylesheet" href="../style.css">
+</HEAD>
+<BODY>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.server/-audio-sender/-init-.html"><span class="keyword">internal</span> <span class="identifier">AudioSender</span><span class="symbol">(</span><span class="identifier" id="basalt.server.AudioSender$<init>(com.sedmelluq.discord.lavaplayer.player.AudioPlayer)/player">player</span><span class="symbol">:</span>&nbsp;<span class="identifier">AudioPlayer</span><span class="symbol">)</span></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.server/-audio-sender/can-provide.html"><span class="keyword">fun </span><span class="identifier">canProvide</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.server/-audio-sender/data.html"><span class="identifier">@Volatile</span> <span class="keyword">private</span> <span class="keyword">var </span><span class="identifier">data</span><span class="symbol">: </span><span class="identifier">AudioFrame</span><span class="symbol">?</span></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.server/-audio-sender/is-opus.html"><span class="keyword">fun </span><span class="identifier">isOpus</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.server/-audio-sender/player.html"><span class="keyword">private</span> <span class="keyword">val </span><span class="identifier">player</span><span class="symbol">: </span><span class="identifier">AudioPlayer</span></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.server/-audio-sender/provide20-ms-audio.html"><span class="keyword">fun </span><span class="identifier">provide20MsAudio</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte-array/index.html"><span class="identifier">ByteArray</span></a></a></a><br/>
+</BODY>
+</HTML>
+</ul>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.server/-basalt-server/index.html"><span class="keyword">class </span><span class="identifier">BasaltServer</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">AbstractVerticle</span></a></a><br/>
+<ul>
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>Module Contents</title>
+<link rel="stylesheet" href="../style.css">
+</HEAD>
+<BODY>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.server/-basalt-server/-init-.html"><span class="identifier">BasaltServer</span><span class="symbol">(</span><span class="symbol">)</span></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.server/-basalt-server/listener.html"><span class="keyword">private</span> <span class="keyword">val </span><span class="identifier">listener</span><span class="symbol">: </span><a href="basalt.server/-web-socket-listener/index.html"><span class="identifier">WebSocketListener</span></a></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.server/-basalt-server/magma.html"><span class="keyword">internal</span> <span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">magma</span><span class="symbol">: </span><span class="identifier">MagmaApi</span></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.server/-basalt-server/mapper.html"><span class="keyword">private</span> <span class="keyword">val </span><span class="identifier">mapper</span><span class="symbol">: </span><span class="identifier">ObjectMapper</span></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.server/-basalt-server/password.html"><span class="keyword">private</span> <span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">password</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.server/-basalt-server/socket.html"><span class="keyword">private</span> <span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">socket</span><span class="symbol">: </span><span class="identifier">Undertow</span></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.server/-basalt-server/source-manager.html"><span class="keyword">internal</span> <span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">sourceManager</span><span class="symbol">: </span><span class="identifier">AudioPlayerManager</span></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.server/-basalt-server/start.html"><span class="keyword">fun </span><span class="identifier">start</span><span class="symbol">(</span><span class="identifier" id="basalt.server.BasaltServer$start(io.vertx.core.Future((java.lang.Void)))/startFuture">startFuture</span><span class="symbol">:</span>&nbsp;<span class="identifier">Future</span><span class="symbol">&lt;</span><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Void.html"><span class="identifier">Void</span></a><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.server/-basalt-server/stop.html"><span class="keyword">fun </span><span class="identifier">stop</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.server/-basalt-server/track-util.html"><span class="keyword">internal</span> <span class="keyword">val </span><span class="identifier">trackUtil</span><span class="symbol">: </span><a href="basalt.util/-audio-track-util/index.html"><span class="identifier">AudioTrackUtil</span></a></a></a><br/>
+</BODY>
+</HTML>
+</ul>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.server/-socket-context-map.html"><span class="keyword">typealias </span><span class="identifier">SocketContextMap</span>&nbsp;<span class="symbol">=</span>&nbsp;<span class="identifier">Object2ObjectOpenHashMap</span><span class="symbol">&lt;</span><span class="identifier">WebSocketChannel</span><span class="symbol">,</span>&nbsp;<a href="basalt.player/-socket-context/index.html"><span class="identifier">SocketContext</span></a><span class="symbol">&gt;</span></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.server/-web-socket-listener/index.html"><span class="keyword">class </span><span class="identifier">WebSocketListener</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">AbstractReceiveListener</span></a></a><br/>
+<ul>
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>Module Contents</title>
+<link rel="stylesheet" href="../style.css">
+</HEAD>
+<BODY>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.server/-web-socket-listener/-init-.html"><span class="keyword">internal</span> <span class="identifier">WebSocketListener</span><span class="symbol">(</span><span class="identifier" id="basalt.server.WebSocketListener$<init>(basalt.server.BasaltServer)/server">server</span><span class="symbol">:</span>&nbsp;<a href="basalt.server/-basalt-server/index.html"><span class="identifier">BasaltServer</span></a><span class="symbol">)</span></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.server/-web-socket-listener/on-close.html"><span class="keyword">protected</span> <span class="keyword">fun </span><span class="identifier">onClose</span><span class="symbol">(</span><span class="identifier" id="basalt.server.WebSocketListener$onClose(io.undertow.websockets.core.WebSocketChannel, io.undertow.websockets.core.StreamSourceFrameChannel)/webSocketChannel">webSocketChannel</span><span class="symbol">:</span>&nbsp;<span class="identifier">WebSocketChannel</span><span class="symbol">, </span><span class="identifier" id="basalt.server.WebSocketListener$onClose(io.undertow.websockets.core.WebSocketChannel, io.undertow.websockets.core.StreamSourceFrameChannel)/channel">channel</span><span class="symbol">:</span>&nbsp;<span class="identifier">StreamSourceFrameChannel</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.server/-web-socket-listener/on-error.html"><span class="keyword">protected</span> <span class="keyword">fun </span><span class="identifier">onError</span><span class="symbol">(</span><span class="identifier" id="basalt.server.WebSocketListener$onError(io.undertow.websockets.core.WebSocketChannel, kotlin.Throwable)/channel">channel</span><span class="symbol">:</span>&nbsp;<span class="identifier">WebSocketChannel</span><span class="symbol">, </span><span class="identifier" id="basalt.server.WebSocketListener$onError(io.undertow.websockets.core.WebSocketChannel, kotlin.Throwable)/error">error</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-throwable/index.html"><span class="identifier">Throwable</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.server/-web-socket-listener/on-full-text-message.html"><span class="keyword">protected</span> <span class="keyword">fun </span><span class="identifier">onFullTextMessage</span><span class="symbol">(</span><span class="identifier" id="basalt.server.WebSocketListener$onFullTextMessage(io.undertow.websockets.core.WebSocketChannel, io.undertow.websockets.core.BufferedTextMessage)/channel">channel</span><span class="symbol">:</span>&nbsp;<span class="identifier">WebSocketChannel</span><span class="symbol">, </span><span class="identifier" id="basalt.server.WebSocketListener$onFullTextMessage(io.undertow.websockets.core.WebSocketChannel, io.undertow.websockets.core.BufferedTextMessage)/message">message</span><span class="symbol">:</span>&nbsp;<span class="identifier">BufferedTextMessage</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.server/-web-socket-listener/server.html"><span class="keyword">private</span> <span class="keyword">val </span><span class="identifier">server</span><span class="symbol">: </span><a href="basalt.server/-basalt-server/index.html"><span class="identifier">BasaltServer</span></a></a></a><br/>
+</BODY>
+</HTML>
+</ul>
+</BODY>
+</HTML>
+</ul>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.util/index.html"><span class="keyword">package</span> <span class="identifier">basalt.util</span></a></a><br/>
+<ul>
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>Module Contents</title>
+<link rel="stylesheet" href="../style.css">
+</HEAD>
+<BODY>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.util/-audio-track-util/index.html"><span class="keyword">class </span><span class="identifier">AudioTrackUtil</span></a></a><br/>
+<ul>
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>Module Contents</title>
+<link rel="stylesheet" href="../style.css">
+</HEAD>
+<BODY>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.util/-audio-track-util/-init-.html"><span class="keyword">internal</span> <span class="identifier">AudioTrackUtil</span><span class="symbol">(</span><span class="identifier" id="basalt.util.AudioTrackUtil$<init>(basalt.server.BasaltServer)/server">server</span><span class="symbol">:</span>&nbsp;<a href="basalt.server/-basalt-server/index.html"><span class="identifier">BasaltServer</span></a><span class="symbol">)</span></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.util/-audio-track-util/from-audio-track.html"><span class="keyword">fun </span><span class="identifier">fromAudioTrack</span><span class="symbol">(</span><span class="identifier" id="basalt.util.AudioTrackUtil$fromAudioTrack(com.sedmelluq.discord.lavaplayer.track.AudioTrack)/track">track</span><span class="symbol">:</span>&nbsp;<span class="identifier">AudioTrack</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.util/-audio-track-util/server.html"><span class="keyword">private</span> <span class="keyword">val </span><span class="identifier">server</span><span class="symbol">: </span><a href="basalt.server/-basalt-server/index.html"><span class="identifier">BasaltServer</span></a></a></a><br/>
+<a href="/Users/Samuel/Documents/Basalt/build/docs/javadoc/-basalt/index"><a href="basalt.util/-audio-track-util/to-audio-track.html"><span class="keyword">fun </span><span class="identifier">toAudioTrack</span><span class="symbol">(</span><span class="identifier" id="basalt.util.AudioTrackUtil$toAudioTrack(kotlin.String)/data">data</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">AudioTrack</span></a></a><br/>
+</BODY>
+</HTML>
+</ul>
+</BODY>
+</HTML>
+</ul>
+</BODY>
+</HTML>
+</ul>
+</BODY>
+</HTML>

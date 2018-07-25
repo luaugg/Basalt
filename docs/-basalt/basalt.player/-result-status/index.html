@@ -1,0 +1,72 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>ResultStatus - Basalt</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">Basalt</a>&nbsp;/&nbsp;<a href="../index.html">basalt.player</a>&nbsp;/&nbsp;<a href="./index.html">ResultStatus</a><br/>
+<br/>
+<h1>ResultStatus</h1>
+<code><span class="keyword">enum</span> <span class="keyword">class </span><span class="identifier">ResultStatus</span></code>
+<p>Enum which corresponds to how a source loaded.</p>
+<p>For example, if you load a single track successfully the returned "load type" will be equal to <code>TRACK_LOADED</code>.</p>
+<p><strong>Author</strong><br/>
+Sam Pritchard</p>
+<p><strong>Since</strong><br/>
+1.0</p>
+<h3>Enum Values</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-t-r-a-c-k_-l-o-a-d-e-d.html">TRACK_LOADED</a></p>
+</td>
+<td>
+<p>Returned when a single AudioTrack is loaded.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-p-l-a-y-l-i-s-t_-l-o-a-d-e-d.html">PLAYLIST_LOADED</a></p>
+</td>
+<td>
+<p>Returned when a playlist of AudioTracks is loaded.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-s-e-a-r-c-h_-r-e-s-u-l-t.html">SEARCH_RESULT</a></p>
+</td>
+<td>
+<p>Returned when a search result is loaded.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-n-o_-m-a-t-c-h-e-s.html">NO_MATCHES</a></p>
+</td>
+<td>
+<p>Returned if no sources could be attributed to the provided identifier.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-l-o-a-d_-f-a-i-l-e-d.html">LOAD_FAILED</a></p>
+</td>
+<td>
+<p>Returned if Lavaplayer failed to load the source.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-u-n-k-n-o-w-n.html">UNKNOWN</a></p>
+</td>
+<td>
+<p>Usually never returned. If this is, a report should be made to the developers.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>
