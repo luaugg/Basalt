@@ -1,6 +1,5 @@
 .gradle
 .idea
-gradle
 build
 basalt.yml
 src/main/resources
