@@ -13,7 +13,9 @@ import java.io.IOException
 /**
  * The utility class which converts AudioTracks to easily-transportable data and vice versa.
  *
- * @constructor Constructs a new AudioTrackUtil class with an attached [BasaltServer]
+ * @property server A [BasaltServer] reference, used to access the Source Manager.
+ *
+ * @constructor Constructs a new AudioTrackUtil class with an attached [BasaltServer].
  * @author Sam Pritchard
  * @since 0.1
  */
