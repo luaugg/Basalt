@@ -20,6 +20,8 @@ import java.util.concurrent.atomic.AtomicBoolean
  * being produced each time this is used more than once -- which it is not, if using the normal, stable Basalt release.
  *
  * @property server A [BasaltServer] reference.
+ * @property future A CompletableFuture that can be completed with a [LoadResult].
+ * @property isUsed An AtomicBoolean that atomically checks to see if this instance has already been used before.
  *
  * @author Sam Pritchard
  * @since 1.0
@@ -27,13 +29,7 @@ import java.util.concurrent.atomic.AtomicBoolean
  */
 
 class AudioLoadHandler internal constructor(private val server: BasaltServer): AudioLoadResultHandler {
-    /**
-     * A CompletableFuture that can be completed with a [LoadResult].
-     */
     private val future = CompletableFuture<LoadResult>()
-    /**
-     * An AtomicBoolean that atomically checks to see if this instance has already been used before.
-     */
     private val isUsed = AtomicBoolean(false)
 
     /**

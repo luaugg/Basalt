@@ -51,46 +51,33 @@ typealias SocketContextMap = Object2ObjectOpenHashMap<WebSocketChannel, SocketCo
  *
  * The Jsoniter options are also set upon this server being started, as well as Magma being setup too.
  *
+ * @property mapper The Jackson Object Mapper used to parse the YAML Configuration File.
+ * @property listener The [WebSocketListener] which every open WebSocketChannel uses to handle incoming requests.
+ * @property contexts The [SocketContextMap] used to associate WebSocketChannels with [SocketContext]s.
+ * @property password The password used to successfully open a WebSocket Connection to this BasaltServer instance.
+ * @property magma The raw MagmaApi instance used to actually send and update voice data/state.
+ * @property sourceManager The Lavaplayer SourceManager used to actually load sources.
+ * @property socket The Undertow WebSocket instance.
+ * @property trackUtil The [AudioTrackUtil] instance used externally to encode tracks and vice versa.
+ *
  * @author Sam Pritchard
  * @since 1.0
  */
 
 class BasaltServer: AbstractVerticle() {
-    /**
-     * The Jackson Object Mapper used to parse the YAML Configuration File.
-     */
     private val mapper = ObjectMapper(YAMLFactory())
-    /**
-     * The raw [WebSocketListener] which every open socket uses to handle events.
-     */
     private val listener = WebSocketListener(this)
-    /**
-     * The [SocketContextMap] used to associate WebSocketChannels with [SocketContext]s.
-     */
     internal val contexts = SocketContextMap()
+
     /**
      * @suppress
      */
     internal var bufferDurationMs: Int = -1
-    /**
-     * The password uses to successfully open a WebSocket Connection to this server.
-     */
+
     private lateinit var password: String
-    /**
-     * The raw MagmaApi instance used to actually send and update voice data/state.
-     */
     internal lateinit var magma: MagmaApi
-    /**
-     * The Lavaplayer SourceManager used to actually load sources.
-     */
     internal lateinit var sourceManager: AudioPlayerManager
-    /**
-     * The Undertow WebSocket instance.
-     */
     private lateinit var socket: Undertow
-    /**
-     * The [AudioTrackUtil] instance externally to encode tracks and vice versa.
-     */
     internal val trackUtil = AudioTrackUtil(this)
 
     /**

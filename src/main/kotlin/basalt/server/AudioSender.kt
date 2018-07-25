@@ -9,6 +9,7 @@ import net.dv8tion.jda.core.audio.AudioSendHandler
  * subsequently sent to Discord.
  *
  * @property player A Lavaplayer AudioPlayer instance.
+ * @property data The latest AudioFrame of data to be sent.
  *
  * @constructor Constructs an AudioSender instance from an AudioPlayer.
  * @author Sam Pritchard
@@ -16,9 +17,6 @@ import net.dv8tion.jda.core.audio.AudioSendHandler
  */
 
 class AudioSender internal constructor(private val player: AudioPlayer): AudioSendHandler {
-    /**
-     * @suppress
-     */
     @Volatile private var data: AudioFrame? = null
 
     /**

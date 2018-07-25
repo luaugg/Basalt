@@ -18,6 +18,8 @@ typealias PlayerMap = Object2ObjectOpenHashMap<String, BasaltPlayer>
  * @property server A [BasaltServer] reference.
  * @property channel An Undertow WebSocketChannel.
  * @property userId The User ID associated with the WebSocketChannel (provided as a header).
+ * @property players The internal [PlayerMap] which associates Guild ID's with [BasaltPlayer]s.
+ * @property seq A sequence counter which stores the amount of events sent in response to successful requests.
  *
  * @author Sam Pritchard
  * @since 1.0
@@ -25,14 +27,6 @@ typealias PlayerMap = Object2ObjectOpenHashMap<String, BasaltPlayer>
  */
 
 class SocketContext internal constructor(val server: BasaltServer, val channel: WebSocketChannel, val userId: String) {
-    /**
-     * The internal [PlayerMap] which associates Guild ID's with [BasaltPlayer]s.
-     */
     internal val players = PlayerMap()
-    /**
-     * A sequence counter which stores the amount of events sent in response to successful events.
-     *
-     * This value is used mainly to synchronize requests and responses (between client and server).
-     */
     internal val seq = AtomicLong(0)
 }
