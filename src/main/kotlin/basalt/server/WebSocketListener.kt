@@ -4,7 +4,6 @@ import basalt.messages.client.*
 import basalt.messages.server.DispatchResponse
 import basalt.messages.server.LoadTrackResponse
 import basalt.messages.server.PlayerUpdate
-import basalt.messages.server.TrackPair
 import basalt.player.AudioLoadHandler
 import basalt.player.BasaltPlayer
 import com.jsoniter.JsonIterator
@@ -15,20 +14,49 @@ import org.slf4j.LoggerFactory
 import space.npstr.magma.MagmaMember
 import space.npstr.magma.MagmaServerUpdate
 
+/**
+ * The listener class which responds to WebSocket Events, including (but not limited to) incoming messages.
+ *
+ * @property server A [BasaltServer] reference used mainly to access information.
+ *
+ * @author Sam Pritchard
+ * @since 1.0
+ * @constructor Constructs a WebSocketListener from a [BasaltServer] instance.
+ */
+
 class WebSocketListener internal constructor(private val server: BasaltServer): AbstractReceiveListener() {
+    /**
+     * Fired by Undertow when the WebSocket Connection between Basalt and a client closes.
+     * @param webSocketChannel The WebSocketChannel that was closed.
+     * @param channel The StreamSourceFrameChannel that was closed.
+     */
     override fun onClose(webSocketChannel: WebSocketChannel, channel: StreamSourceFrameChannel) {
         super.onClose(webSocketChannel, channel)
         server.contexts.remove(webSocketChannel)
-        val host = webSocketChannel.sourceAddress
-                .toString()
-                .replaceFirst("/", "")
-                .replaceFirst("0:0:0:0:0:0:0:1", "localhost")
-        LOGGER.info("Connection closed from {}", host)
+        if (webSocketChannel.isCloseInitiatedByRemotePeer) {
+            val host = webSocketChannel.sourceAddress
+                    .toString()
+                    .replaceFirst("/", "")
+                    .replaceFirst("0:0:0:0:0:0:0:1", "localhost")
+            LOGGER.info("Connection closed from {}", host)
+        }
     }
+
+    /**
+     * Fired by Undertow upon an error that was thrown during WebSocket Communication.
+     * @param channel The WebSocketChannel that errored.
+     * @param error The Throwable instance that was thrown.
+     */
     override fun onError(channel: WebSocketChannel, error: Throwable) {
         super.onError(channel, error)
         LOGGER.error("Error during WebSocket Communication!", error)
     }
+
+    /**
+     * Fired by Undertow upon a full text message (such as JSON Data) being sent by a client.
+     * @param channel The WebSocketChannel that data was sent to.
+     * @param message The BufferedTextMessage data that was sent.
+     */
     override fun onFullTextMessage(channel: WebSocketChannel, message: BufferedTextMessage) {
         try {
             val data = JsonIterator.deserialize(message.data)
@@ -182,7 +210,14 @@ class WebSocketListener internal constructor(private val server: BasaltServer): 
             LOGGER.error("Error when responding to text message!", err)
         }
     }
+
+    /**
+     * @suppress
+     */
     companion object {
+        /**
+         * @suppress
+         */
         private val LOGGER = LoggerFactory.getLogger(WebSocketListener::class.java)
     }
 }

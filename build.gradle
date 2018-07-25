@@ -44,8 +44,25 @@ task sourcesJar(type: Jar, dependsOn: classes) {
 }
 
 task dokkaJavadoc(type: org.jetbrains.dokka.gradle.DokkaTask) {
+    moduleName = 'Basalt'
     outputFormat = 'javadoc'
     outputDirectory = javadoc.destinationDir
+    jdkVersion = 8
+    includeNonPublic = true
+
+    linkMapping {
+        dir = 'src/main/kotlin'
+        url = 'https://github.com/SamOphis/Basalt/blob/master/src/main/kotlin'
+        suffix = '#L'
+    }
+
+    packageOptions {
+        prefix = 'basalt.messages'
+        suppress = true
+    }
+
+    includes = ['basalt.md']
+
     inputs.dir 'src/main/kotlin'
 }
 
@@ -65,20 +82,6 @@ task wrapper(type: Wrapper) {
 
 shadowJar {
     classifier = 'withDependencies'
-}
-
-dokka {
-    moduleName = 'Basalt'
-    outputFormat = 'javadoc'
-    outputDirectory = "$buildDir/docs"
-    jdkVersion = 8
-    includeNonPublic = true
-
-    linkMapping {
-        dir = 'src/main/kotlin'
-        url = 'https://github.com/SamOphis/Basalt/blob/master/src/main/kotlin'
-        suffix = '#L'
-    }
 }
 
 build {

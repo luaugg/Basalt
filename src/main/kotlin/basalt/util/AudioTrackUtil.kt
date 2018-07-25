@@ -13,7 +13,9 @@ import java.io.IOException
 /**
  * The utility class which converts AudioTracks to easily-transportable data and vice versa.
  *
- * @constructor Constructs a new AudioTrackUtil class with an attached [BasaltServer]
+ * @property server A [BasaltServer] reference, used to access the Source Manager.
+ *
+ * @constructor Constructs a new AudioTrackUtil class with an attached [BasaltServer].
  * @author Sam Pritchard
  * @since 0.1
  */
@@ -27,6 +29,9 @@ class AudioTrackUtil internal constructor(private val server: BasaltServer) {
      * <br>Additionally, Basalt makes no requests in order to resolve the track data as it already has been resolved.
      * When converting strings via the [toAudioTrack][toAudioTrack] method, similarly, Basalt doesn't have
      * to make requests in order to decode the track as the data already contains all the information.</p>
+     *
+     * @param track The track object to be encoded.
+     * @return The encoded data of the track.
      */
     fun fromAudioTrack(track: AudioTrack): String {
         try {
@@ -47,6 +52,9 @@ class AudioTrackUtil internal constructor(private val server: BasaltServer) {
      *
      * <br>Additionally, and similarly to the [fromAudioTrack][fromAudioTrack] method, Basalt does not have to make any requests to resolve
      * the track data as it is already contained inside the string.</p>
+     *
+     * @param data The encoded track data, to be decoded into an AudioTrack.
+     * @return The track object represented in the encoded data.
      */
     fun toAudioTrack(data: String): AudioTrack {
         try {
