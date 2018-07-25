@@ -45,7 +45,7 @@ task sourcesJar(type: Jar, dependsOn: classes) {
 
 task dokkaJavadoc(type: org.jetbrains.dokka.gradle.DokkaTask) {
     moduleName = 'Basalt'
-    outputFormat = 'javadoc'
+    outputFormat = 'html'
     outputDirectory = javadoc.destinationDir
     jdkVersion = 8
     includeNonPublic = true
