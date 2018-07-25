@@ -54,12 +54,12 @@ class BasaltPlayer internal constructor(internal val context: SocketContext, pri
         WebSockets.sendText(JsonStream.serialize(response), context.channel, null)
     }
 
-    override fun onPlayerPause(player: AudioPlayer?) {
+    override fun onPlayerPause(player: AudioPlayer) {
         val response = DispatchResponse(context, guildId, "PLAYER_PAUSE", true)
         WebSockets.sendText(JsonStream.serialize(response), context.channel, null)
     }
 
-    override fun onPlayerResume(player: AudioPlayer?) {
+    override fun onPlayerResume(player: AudioPlayer) {
         val response = DispatchResponse(context, guildId, "PLAYER_PAUSE", false)
         WebSockets.sendText(JsonStream.serialize(response), context.channel, null)
     }
