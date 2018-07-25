@@ -53,10 +53,10 @@ class BasaltPlayer internal constructor(internal val context: SocketContext, pri
      * Fired by Lavaplayer when an AudioTrack starts.
      *
      * This sends a `TRACK_STARTED` event, **wrapped in a Dispatch Response**, across a WebSocketChannel.
-     * Additionally, it starts an Update Task (see [updateTask]) which sends `PLAYER_UPDATE` events
+     * Additionally, it starts an Update Task which sends `PLAYER_UPDATE` events
      * that **are NOT** wrapped in a Dispatch Response every 5 seconds.
      *
-     * @param player The AudioPlayer object itself, equivalent to [audioPlayer].
+     * @param player The AudioPlayer object itself.
      * @param track the AudioTrack that was started.
      */
     override fun onTrackStart(player: AudioPlayer, track: AudioTrack) {
@@ -80,7 +80,7 @@ class BasaltPlayer internal constructor(internal val context: SocketContext, pri
      * This sends a `TRACK_ENDED` event, **wrapped in a Dispatch Response**, across a WebSocketChannel.
      * It also cancels the previously-started update task and sets it to `null`.
      *
-     * @param player The AudioPlayer object itself, equivalent to [audioPlayer].
+     * @param player The AudioPlayer object itself.
      * @param track The AudioTrack that was ended.
      * @param endReason The reason why the track ended.
      */
@@ -96,7 +96,7 @@ class BasaltPlayer internal constructor(internal val context: SocketContext, pri
      *
      * This sends a `TRACK_EXCEPTION` event, **wrapped in a Dispatch Response**, across a WebSocketChannel.
      *
-     * @param player The AudioPlayer object itself, equivalent to [audioPlayer].
+     * @param player The AudioPlayer object itself.
      * @param track The AudioTrack that was playing.
      * @param exception The exception that was thrown.
      */
@@ -110,7 +110,7 @@ class BasaltPlayer internal constructor(internal val context: SocketContext, pri
      *
      * This sends a `TRACK_STUCK` event, **wrapped in a Dispatch Response**, across a WebSocketChannel.
      *
-     * @param player The AudioPlayer object itself, equivalent to [audioPlayer].
+     * @param player The AudioPlayer object itself.
      * @param track The AudioTrack that got stuck.
      * @param thresholdMs The threshold the track was/is stuck for.
      */
@@ -120,12 +120,12 @@ class BasaltPlayer internal constructor(internal val context: SocketContext, pri
     }
 
     /**
-     * Fired by Lavaplayer when the AudioPlayer, equivalent to [audioPlayer], is paused.
+     * Fired by Lavaplayer when the AudioPlayer is paused.
      *
      * This sends a `PLAYER_PAUSE` event, **wrapped in a Dispatch Response**, across a WebSocketChannel.
      * **Note: This sends the same event as when the player is resumed, but the data is set to `true` (for "is paused").**
      *
-     * @param player The AudioPlayer object itself, equivalent to [audioPlayer].
+     * @param player The AudioPlayer object itself.
      */
     override fun onPlayerPause(player: AudioPlayer) {
         val response = DispatchResponse(context, guildId, "PLAYER_PAUSE", true)
@@ -133,11 +133,11 @@ class BasaltPlayer internal constructor(internal val context: SocketContext, pri
     }
 
     /**
-     * Fired by Lavaplayer when the AudioPlayer, equivalent to [audioPlayer], is resumed.
+     * Fired by Lavaplayer when the AudioPlayer is resumed.
      *
      * This sends a `PLAYER_PAUSE` event, **wrapped in a Dispatch Response**, across a WebSocketChannel.
      * **Note: This sends the same event as when the player is paused, but the data is set to `false` (for "is paused").**
-     * @param player The AudioPlayer object itself, equivalent to [audioPlayer].
+     * @param player The AudioPlayer object itself.
      */
     override fun onPlayerResume(player: AudioPlayer) {
         val response = DispatchResponse(context, guildId, "PLAYER_PAUSE", false)

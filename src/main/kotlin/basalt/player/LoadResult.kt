@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory
  * A result class which represents a singular, successful load result.
  *
  * @property playlistInfo **nullable** pair of information (playlist name + index of selected track)
- * @property tracks an array of [TrackPair]s
+ * @property tracks an array of TrackPairs
  * @property result a [ResultStatus] that can never be unknown
  *
  * @author Sam Pritchard
