@@ -62,6 +62,7 @@ typealias SocketContextMap = Object2ObjectOpenHashMap<WebSocketChannel, SocketCo
  *
  * @author Sam Pritchard
  * @since 1.0
+ * @constructor Simply constructs a BasaltServer instance with no additional information.
  */
 
 class BasaltServer: AbstractVerticle() {
