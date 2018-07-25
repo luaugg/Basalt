@@ -1,0 +1,25 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>AudioTrackUtil.fromAudioTrack - Basalt</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">Basalt</a>&nbsp;/&nbsp;<a href="../index.html">basalt.util</a>&nbsp;/&nbsp;<a href="index.html">AudioTrackUtil</a>&nbsp;/&nbsp;<a href="./from-audio-track.html">fromAudioTrack</a><br/>
+<br/>
+<h1>fromAudioTrack</h1>
+<a name="basalt.util.AudioTrackUtil$fromAudioTrack(com.sedmelluq.discord.lavaplayer.track.AudioTrack)"></a>
+<code><span class="keyword">fun </span><span class="identifier">fromAudioTrack</span><span class="symbol">(</span><span class="identifier" id="basalt.util.AudioTrackUtil$fromAudioTrack(com.sedmelluq.discord.lavaplayer.track.AudioTrack)/track">track</span><span class="symbol">:</span>&nbsp;<span class="identifier">AudioTrack</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code>
+<p>Converts a <strong>not-null</strong> AudioTrack into its data representation, which is then used for various purposes.</p>
+<p>The data representation is used mainly by clients in order to play media sources, as passing/storing
+an entire JSON Object is a little harder and less performant.</p>
+<p>Additionally, Basalt makes no requests in order to resolve the track data as it already has been resolved.
+When converting strings via the <a href="to-audio-track.html">toAudioTrack</a> method, similarly, Basalt doesn't have
+to make requests in order to decode the track as the data already contains all the information.</p>
+<h3>Parameters</h3>
+<p><a name="track"></a>
+<code>track</code> - The track object to be encoded.</p>
+<p><strong>Return</strong><br/>
+The encoded data of the track.</p>
+</BODY>
+</HTML>

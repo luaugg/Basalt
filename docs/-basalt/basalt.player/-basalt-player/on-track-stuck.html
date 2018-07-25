@@ -1,0 +1,23 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>BasaltPlayer.onTrackStuck - Basalt</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">Basalt</a>&nbsp;/&nbsp;<a href="../index.html">basalt.player</a>&nbsp;/&nbsp;<a href="index.html">BasaltPlayer</a>&nbsp;/&nbsp;<a href="./on-track-stuck.html">onTrackStuck</a><br/>
+<br/>
+<h1>onTrackStuck</h1>
+<a name="basalt.player.BasaltPlayer$onTrackStuck(com.sedmelluq.discord.lavaplayer.player.AudioPlayer, com.sedmelluq.discord.lavaplayer.track.AudioTrack, kotlin.Long)"></a>
+<code><span class="keyword">fun </span><span class="identifier">onTrackStuck</span><span class="symbol">(</span><span class="identifier" id="basalt.player.BasaltPlayer$onTrackStuck(com.sedmelluq.discord.lavaplayer.player.AudioPlayer, com.sedmelluq.discord.lavaplayer.track.AudioTrack, kotlin.Long)/player">player</span><span class="symbol">:</span>&nbsp;<span class="identifier">AudioPlayer</span><span class="symbol">, </span><span class="identifier" id="basalt.player.BasaltPlayer$onTrackStuck(com.sedmelluq.discord.lavaplayer.player.AudioPlayer, com.sedmelluq.discord.lavaplayer.track.AudioTrack, kotlin.Long)/track">track</span><span class="symbol">:</span>&nbsp;<span class="identifier">AudioTrack</span><span class="symbol">, </span><span class="identifier" id="basalt.player.BasaltPlayer$onTrackStuck(com.sedmelluq.discord.lavaplayer.player.AudioPlayer, com.sedmelluq.discord.lavaplayer.track.AudioTrack, kotlin.Long)/thresholdMs">thresholdMs</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Fired by Lavaplayer when the track that was playing got stuck.</p>
+<p>This sends a <code>TRACK_STUCK</code> event, <strong>wrapped in a Dispatch Response</strong>, across a WebSocketChannel.</p>
+<h3>Parameters</h3>
+<p><a name="player"></a>
+<code>player</code> - The AudioPlayer object itself.</p>
+<p><a name="track"></a>
+<code>track</code> - The AudioTrack that got stuck.</p>
+<p><a name="thresholdMs"></a>
+<code>thresholdMs</code> - The threshold the track was/is stuck for.</p>
+</BODY>
+</HTML>

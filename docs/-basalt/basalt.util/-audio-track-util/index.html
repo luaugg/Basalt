@@ -1,0 +1,65 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>AudioTrackUtil - Basalt</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">Basalt</a>&nbsp;/&nbsp;<a href="../index.html">basalt.util</a>&nbsp;/&nbsp;<a href="./index.html">AudioTrackUtil</a><br/>
+<br/>
+<h1>AudioTrackUtil</h1>
+<code><span class="keyword">class </span><span class="identifier">AudioTrackUtil</span></code>
+<p>The utility class which converts AudioTracks to easily-transportable data and vice versa.</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="keyword">internal</span> <span class="identifier">AudioTrackUtil</span><span class="symbol">(</span><span class="identifier" id="basalt.util.AudioTrackUtil$<init>(basalt.server.BasaltServer)/server">server</span><span class="symbol">:</span>&nbsp;<a href="../../basalt.server/-basalt-server/index.html"><span class="identifier">BasaltServer</span></a><span class="symbol">)</span></code>
+<p>Constructs a new AudioTrackUtil class with an attached <a href="../../basalt.server/-basalt-server/index.html">BasaltServer</a>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="server.html">server</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">server</span><span class="symbol">: </span><a href="../../basalt.server/-basalt-server/index.html"><span class="identifier">BasaltServer</span></a></code>
+<p>A <a href="../../basalt.server/-basalt-server/index.html">BasaltServer</a> reference, used to access the Source Manager.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="from-audio-track.html">fromAudioTrack</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">fromAudioTrack</span><span class="symbol">(</span><span class="identifier" id="basalt.util.AudioTrackUtil$fromAudioTrack(com.sedmelluq.discord.lavaplayer.track.AudioTrack)/track">track</span><span class="symbol">:</span>&nbsp;<span class="identifier">AudioTrack</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code>
+<p>Converts a <strong>not-null</strong> AudioTrack into its data representation, which is then used for various purposes.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="to-audio-track.html">toAudioTrack</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">toAudioTrack</span><span class="symbol">(</span><span class="identifier" id="basalt.util.AudioTrackUtil$toAudioTrack(kotlin.String)/data">data</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">AudioTrack</span></code>
+<p>Converts a <strong>not-null</strong> data representation of an AudioTrack into an AudioTrack, which is then used for various purposes.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

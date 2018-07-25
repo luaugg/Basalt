@@ -1,0 +1,78 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>basalt.player - Basalt</title>
+<link rel="stylesheet" href="../../style.css">
+</HEAD>
+<BODY>
+<a href="../index.html">Basalt</a>&nbsp;/&nbsp;<a href="./index.html">basalt.player</a><br/>
+<br/>
+<h2>Package basalt.player</h2>
+<p>Package containing everything related to Audio Players or the loading of audio.</p>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-audio-load-handler/index.html">AudioLoadHandler</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">AudioLoadHandler</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">AudioLoadResultHandler</span></code>
+<p>Class which loads sources based on provided identifiers asynchronously.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-basalt-player/index.html">BasaltPlayer</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">BasaltPlayer</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">AudioEventAdapter</span></code>
+<p>A player class associated with a <a href="-socket-context/index.html">SocketContext</a> and a Guild ID, with a "lifecycle" determined by incoming requests.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-load-result/index.html">LoadResult</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">LoadResult</span></code>
+<p>A result class which represents a singular, successful load result.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-result-status/index.html">ResultStatus</a></p>
+</td>
+<td>
+<code><span class="keyword">enum</span> <span class="keyword">class </span><span class="identifier">ResultStatus</span></code>
+<p>Enum which corresponds to how a source loaded.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-socket-context/index.html">SocketContext</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">SocketContext</span></code>
+<p>Context class which stores a reference to a <a href="../basalt.server/-basalt-server/index.html">BasaltServer</a>, a WebSocketChannel and the User ID associated
+with that channel, as well as a PlayerMap and a Sequence Number of Sent, Successful Events.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Type Aliases</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-player-map.html">PlayerMap</a></p>
+</td>
+<td>
+<code><span class="keyword">typealias </span><span class="identifier">PlayerMap</span>&nbsp;<span class="symbol">=</span>&nbsp;<span class="identifier">Object2ObjectOpenHashMap</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">,</span>&nbsp;<a href="-basalt-player/index.html"><span class="identifier">BasaltPlayer</span></a><span class="symbol">&gt;</span></code>
+<p>Type alias equivalent to an <code>Object2ObjectOpenHashMap&lt;String, BasaltPlayer&gt;</code></p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

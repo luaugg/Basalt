@@ -1,0 +1,24 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>BasaltPlayer.onTrackEnd - Basalt</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">Basalt</a>&nbsp;/&nbsp;<a href="../index.html">basalt.player</a>&nbsp;/&nbsp;<a href="index.html">BasaltPlayer</a>&nbsp;/&nbsp;<a href="./on-track-end.html">onTrackEnd</a><br/>
+<br/>
+<h1>onTrackEnd</h1>
+<a name="basalt.player.BasaltPlayer$onTrackEnd(com.sedmelluq.discord.lavaplayer.player.AudioPlayer, com.sedmelluq.discord.lavaplayer.track.AudioTrack, com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason)"></a>
+<code><span class="keyword">fun </span><span class="identifier">onTrackEnd</span><span class="symbol">(</span><span class="identifier" id="basalt.player.BasaltPlayer$onTrackEnd(com.sedmelluq.discord.lavaplayer.player.AudioPlayer, com.sedmelluq.discord.lavaplayer.track.AudioTrack, com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason)/player">player</span><span class="symbol">:</span>&nbsp;<span class="identifier">AudioPlayer</span><span class="symbol">, </span><span class="identifier" id="basalt.player.BasaltPlayer$onTrackEnd(com.sedmelluq.discord.lavaplayer.player.AudioPlayer, com.sedmelluq.discord.lavaplayer.track.AudioTrack, com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason)/track">track</span><span class="symbol">:</span>&nbsp;<span class="identifier">AudioTrack</span><span class="symbol">, </span><span class="identifier" id="basalt.player.BasaltPlayer$onTrackEnd(com.sedmelluq.discord.lavaplayer.player.AudioPlayer, com.sedmelluq.discord.lavaplayer.track.AudioTrack, com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason)/endReason">endReason</span><span class="symbol">:</span>&nbsp;<span class="identifier">AudioTrackEndReason</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Fired by Lavaplayer when an AudioTrack ends.</p>
+<p>This sends a <code>TRACK_ENDED</code> event, <strong>wrapped in a Dispatch Response</strong>, across a WebSocketChannel.
+It also cancels the previously-started update task and sets it to <code>null</code>.</p>
+<h3>Parameters</h3>
+<p><a name="player"></a>
+<code>player</code> - The AudioPlayer object itself.</p>
+<p><a name="track"></a>
+<code>track</code> - The AudioTrack that was ended.</p>
+<p><a name="endReason"></a>
+<code>endReason</code> - The reason why the track ended.</p>
+</BODY>
+</HTML>

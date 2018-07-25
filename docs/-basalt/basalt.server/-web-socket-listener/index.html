@@ -1,0 +1,74 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>WebSocketListener - Basalt</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">Basalt</a>&nbsp;/&nbsp;<a href="../index.html">basalt.server</a>&nbsp;/&nbsp;<a href="./index.html">WebSocketListener</a><br/>
+<br/>
+<h1>WebSocketListener</h1>
+<code><span class="keyword">class </span><span class="identifier">WebSocketListener</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">AbstractReceiveListener</span></code>
+<p>The listener class which responds to WebSocket Events, including (but not limited to) incoming messages.</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="keyword">internal</span> <span class="identifier">WebSocketListener</span><span class="symbol">(</span><span class="identifier" id="basalt.server.WebSocketListener$<init>(basalt.server.BasaltServer)/server">server</span><span class="symbol">:</span>&nbsp;<a href="../-basalt-server/index.html"><span class="identifier">BasaltServer</span></a><span class="symbol">)</span></code>
+<p>Constructs a WebSocketListener from a <a href="../-basalt-server/index.html">BasaltServer</a> instance.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="server.html">server</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">server</span><span class="symbol">: </span><a href="../-basalt-server/index.html"><span class="identifier">BasaltServer</span></a></code>
+<p>A <a href="../-basalt-server/index.html">BasaltServer</a> reference used mainly to access information.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="on-close.html">onClose</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">onClose</span><span class="symbol">(</span><span class="identifier" id="basalt.server.WebSocketListener$onClose(io.undertow.websockets.core.WebSocketChannel, io.undertow.websockets.core.StreamSourceFrameChannel)/webSocketChannel">webSocketChannel</span><span class="symbol">:</span>&nbsp;<span class="identifier">WebSocketChannel</span><span class="symbol">, </span><span class="identifier" id="basalt.server.WebSocketListener$onClose(io.undertow.websockets.core.WebSocketChannel, io.undertow.websockets.core.StreamSourceFrameChannel)/channel">channel</span><span class="symbol">:</span>&nbsp;<span class="identifier">StreamSourceFrameChannel</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Fired by Undertow when the WebSocket Connection between Basalt and a client closes.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="on-error.html">onError</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">onError</span><span class="symbol">(</span><span class="identifier" id="basalt.server.WebSocketListener$onError(io.undertow.websockets.core.WebSocketChannel, kotlin.Throwable)/channel">channel</span><span class="symbol">:</span>&nbsp;<span class="identifier">WebSocketChannel</span><span class="symbol">, </span><span class="identifier" id="basalt.server.WebSocketListener$onError(io.undertow.websockets.core.WebSocketChannel, kotlin.Throwable)/error">error</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-throwable/index.html"><span class="identifier">Throwable</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Fired by Undertow upon an error that was thrown during WebSocket Communication.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="on-full-text-message.html">onFullTextMessage</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">onFullTextMessage</span><span class="symbol">(</span><span class="identifier" id="basalt.server.WebSocketListener$onFullTextMessage(io.undertow.websockets.core.WebSocketChannel, io.undertow.websockets.core.BufferedTextMessage)/channel">channel</span><span class="symbol">:</span>&nbsp;<span class="identifier">WebSocketChannel</span><span class="symbol">, </span><span class="identifier" id="basalt.server.WebSocketListener$onFullTextMessage(io.undertow.websockets.core.WebSocketChannel, io.undertow.websockets.core.BufferedTextMessage)/message">message</span><span class="symbol">:</span>&nbsp;<span class="identifier">BufferedTextMessage</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Fired by Undertow upon a full text message (such as JSON Data) being sent by a client.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

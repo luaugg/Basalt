@@ -1,0 +1,61 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>basalt.server - Basalt</title>
+<link rel="stylesheet" href="../../style.css">
+</HEAD>
+<BODY>
+<a href="../index.html">Basalt</a>&nbsp;/&nbsp;<a href="./index.html">basalt.server</a><br/>
+<br/>
+<h2>Package basalt.server</h2>
+<p>Package containing everything related to the Basalt Server, such as the listener that listens for incoming events
+as well as the <code>BasaltServer</code> class itself.</p>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-audio-sender/index.html">AudioSender</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">AudioSender</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">AudioSendHandler</span></code>
+<p>Sender class which takes in Opus frames from Lavaplayer and passes them to Magma, where they are then
+subsequently sent to Discord.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-basalt-server/index.html">BasaltServer</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">BasaltServer</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">AbstractVerticle</span></code>
+<p>Server instance which is the starting point for every other part of Basalt.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-web-socket-listener/index.html">WebSocketListener</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">WebSocketListener</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">AbstractReceiveListener</span></code>
+<p>The listener class which responds to WebSocket Events, including (but not limited to) incoming messages.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Type Aliases</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-socket-context-map.html">SocketContextMap</a></p>
+</td>
+<td>
+<code><span class="keyword">typealias </span><span class="identifier">SocketContextMap</span>&nbsp;<span class="symbol">=</span>&nbsp;<span class="identifier">Object2ObjectOpenHashMap</span><span class="symbol">&lt;</span><span class="identifier">WebSocketChannel</span><span class="symbol">,</span>&nbsp;<a href="../basalt.player/-socket-context/index.html"><span class="identifier">SocketContext</span></a><span class="symbol">&gt;</span></code>
+<p>Type alias which is equal to <code>Object2ObjectOpenHashMap&lt;WebSocketChannel, SocketContext&gt;</code></p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

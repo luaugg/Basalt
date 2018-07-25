@@ -1,0 +1,23 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>BasaltPlayer.onTrackStart - Basalt</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">Basalt</a>&nbsp;/&nbsp;<a href="../index.html">basalt.player</a>&nbsp;/&nbsp;<a href="index.html">BasaltPlayer</a>&nbsp;/&nbsp;<a href="./on-track-start.html">onTrackStart</a><br/>
+<br/>
+<h1>onTrackStart</h1>
+<a name="basalt.player.BasaltPlayer$onTrackStart(com.sedmelluq.discord.lavaplayer.player.AudioPlayer, com.sedmelluq.discord.lavaplayer.track.AudioTrack)"></a>
+<code><span class="keyword">fun </span><span class="identifier">onTrackStart</span><span class="symbol">(</span><span class="identifier" id="basalt.player.BasaltPlayer$onTrackStart(com.sedmelluq.discord.lavaplayer.player.AudioPlayer, com.sedmelluq.discord.lavaplayer.track.AudioTrack)/player">player</span><span class="symbol">:</span>&nbsp;<span class="identifier">AudioPlayer</span><span class="symbol">, </span><span class="identifier" id="basalt.player.BasaltPlayer$onTrackStart(com.sedmelluq.discord.lavaplayer.player.AudioPlayer, com.sedmelluq.discord.lavaplayer.track.AudioTrack)/track">track</span><span class="symbol">:</span>&nbsp;<span class="identifier">AudioTrack</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Fired by Lavaplayer when an AudioTrack starts.</p>
+<p>This sends a <code>TRACK_STARTED</code> event, <strong>wrapped in a Dispatch Response</strong>, across a WebSocketChannel.
+Additionally, it starts an Update Task which sends <code>PLAYER_UPDATE</code> events
+that <strong>are NOT</strong> wrapped in a Dispatch Response every 5 seconds.</p>
+<h3>Parameters</h3>
+<p><a name="player"></a>
+<code>player</code> - The AudioPlayer object itself.</p>
+<p><a name="track"></a>
+<code>track</code> - the AudioTrack that was started.</p>
+</BODY>
+</HTML>
