@@ -61,6 +61,8 @@ task dokkaJavadoc(type: org.jetbrains.dokka.gradle.DokkaTask) {
         suppress = true
     }
 
+    includes = ['basalt.md']
+
     inputs.dir 'src/main/kotlin'
 }
 
