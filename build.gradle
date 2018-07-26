@@ -43,8 +43,8 @@ apply plugin: 'idea'
 apply plugin: 'application'
 
 group 'basalt'
-version '1.0'
-description = 'A high-performance, distributed audio node server based on Lavaplayer, Magma and the Vert.x Framework.'
+version '1.1.0'
+description = 'A high-performance, distributed audio node server based on Lavaplayer, Magma and Undertow.'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 mainClassName = 'basalt.MainKt'
