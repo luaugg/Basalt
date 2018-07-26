@@ -42,7 +42,5 @@ enum class ErrorResponses {
     /** Returned if an attempt was made to pause a player if it is already paused. */
     PLAYER_ALREADY_PAUSED,
     /** Returned if an attempt was made to resume a player if it has already been resumed. */
-    PLAYER_ALREADY_RESUMED,
-    /** Returned in an attempt was made to stop a player if it has already stopped. */
-    PLAYER_ALREADY_STOPPED
+    PLAYER_ALREADY_RESUMED
 }
