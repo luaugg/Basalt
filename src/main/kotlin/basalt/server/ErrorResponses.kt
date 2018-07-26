@@ -38,5 +38,11 @@ enum class ErrorResponses {
     /** Returned if an attempt was made to update a non-existent player (before initializing). */
     PLAYER_NOT_INITIALIZED,
     /** Returned if an attempt was made to initialize an already-initialized player. */
-    PLAYER_ALREADY_INITIALIZED
+    PLAYER_ALREADY_INITIALIZED,
+    /** Returned if an attempt was made to pause a player if it is already paused. */
+    PLAYER_ALREADY_PAUSED,
+    /** Returned if an attempt was made to resume a player if it has already been resumed. */
+    PLAYER_ALREADY_RESUMED,
+    /** Returned in an attempt was made to stop a player if it has already stopped. */
+    PLAYER_ALREADY_STOPPED
 }
