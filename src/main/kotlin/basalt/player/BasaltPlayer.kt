@@ -137,25 +137,25 @@ class BasaltPlayer internal constructor(internal val context: SocketContext, pri
     /**
      * Fired by Lavaplayer when the AudioPlayer is paused.
      *
-     * This sends a `PLAYER_PAUSE` event, **wrapped in a Dispatch Response**, across a WebSocketChannel.
+     * This sends a `PLAYER_PAUSED` event, **wrapped in a Dispatch Response**, across a WebSocketChannel.
      * **Note: This sends the same event as when the player is resumed, but the data is set to `true` (for "is paused").**
      *
      * @param player The AudioPlayer object itself.
      */
     override fun onPlayerPause(player: AudioPlayer) {
-        val response = DispatchResponse(context, guildId, "PLAYER_PAUSE", true)
+        val response = DispatchResponse(context, guildId, "PLAYER_PAUSED", true)
         WebSockets.sendText(JsonStream.serialize(response), context.channel, null)
     }
 
     /**
      * Fired by Lavaplayer when the AudioPlayer is resumed.
      *
-     * This sends a `PLAYER_PAUSE` event, **wrapped in a Dispatch Response**, across a WebSocketChannel.
+     * This sends a `PLAYER_PAUSED` event, **wrapped in a Dispatch Response**, across a WebSocketChannel.
      * **Note: This sends the same event as when the player is paused, but the data is set to `false` (for "is paused").**
      * @param player The AudioPlayer object itself.
      */
     override fun onPlayerResume(player: AudioPlayer) {
-        val response = DispatchResponse(context, guildId, "PLAYER_PAUSE", false)
+        val response = DispatchResponse(context, guildId, "PLAYER_PAUSED", false)
         WebSockets.sendText(JsonStream.serialize(response), context.channel, null)
     }
 }
