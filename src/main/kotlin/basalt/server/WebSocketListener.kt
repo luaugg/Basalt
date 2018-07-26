@@ -29,6 +29,8 @@ import org.slf4j.LoggerFactory
 import space.npstr.magma.MagmaMember
 import space.npstr.magma.MagmaServerUpdate
 
+import basalt.server.ErrorResponses.*
+
 /**
  * The listener class which responds to WebSocket Events, including (but not limited to) incoming messages.
  *
@@ -83,11 +85,13 @@ class WebSocketListener internal constructor(private val server: BasaltServer): 
                         LOGGER.error("SocketContext is null for Guild ID: {}\nThis should never happen!", init.guildId)
                         return
                     }
+                    context.seq.incrementAndGet()
                     if (context.players[init.guildId] != null) {
-                        LOGGER.error("Player already initialized for User ID: {} and Guild ID: {}", context.userId, init.guildId)
+                        LOGGER.warn("Player already initialized for User ID: {} and Guild ID: {}", context.userId, init.guildId)
+                        val response = DispatchResponse(context, init.guildId, "ERROR", PLAYER_ALREADY_INITIALIZED.name)
+                        WebSockets.sendText(JsonStream.serialize(response), channel, null)
                         return
                     }
-                    context.seq.incrementAndGet()
                     val member = MagmaMember.builder()
                             .guildId(init.guildId)
                             .userId(context.userId)
@@ -107,42 +111,97 @@ class WebSocketListener internal constructor(private val server: BasaltServer): 
                 }
                 "play" -> {
                     val play = JsonIterator.deserialize(message.data, PlayRequest::class.java)
-                    val player = server.contexts[channel]?.players?.get(play.guildId)
-                    if (player == null) {
-                        LOGGER.error("Player or SocketContext is null for Guild ID: {} (Try initializing first!)", play.guildId)
+                    val context = server.contexts[channel]
+                    val guildId = play.guildId
+                    if (context == null) {
+                        LOGGER.error("SocketContext is null for this WebSocketChannel (Guild ID: {})!", guildId)
                         return
                     }
-                    player.context.seq.incrementAndGet()
+                    context.seq.incrementAndGet()
+                    val player = context.players[guildId]
+                    if (player == null) {
+                        LOGGER.warn("Player is null for Guild ID: {} and User ID: {} (Try initializing first!)", guildId, context.userId)
+                        val response = DispatchResponse(context, guildId, "ERROR", PLAYER_NOT_INITIALIZED.name)
+                        WebSockets.sendText(JsonStream.serialize(response), channel, null)
+                        return
+                    }
                     player.audioPlayer.playTrack(server.trackUtil.toAudioTrack(play.track))
                 }
                 "pause" -> {
                     val pause = JsonIterator.deserialize(message.data, SetPausedRequest::class.java)
-                    val player = server.contexts[channel]?.players?.get(pause.guildId)
-                    if (player == null) {
-                        LOGGER.error("Player or SocketContext is null for Guild ID: {} (Try initializing first!)", pause.guildId)
+                    val context = server.contexts[channel]
+                    val guildId = pause.guildId
+                    if (context == null) {
+                        LOGGER.error("SocketContext is null for this WebSocketChannel (Guild ID: {})!", guildId)
                         return
                     }
-                    player.context.seq.incrementAndGet()
+                    context.seq.incrementAndGet()
+                    val player = context.players[guildId]
+                    if (player == null) {
+                        LOGGER.warn("Player is null for Guild ID: {} and User ID: {} (Try initializing first!)", guildId, context.userId)
+                        val response = DispatchResponse(context, guildId, "ERROR", PLAYER_NOT_INITIALIZED.name)
+                        WebSockets.sendText(JsonStream.serialize(response), channel, null)
+                        return
+                    }
+                    val paused = pause.paused
+                    if (player.audioPlayer.isPaused == paused) {
+                        val enum: String?
+                        val msg: String?
+                        if (paused) {
+                            enum = PLAYER_ALREADY_PAUSED.name
+                            msg = "Player is already paused for"
+                        }
+                        else {
+                            enum = PLAYER_ALREADY_RESUMED.name
+                            msg = "Player has already been resumed for"
+                        }
+                        LOGGER.warn("{} Guild ID: {} and User ID: {}", msg, guildId, context.userId)
+                        val response = DispatchResponse(context, guildId, "ERROR", enum)
+                        WebSockets.sendText(JsonStream.serialize(response), channel, null)
+                        return
+                    }
                     player.audioPlayer.isPaused = pause.paused
                 }
                 "stop" -> {
                     val stop = JsonIterator.deserialize(message.data, StopRequest::class.java)
-                    val player = server.contexts[channel]?.players?.get(stop.guildId)
-                    if (player == null) {
-                        LOGGER.error("Player or SocketContext is null for Guild ID: {} (Try initializing first!)", stop.guildId)
+                    val context = server.contexts[channel]
+                    val guildId = stop.guildId
+                    if (context == null) {
+                        LOGGER.error("SocketContext is null for this WebSocketChannel (Guild ID: {})!", guildId)
                         return
                     }
-                    player.context.seq.incrementAndGet()
+                    context.seq.incrementAndGet()
+                    val player = context.players[guildId]
+                    if (player == null) {
+                        LOGGER.warn("Player is null for Guild ID: {} and User ID: {} (Try initializing first!)", guildId, context.userId)
+                        val response = DispatchResponse(context, guildId, "ERROR", PLAYER_NOT_INITIALIZED.name)
+                        WebSockets.sendText(JsonStream.serialize(response), channel, null)
+                        return
+                    }
+                    if (player.audioPlayer.playingTrack == null) {
+                        LOGGER.warn("Track is null for Guild ID: {} and User ID: {}", guildId, context.userId)
+                        val response = DispatchResponse(context, guildId, "ERROR", NO_TRACK.name)
+                        WebSockets.sendText(JsonStream.serialize(response), channel, null)
+                        return
+                    }
                     player.audioPlayer.stopTrack()
                 }
                 "destroy" -> {
                     val destroy = JsonIterator.deserialize(message.data, DestroyRequest::class.java)
-                    val player = server.contexts[channel]?.players?.get(destroy.guildId)
-                    if (player == null) {
-                        LOGGER.error("Player or SocketContext is null for Guild ID: {} (Try initializing first!)", destroy.guildId)
+                    val context = server.contexts[channel]
+                    val guildId = destroy.guildId
+                    if (context == null) {
+                        LOGGER.error("SocketContext is null for this WebSocketChannel (Guild ID: {})!", guildId)
                         return
                     }
-                    player.context.seq.incrementAndGet()
+                    context.seq.incrementAndGet()
+                    val player = context.players[guildId]
+                    if (player == null) {
+                        LOGGER.warn("Player is null for Guild ID: {} and User ID: {} (Try initializing first!)", guildId, context.userId)
+                        val response = DispatchResponse(context, guildId, "ERROR", PLAYER_NOT_INITIALIZED.name)
+                        WebSockets.sendText(JsonStream.serialize(response), channel, null)
+                        return
+                    }
                     player.audioPlayer.destroy()
                     player.context.players.remove(destroy.guildId)
                     val member = MagmaMember.builder()
@@ -156,44 +215,67 @@ class WebSocketListener internal constructor(private val server: BasaltServer): 
                 }
                 "volume" -> {
                     val volume = JsonIterator.deserialize(message.data, SetVolumeRequest::class.java)
-                    val player = server.contexts[channel]?.players?.get(volume.guildId)
+                    val context = server.contexts[channel]
+                    val guildId = volume.guildId
+                    if (context == null) {
+                        LOGGER.error("SocketContext is null for this WebSocketChannel (Guild ID: {})!", guildId)
+                        return
+                    }
+                    context.seq.incrementAndGet()
+                    val player = context.players[guildId]
                     if (player == null) {
-                        LOGGER.error("Player or SocketContext is null for Guild ID: {} (Try initializing first!)", volume.guildId)
+                        LOGGER.warn("Player is null for Guild ID: {} and User ID: {} (Try initializing first!)", guildId, context.userId)
+                        val response = DispatchResponse(context, guildId, "ERROR", PLAYER_NOT_INITIALIZED.name)
+                        WebSockets.sendText(JsonStream.serialize(response), channel, null)
                         return
                     }
                     if (volume.volume < 0 || volume.volume > 1000) {
                         LOGGER.warn("Volume cannot be negative or above 1000 for User ID: {} and Guild ID: {}",
                                 player.context.userId, volume.guildId)
+                        val response = DispatchResponse(context, guildId, "ERROR", VOLUME_OUT_OF_BOUNDS.name)
+                        WebSockets.sendText(JsonStream.serialize(response), channel, null)
                         return
                     }
-                    player.context.seq.incrementAndGet()
                     player.audioPlayer.volume = volume.volume
                     val response = DispatchResponse(player.context, volume.guildId, "VOLUME_UPDATE", volume.volume)
                     WebSockets.sendText(JsonStream.serialize(response), channel, null)
                 }
                 "seek" -> {
                     val seek = JsonIterator.deserialize(message.data, SeekRequest::class.java)
-                    val player = server.contexts[channel]?.players?.get(seek.guildId)
+                    val context = server.contexts[channel]
+                    val guildId = seek.guildId
+                    if (context == null) {
+                        LOGGER.error("SocketContext is null for this WebSocketChannel (Guild ID: {})!", guildId)
+                        return
+                    }
+                    context.seq.incrementAndGet()
+                    val player = context.players[guildId]
                     if (player == null) {
-                        LOGGER.error("Player or SocketContext is null for Guild ID: {} (Try initializing first!)", seek.guildId)
+                        LOGGER.warn("Player is null for Guild ID: {} and User ID: {} (Try initializing first!)", guildId, context.userId)
+                        val response = DispatchResponse(context, guildId, "ERROR", PLAYER_NOT_INITIALIZED.name)
+                        WebSockets.sendText(JsonStream.serialize(response), channel, null)
                         return
                     }
                     val track = player.audioPlayer.playingTrack
                     if (track == null) {
-                        LOGGER.error("Track is null (attempt to seek through a non-existent track). User ID: {}, Guild ID: {}",
-                                player.context.userId, seek.guildId)
+                        LOGGER.warn("Track is null for Guild ID: {} and User ID: {}", seek.guildId, context.userId)
+                        val response = DispatchResponse(context, guildId, "ERROR", NO_TRACK.name)
+                        WebSockets.sendText(JsonStream.serialize(response), channel, null)
                         return
                     }
                     if (!track.isSeekable) {
-                        LOGGER.error("Track cannot be seeked through. User ID: {}, Guild ID: {}", player.context.userId, seek.guildId)
+                        LOGGER.warn("Track is not seekable for Guild ID: {} and User ID: {}", seek.guildId, context.userId)
+                        val response = DispatchResponse(context, guildId, "ERROR", TRACK_NOT_SEEKABLE.name)
+                        WebSockets.sendText(JsonStream.serialize(response), channel, null)
                         return
                     }
                     if (seek.position < 0 || seek.position > track.duration) {
-                        LOGGER.error("Seek position cannot be negative or larger than the duration of the track. User ID: {}, Guild ID: {}",
-                                player.context.userId, seek.guildId)
+                        LOGGER.warn("Seek position cannot be negative or larger than the duration of the track! Guild ID: {} and User ID: {}",
+                                seek.guildId, context.userId)
+                        val response = DispatchResponse(context, guildId, "ERROR", POSITION_OUT_OF_BOUNDS.name)
+                        WebSockets.sendText(JsonStream.serialize(response), channel, null)
                         return
                     }
-                    player.context.seq.incrementAndGet()
                     player.audioPlayer.playingTrack.position = seek.position
                     val response = PlayerUpdate(seek.guildId, seek.position, System.currentTimeMillis())
                     WebSockets.sendText(JsonStream.serialize(response), channel, null)
