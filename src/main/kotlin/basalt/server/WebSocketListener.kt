@@ -163,7 +163,7 @@ class WebSocketListener internal constructor(private val server: BasaltServer): 
                     player.audioPlayer.isPaused = pause.paused
                 }
                 "stop" -> {
-                    val stop = JsonIterator.deserialize(message.data, StopRequest::class.java)
+                    val stop = JsonIterator.deserialize(message.data, EmptyRequestBody::class.java)
                     val context = server.contexts[channel]
                     val guildId = stop.guildId
                     if (context == null) {
@@ -187,7 +187,7 @@ class WebSocketListener internal constructor(private val server: BasaltServer): 
                     player.audioPlayer.stopTrack()
                 }
                 "destroy" -> {
-                    val destroy = JsonIterator.deserialize(message.data, DestroyRequest::class.java)
+                    val destroy = JsonIterator.deserialize(message.data, EmptyRequestBody::class.java)
                     val context = server.contexts[channel]
                     val guildId = destroy.guildId
                     if (context == null) {
