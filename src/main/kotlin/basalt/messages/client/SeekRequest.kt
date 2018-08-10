@@ -19,6 +19,7 @@ import com.jsoniter.annotation.JsonCreator
 import com.jsoniter.annotation.JsonProperty
 
 @Suppress("UNUSED")
-class SeekRequest @JsonCreator constructor(@JsonProperty("op", required = true, nullable = false) val op: String,
+class SeekRequest @JsonCreator constructor(@JsonProperty("key", required = true, nullable = false) val key: String,
+                                           @JsonProperty("op", required = true, nullable = false) val op: String,
                                            @JsonProperty("guildId", required = true, nullable = false) val guildId: String,
                                            @JsonProperty("position", required = true, nullable = false) val position: Long)
