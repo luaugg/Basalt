@@ -123,6 +123,8 @@ class WebSocketListener internal constructor(private val server: BasaltServer): 
                     val guildId = play.guildId
                     if (context == null) {
                         LOGGER.error("SocketContext is null for this WebSocketChannel (Guild ID: {})!", guildId)
+                        val response = DispatchResponse(play.key, guildId, "ERROR", SOCKET_CONTEXT_NULL.name)
+                        WebSockets.sendText(JsonStream.serialize(response), channel, null)
                         return
                     }
                     val player = context.players[guildId]
@@ -144,6 +146,8 @@ class WebSocketListener internal constructor(private val server: BasaltServer): 
                     val guildId = pause.guildId
                     if (context == null) {
                         LOGGER.error("SocketContext is null for this WebSocketChannel (Guild ID: {})!", guildId)
+                        val response = DispatchResponse(pause.key, guildId, "ERROR", SOCKET_CONTEXT_NULL.name)
+                        WebSockets.sendText(JsonStream.serialize(response), channel, null)
                         return
                     }
                     val player = context.players[guildId]
@@ -179,6 +183,8 @@ class WebSocketListener internal constructor(private val server: BasaltServer): 
                     val guildId = stop.guildId
                     if (context == null) {
                         LOGGER.error("SocketContext is null for this WebSocketChannel (Guild ID: {})!", guildId)
+                        val response = DispatchResponse(stop.key, guildId, "ERROR", SOCKET_CONTEXT_NULL.name)
+                        WebSockets.sendText(JsonStream.serialize(response), channel, null)
                         return
                     }
                     val player = context.players[guildId]
@@ -203,6 +209,8 @@ class WebSocketListener internal constructor(private val server: BasaltServer): 
                     val guildId = destroy.guildId
                     if (context == null) {
                         LOGGER.error("SocketContext is null for this WebSocketChannel (Guild ID: {})!", guildId)
+                        val response = DispatchResponse(destroy.key, guildId, "ERROR", SOCKET_CONTEXT_NULL.name)
+                        WebSockets.sendText(JsonStream.serialize(response), channel, null)
                         return
                     }
                     val player = context.players[guildId]
@@ -229,6 +237,8 @@ class WebSocketListener internal constructor(private val server: BasaltServer): 
                     val guildId = volume.guildId
                     if (context == null) {
                         LOGGER.error("SocketContext is null for this WebSocketChannel (Guild ID: {})!", guildId)
+                        val response = DispatchResponse(volume.key, guildId, "ERROR", SOCKET_CONTEXT_NULL.name)
+                        WebSockets.sendText(JsonStream.serialize(response), channel, null)
                         return
                     }
                     val player = context.players[guildId]
@@ -255,6 +265,8 @@ class WebSocketListener internal constructor(private val server: BasaltServer): 
                     val guildId = seek.guildId
                     if (context == null) {
                         LOGGER.error("SocketContext is null for this WebSocketChannel (Guild ID: {})!", guildId)
+                        val response = DispatchResponse(seek.key, guildId, "ERROR", SOCKET_CONTEXT_NULL.name)
+                        WebSockets.sendText(JsonStream.serialize(response), channel, null)
                         return
                     }
                     val player = context.players[guildId]
@@ -293,6 +305,8 @@ class WebSocketListener internal constructor(private val server: BasaltServer): 
                     val context = server.contexts[channel]
                     if (context == null) {
                         LOGGER.error("SocketContext is null. This should *never* happen.")
+                        val response = DispatchResponse(load.key, null, "ERROR", SOCKET_CONTEXT_NULL.name)
+                        WebSockets.sendText(JsonStream.serialize(response), channel, null)
                         return
                     }
                     val chunkSize = server.loadChunkSize

@@ -42,5 +42,7 @@ enum class ErrorResponses {
     /** Returned if an attempt was made to pause a player if it is already paused. */
     PLAYER_ALREADY_PAUSED,
     /** Returned if an attempt was made to resume a player if it has already been resumed. */
-    PLAYER_ALREADY_RESUMED
+    PLAYER_ALREADY_RESUMED,
+    /** Returned if, for some reason, the internal [SocketContext][basalt.player.SocketContext] associated with the WebSocket Connection is `null`. */
+    SOCKET_CONTEXT_NULL
 }
