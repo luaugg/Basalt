@@ -30,6 +30,9 @@ import space.npstr.magma.MagmaMember
 import space.npstr.magma.MagmaServerUpdate
 
 import basalt.server.ErrorResponses.*
+import com.sedmelluq.discord.lavaplayer.track.TrackMarker
+import com.sedmelluq.discord.lavaplayer.track.TrackMarkerHandler
+import com.sedmelluq.discord.lavaplayer.track.TrackMarkerHandler.MarkerState.*
 
 /**
  * The listener class which responds to WebSocket Events, including (but not limited to) incoming messages.
@@ -123,6 +126,9 @@ class WebSocketListener internal constructor(private val server: BasaltServer): 
                         WebSockets.sendText(JsonStream.serialize(response), channel, null)
                         return
                     }
+                    val track = server.trackUtil.toAudioTrack(play.track)
+                    if (play.startTime != null)
+                        track.position = play.startTime
                     player.startKeys.add(play.key)
                     player.audioPlayer.playTrack(server.trackUtil.toAudioTrack(play.track))
                 }

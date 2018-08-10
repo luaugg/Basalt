@@ -107,8 +107,11 @@ class BasaltPlayer internal constructor(internal val context: SocketContext, pri
      * @param endReason The reason why the track ended.
      */
     override fun onTrackEnd(player: AudioPlayer, track: AudioTrack, endReason: AudioTrackEndReason) {
-        val key = if (endReason == AudioTrackEndReason.STOPPED)
-            stopKey
+        val key = if (endReason == AudioTrackEndReason.STOPPED) {
+            val k = stopKey
+            stopKey = null
+            k
+        }
         else
             null
         val response = DispatchResponse(key, guildId, "TRACK_ENDED", TrackEndResponse(context.server, track, endReason))
@@ -155,7 +158,9 @@ class BasaltPlayer internal constructor(internal val context: SocketContext, pri
      */
     override fun onPlayerPause(player: AudioPlayer) {
         val response = DispatchResponse(pauseKey, guildId, "PLAYER_PAUSED", true)
+        pauseKey = null
         WebSockets.sendText(JsonStream.serialize(response), context.channel, null)
+
     }
 
     /**
@@ -167,6 +172,7 @@ class BasaltPlayer internal constructor(internal val context: SocketContext, pri
      */
     override fun onPlayerResume(player: AudioPlayer) {
         val response = DispatchResponse(pauseKey, guildId, "PLAYER_PAUSED", false)
+        pauseKey = null
         WebSockets.sendText(JsonStream.serialize(response), context.channel, null)
     }
 }

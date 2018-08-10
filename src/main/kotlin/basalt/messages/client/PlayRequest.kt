@@ -23,5 +23,4 @@ class PlayRequest @JsonCreator constructor(@JsonProperty("key", required = true,
                                            @JsonProperty("op", required = true, nullable = false) val op: String,
                                            @JsonProperty("guildId", required = true, nullable = false) val guildId: String,
                                            @JsonProperty("track", required = true, nullable = false) val track: String,
-                                           @JsonProperty("startTime") val startTime: Long?,
-                                           @JsonProperty("endTime") val endTime: Long?)
+                                           @JsonProperty("startTime") val startTime: Long?)

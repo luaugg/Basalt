@@ -22,8 +22,8 @@ import com.jsoniter.output.JsonStream
 @Suppress("UNUSED")
 class DispatchResponse internal constructor(@field:JsonIgnore val key: String? = null,
                                             @field:JsonIgnore val guildId: String? = null,
-                                            @field:JsonIgnore val data: Any? = null,
-                                            @field:JsonIgnore val name: String) {
+                                            @field:JsonIgnore val name: String,
+                                            @field:JsonIgnore val data: Any? = null) {
     @JsonUnwrapper
     fun unwrapData(stream: JsonStream) {
         with (stream) {
