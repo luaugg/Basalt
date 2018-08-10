@@ -68,6 +68,8 @@ typealias SocketContextMap = Object2ObjectOpenHashMap<WebSocketChannel, SocketCo
  *
  * @property mapper The Jackson Object Mapper used to parse the YAML Configuration File.
  * @property listener The [WebSocketListener] which every open WebSocketChannel uses to handle incoming requests.
+ * @property contexts The [SocketContextMap] which indexes [SocketContexts][SocketContext] by Undertow WebSocketChannels.
+ * @property loadChunkSize The amount of identifier load results to fit into each `LOAD_TRACK_CHUNK` event (1+).
  * @property password The password used to successfully open a WebSocket Connection to this BasaltServer instance.
  * @property magma The raw MagmaApi instance used to actually send and update voice data/state.
  * @property sourceManager The Lavaplayer SourceManager used to actually load sources.
@@ -82,9 +84,6 @@ typealias SocketContextMap = Object2ObjectOpenHashMap<WebSocketChannel, SocketCo
 class BasaltServer: AbstractVerticle() {
     private val mapper = ObjectMapper(YAMLFactory())
     private val listener = WebSocketListener(this)
-    /**
-     * @suppress
-     */
     internal val contexts = SocketContextMap()
 
     /**
