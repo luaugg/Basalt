@@ -91,12 +91,13 @@ class BasaltServer: AbstractVerticle() {
      * @suppress
      */
     internal var bufferDurationMs: Int = -1
-
-    private lateinit var password: String
+    internal var loadChunkSize: Int = -1
     internal lateinit var magma: MagmaApi
     internal lateinit var sourceManager: AudioPlayerManager
-    private lateinit var socket: Undertow
     internal val trackUtil = AudioTrackUtil(this)
+
+    private lateinit var password: String
+    private lateinit var socket: Undertow
 
     /**
      * Called by Vert.x when this Verticle is deployed (which it is in the Main class).
@@ -114,6 +115,11 @@ class BasaltServer: AbstractVerticle() {
         password = basalt["password"]!!.textValue()
         sourceManager = DefaultAudioPlayerManager()
         bufferDurationMs = basalt["bufferDurationMs"]!!.intValue()
+        loadChunkSize = basalt["loadChunkSize"]!!.intValue()
+        if (loadChunkSize < 1) {
+            LOGGER.error("The size for Load Chunks must be larger than 0! Current Value: {}", loadChunkSize)
+            throw IllegalArgumentException(loadChunkSize.toString())
+        }
 
         if (sources["youtube"]?.booleanValue() == true) {
             val manager = YoutubeAudioSourceManager(true)

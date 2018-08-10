@@ -33,6 +33,12 @@ import basalt.server.ErrorResponses.*
 import com.sedmelluq.discord.lavaplayer.track.TrackMarker
 import com.sedmelluq.discord.lavaplayer.track.TrackMarkerHandler
 import com.sedmelluq.discord.lavaplayer.track.TrackMarkerHandler.MarkerState.*
+import it.unimi.dsi.fastutil.objects.ObjectArrayFIFOQueue
+import kotlinx.coroutines.experimental.async
+import kotlinx.coroutines.experimental.launch
+import java.util.*
+import kotlin.math.min
+import kotlin.math.roundToInt
 
 /**
  * The listener class which responds to WebSocket Events, including (but not limited to) incoming messages.
@@ -289,18 +295,26 @@ class WebSocketListener internal constructor(private val server: BasaltServer): 
                         LOGGER.error("SocketContext is null. This should *never* happen.")
                         return
                     }
-                    val identifiers = load.identifiers
-                    val list = ObjectArrayList<LoadTrackResponse>(identifiers.size)
-                    for (str in identifiers) {
-                        AudioLoadHandler(server).load(str)
-                                .thenApply { LoadTrackResponse(it) }
-                                .thenAccept { list.add(it) }
-                                .thenAccept {
-                                    if (list.size == identifiers.size) {
-                                        val response = DispatchResponse(name = "IDENTIFY_RESPONSE", data = list.toArray())
-                                        WebSockets.sendText(JsonStream.serialize(response), channel, null)
-                                    }
-                                }
+                    val chunkSize = server.loadChunkSize
+                    val identifiers = LinkedList<String>()
+                    identifiers.addAll(load.identifiers)
+                    val chunks = Math.ceil((identifiers.size / chunkSize).toDouble()).toInt()
+                    launch {
+                        for (i in 1..chunks) {
+                            val list = ObjectArrayList<LoadTrackResponse>(chunkSize)
+                            val size = min(identifiers.size, chunkSize)
+                            for (index in 1..size) {
+                                AudioLoadHandler(server).load(identifiers.poll())
+                                        .thenApply { LoadTrackResponse(it) }
+                                        .thenAccept { list.add(it) }
+                                        .thenAccept {
+                                            if (index == size) {
+                                                val response = DispatchResponse(load.key, null, "LOAD_TRACK_CHUNK", list.toTypedArray())
+                                                WebSockets.sendText(JsonStream.serialize(response), channel, null)
+                                            }
+                                        }
+                            }
+                        }
                     }
                 }
             }

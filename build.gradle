@@ -132,6 +132,7 @@ ext {
     undertow_websocket_version = '2.0.11.Final'
     fastutil_version = '8.2.1'
     javassist_version = '3.23.1-GA'
+    kotlin_coroutines_version = '0.24.0'
 }
 
 dependencies {
@@ -148,10 +149,17 @@ dependencies {
     compile group: 'io.undertow', name: 'undertow-websockets-jsr', version: undertow_websocket_version
     compile group: 'it.unimi.dsi', name: 'fastutil', version: fastutil_version
     compile group: 'org.javassist', name: 'javassist', version: javassist_version
+    implementation group: 'org.jetbrains.kotlinx', name: 'kotlinx-coroutines-core', version: kotlin_coroutines_version
 }
 
 compileKotlin {
     kotlinOptions {
         jvmTarget = "1.8"
+    }
+}
+
+kotlin {
+    experimental {
+        coroutines 'enable'
     }
 }
