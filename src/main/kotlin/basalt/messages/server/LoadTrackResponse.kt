@@ -17,12 +17,24 @@ package basalt.messages.server
 
 import basalt.player.LoadResult
 import com.jsoniter.annotation.JsonIgnore
+import com.jsoniter.annotation.JsonUnwrapper
+import com.jsoniter.output.JsonStream
 
 @Suppress("UNUSED")
 class LoadTrackResponse internal constructor(@field:JsonIgnore private val result: LoadResult) {
-    val playlistInfo = if (result.playlistInfo != null) PlaylistInfo() else null
     val loadType = result.result.name
     val tracks = result.tracks
+
+    @JsonUnwrapper
+    fun unwrapPlaylistInfo(stream: JsonStream) {
+        if (result.playlistInfo != null) {
+            with (stream) {
+                writeObjectField("playlistInfo")
+                writeVal(PlaylistInfo())
+            }
+        }
+    }
+
     inner class PlaylistInfo {
         @JsonIgnore private val info = this@LoadTrackResponse.result.playlistInfo
         val name = info!!.first

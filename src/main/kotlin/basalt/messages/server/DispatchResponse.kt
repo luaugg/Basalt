@@ -15,7 +15,26 @@ limitations under the License.
  */
 package basalt.messages.server
 
+import com.jsoniter.annotation.JsonIgnore
+import com.jsoniter.annotation.JsonUnwrapper
+import com.jsoniter.output.JsonStream
+
 @Suppress("UNUSED")
-class DispatchResponse internal constructor(val key: String? = null, val guildId: String? = null, val name: String, val data: Any? = null) {
-    val op = "dispatch"
+class DispatchResponse internal constructor(@field:JsonIgnore val key: String? = null,
+                                            @field:JsonIgnore val guildId: String? = null,
+                                            @field:JsonIgnore val data: Any? = null,
+                                            @field:JsonIgnore val name: String) {
+    @JsonUnwrapper
+    fun unwrapData(stream: JsonStream) {
+        with (stream) {
+            writeObjectField("op")
+            writeVal("dispatch")
+            writeMore()
+            writeObjectField("name")
+            writeVal(name)
+            key?.let { writeMore(); writeObjectField("key"); writeVal(it) }
+            guildId?.let { writeMore(); writeObjectField("guildId"); writeVal(it) }
+            data?.let { writeMore(); writeObjectField("data"); writeVal(data) }
+        }
+    }
 }
