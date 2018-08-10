@@ -23,6 +23,7 @@ import com.sedmelluq.discord.lavaplayer.tools.FriendlyException
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason
 import io.undertow.websockets.core.WebSockets
+import java.util.concurrent.ConcurrentLinkedQueue
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledFuture
 import java.util.concurrent.TimeUnit
@@ -48,6 +49,9 @@ import java.util.concurrent.TimeUnit
  * @property audioPlayer A Lavaplayer AudioPlayer instance.
  * @property threadPool The Java ScheduledExecutorService used to schedule the `PLAYER_UPDATE` task.
  * @property updateTask The actual update task itself that is eventually cancelled.
+ * @property startKeys A queue of Request Keys used for providing the right response key.
+ * @property stopKey A response key to send to clients, attached to a `TRACK_STOPPED` event.
+ * @property pauseKey A response key to send to clients, attached to a `PLAYER_PAUSED` event.
  *
  * @author Sam Pritchard
  * @since 1.0
@@ -58,7 +62,10 @@ class BasaltPlayer internal constructor(internal val context: SocketContext, pri
                                         internal val audioPlayer: AudioPlayer): AudioEventAdapter() {
 
     private val threadPool = Executors.newSingleThreadScheduledExecutor()
+    internal val startKeys = ConcurrentLinkedQueue<String>()
     @Volatile private var updateTask: ScheduledFuture<*>? = null
+    @Volatile internal var stopKey: String? = null
+    @Volatile internal var pauseKey: String? = null
 
     init {
         audioPlayer.addListener(this)
@@ -76,7 +83,7 @@ class BasaltPlayer internal constructor(internal val context: SocketContext, pri
      */
     override fun onTrackStart(player: AudioPlayer, track: AudioTrack) {
         val trackData = context.server.trackUtil.fromAudioTrack(track)
-        val response = DispatchResponse(context, guildId, "TRACK_STARTED", TrackPair(trackData, track))
+        val response = DispatchResponse(startKeys.poll(), guildId, "TRACK_STARTED", TrackPair(trackData, track))
         WebSockets.sendText(JsonStream.serialize(response), context.channel, null)
         updateTask = threadPool.scheduleAtFixedRate({
             if (!context.channel.isOpen) {
@@ -100,7 +107,11 @@ class BasaltPlayer internal constructor(internal val context: SocketContext, pri
      * @param endReason The reason why the track ended.
      */
     override fun onTrackEnd(player: AudioPlayer, track: AudioTrack, endReason: AudioTrackEndReason) {
-        val response = DispatchResponse(context, guildId, "TRACK_ENDED", TrackEndResponse(context.server, track, endReason))
+        val key = if (endReason == AudioTrackEndReason.STOPPED)
+            stopKey
+        else
+            null
+        val response = DispatchResponse(key, guildId, "TRACK_ENDED", TrackEndResponse(context.server, track, endReason))
         WebSockets.sendText(JsonStream.serialize(response), context.channel, null)
         updateTask?.cancel(false)
         updateTask = null
@@ -116,7 +127,7 @@ class BasaltPlayer internal constructor(internal val context: SocketContext, pri
      * @param exception The exception that was thrown.
      */
     override fun onTrackException(player: AudioPlayer, track: AudioTrack, exception: FriendlyException) {
-        val response = DispatchResponse(context, guildId, "TRACK_EXCEPTION", TrackExceptionResponse(context.server, track, exception))
+        val response = DispatchResponse(null, guildId, "TRACK_EXCEPTION", TrackExceptionResponse(context.server, track, exception))
         WebSockets.sendText(JsonStream.serialize(response), context.channel, null)
     }
 
@@ -130,7 +141,7 @@ class BasaltPlayer internal constructor(internal val context: SocketContext, pri
      * @param thresholdMs The threshold the track was/is stuck for.
      */
     override fun onTrackStuck(player: AudioPlayer, track: AudioTrack, thresholdMs: Long) {
-        val response = DispatchResponse(context, guildId, "TRACK_STUCK", TrackStuckResponse(context.server, track, thresholdMs))
+        val response = DispatchResponse(null, guildId, "TRACK_STUCK", TrackStuckResponse(context.server, track, thresholdMs))
         WebSockets.sendText(JsonStream.serialize(response), context.channel, null)
     }
 
@@ -143,7 +154,7 @@ class BasaltPlayer internal constructor(internal val context: SocketContext, pri
      * @param player The AudioPlayer object itself.
      */
     override fun onPlayerPause(player: AudioPlayer) {
-        val response = DispatchResponse(context, guildId, "PLAYER_PAUSED", true)
+        val response = DispatchResponse(pauseKey, guildId, "PLAYER_PAUSED", true)
         WebSockets.sendText(JsonStream.serialize(response), context.channel, null)
     }
 
@@ -155,7 +166,7 @@ class BasaltPlayer internal constructor(internal val context: SocketContext, pri
      * @param player The AudioPlayer object itself.
      */
     override fun onPlayerResume(player: AudioPlayer) {
-        val response = DispatchResponse(context, guildId, "PLAYER_PAUSED", false)
+        val response = DispatchResponse(pauseKey, guildId, "PLAYER_PAUSED", false)
         WebSockets.sendText(JsonStream.serialize(response), context.channel, null)
     }
 }

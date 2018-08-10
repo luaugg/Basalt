@@ -85,10 +85,9 @@ class WebSocketListener internal constructor(private val server: BasaltServer): 
                         LOGGER.error("SocketContext is null for Guild ID: {}\nThis should never happen!", init.guildId)
                         return
                     }
-                    context.seq.incrementAndGet()
                     if (context.players[init.guildId] != null) {
                         LOGGER.warn("Player already initialized for User ID: {} and Guild ID: {}", context.userId, init.guildId)
-                        val response = DispatchResponse(context, init.guildId, "ERROR", PLAYER_ALREADY_INITIALIZED.name)
+                        val response = DispatchResponse(init.key, init.guildId, "ERROR", PLAYER_ALREADY_INITIALIZED.name)
                         WebSockets.sendText(JsonStream.serialize(response), channel, null)
                         return
                     }
@@ -105,7 +104,7 @@ class WebSocketListener internal constructor(private val server: BasaltServer): 
                     context.players[init.guildId] = basalt
                     server.magma.provideVoiceServerUpdate(member, update)
                     server.magma.setSendHandler(member, AudioSender(basalt.audioPlayer))
-                    val response = DispatchResponse(context, init.guildId, "INITIALIZED")
+                    val response = DispatchResponse(init.key, init.guildId, "INITIALIZED")
                     WebSockets.sendText(JsonStream.serialize(response), channel, null)
                     LOGGER.info("Initialized connection from User ID: {} and Guild ID: {}", member.userId, member.guildId)
                 }
@@ -117,14 +116,14 @@ class WebSocketListener internal constructor(private val server: BasaltServer): 
                         LOGGER.error("SocketContext is null for this WebSocketChannel (Guild ID: {})!", guildId)
                         return
                     }
-                    context.seq.incrementAndGet()
                     val player = context.players[guildId]
                     if (player == null) {
                         LOGGER.warn("Player is null for Guild ID: {} and User ID: {} (Try initializing first!)", guildId, context.userId)
-                        val response = DispatchResponse(context, guildId, "ERROR", PLAYER_NOT_INITIALIZED.name)
+                        val response = DispatchResponse(play.key, guildId, "ERROR", PLAYER_NOT_INITIALIZED.name)
                         WebSockets.sendText(JsonStream.serialize(response), channel, null)
                         return
                     }
+                    player.startKeys.add(play.key)
                     player.audioPlayer.playTrack(server.trackUtil.toAudioTrack(play.track))
                 }
                 "pause" -> {
@@ -135,11 +134,10 @@ class WebSocketListener internal constructor(private val server: BasaltServer): 
                         LOGGER.error("SocketContext is null for this WebSocketChannel (Guild ID: {})!", guildId)
                         return
                     }
-                    context.seq.incrementAndGet()
                     val player = context.players[guildId]
                     if (player == null) {
                         LOGGER.warn("Player is null for Guild ID: {} and User ID: {} (Try initializing first!)", guildId, context.userId)
-                        val response = DispatchResponse(context, guildId, "ERROR", PLAYER_NOT_INITIALIZED.name)
+                        val response = DispatchResponse(pause.key, guildId, "ERROR", PLAYER_NOT_INITIALIZED.name)
                         WebSockets.sendText(JsonStream.serialize(response), channel, null)
                         return
                     }
@@ -156,10 +154,11 @@ class WebSocketListener internal constructor(private val server: BasaltServer): 
                             msg = "Player has already been resumed for"
                         }
                         LOGGER.warn("{} Guild ID: {} and User ID: {}", msg, guildId, context.userId)
-                        val response = DispatchResponse(context, guildId, "ERROR", enum)
+                        val response = DispatchResponse(pause.key, guildId, "ERROR", enum)
                         WebSockets.sendText(JsonStream.serialize(response), channel, null)
                         return
                     }
+                    player.pauseKey = pause.key
                     player.audioPlayer.isPaused = pause.paused
                 }
                 "stop" -> {
@@ -170,20 +169,20 @@ class WebSocketListener internal constructor(private val server: BasaltServer): 
                         LOGGER.error("SocketContext is null for this WebSocketChannel (Guild ID: {})!", guildId)
                         return
                     }
-                    context.seq.incrementAndGet()
                     val player = context.players[guildId]
                     if (player == null) {
                         LOGGER.warn("Player is null for Guild ID: {} and User ID: {} (Try initializing first!)", guildId, context.userId)
-                        val response = DispatchResponse(context, guildId, "ERROR", PLAYER_NOT_INITIALIZED.name)
+                        val response = DispatchResponse(stop.key, guildId, "ERROR", PLAYER_NOT_INITIALIZED.name)
                         WebSockets.sendText(JsonStream.serialize(response), channel, null)
                         return
                     }
                     if (player.audioPlayer.playingTrack == null) {
                         LOGGER.warn("Track is null for Guild ID: {} and User ID: {}", guildId, context.userId)
-                        val response = DispatchResponse(context, guildId, "ERROR", NO_TRACK.name)
+                        val response = DispatchResponse(stop.key, guildId, "ERROR", NO_TRACK.name)
                         WebSockets.sendText(JsonStream.serialize(response), channel, null)
                         return
                     }
+                    player.stopKey = stop.key
                     player.audioPlayer.stopTrack()
                 }
                 "destroy" -> {
@@ -194,11 +193,10 @@ class WebSocketListener internal constructor(private val server: BasaltServer): 
                         LOGGER.error("SocketContext is null for this WebSocketChannel (Guild ID: {})!", guildId)
                         return
                     }
-                    context.seq.incrementAndGet()
                     val player = context.players[guildId]
                     if (player == null) {
                         LOGGER.warn("Player is null for Guild ID: {} and User ID: {} (Try initializing first!)", guildId, context.userId)
-                        val response = DispatchResponse(context, guildId, "ERROR", PLAYER_NOT_INITIALIZED.name)
+                        val response = DispatchResponse(destroy.key, guildId, "ERROR", PLAYER_NOT_INITIALIZED.name)
                         WebSockets.sendText(JsonStream.serialize(response), channel, null)
                         return
                     }
@@ -210,7 +208,7 @@ class WebSocketListener internal constructor(private val server: BasaltServer): 
                             .build()
                     server.magma.removeSendHandler(member)
                     server.magma.closeConnection(member)
-                    val response = DispatchResponse(player.context, destroy.guildId, "DESTROYED")
+                    val response = DispatchResponse(destroy.key, destroy.guildId, "DESTROYED")
                     WebSockets.sendText(JsonStream.serialize(response), channel, null)
                 }
                 "volume" -> {
@@ -221,23 +219,22 @@ class WebSocketListener internal constructor(private val server: BasaltServer): 
                         LOGGER.error("SocketContext is null for this WebSocketChannel (Guild ID: {})!", guildId)
                         return
                     }
-                    context.seq.incrementAndGet()
                     val player = context.players[guildId]
                     if (player == null) {
                         LOGGER.warn("Player is null for Guild ID: {} and User ID: {} (Try initializing first!)", guildId, context.userId)
-                        val response = DispatchResponse(context, guildId, "ERROR", PLAYER_NOT_INITIALIZED.name)
+                        val response = DispatchResponse(volume.key, guildId, "ERROR", PLAYER_NOT_INITIALIZED.name)
                         WebSockets.sendText(JsonStream.serialize(response), channel, null)
                         return
                     }
                     if (volume.volume < 0 || volume.volume > 1000) {
                         LOGGER.warn("Volume cannot be negative or above 1000 for User ID: {} and Guild ID: {}",
                                 player.context.userId, volume.guildId)
-                        val response = DispatchResponse(context, guildId, "ERROR", VOLUME_OUT_OF_BOUNDS.name)
+                        val response = DispatchResponse(volume.key, guildId, "ERROR", VOLUME_OUT_OF_BOUNDS.name)
                         WebSockets.sendText(JsonStream.serialize(response), channel, null)
                         return
                     }
                     player.audioPlayer.volume = volume.volume
-                    val response = DispatchResponse(player.context, volume.guildId, "VOLUME_UPDATE", volume.volume)
+                    val response = DispatchResponse(volume.key, volume.guildId, "VOLUME_UPDATE", volume.volume)
                     WebSockets.sendText(JsonStream.serialize(response), channel, null)
                 }
                 "seek" -> {
@@ -248,31 +245,30 @@ class WebSocketListener internal constructor(private val server: BasaltServer): 
                         LOGGER.error("SocketContext is null for this WebSocketChannel (Guild ID: {})!", guildId)
                         return
                     }
-                    context.seq.incrementAndGet()
                     val player = context.players[guildId]
                     if (player == null) {
                         LOGGER.warn("Player is null for Guild ID: {} and User ID: {} (Try initializing first!)", guildId, context.userId)
-                        val response = DispatchResponse(context, guildId, "ERROR", PLAYER_NOT_INITIALIZED.name)
+                        val response = DispatchResponse(seek.key, guildId, "ERROR", PLAYER_NOT_INITIALIZED.name)
                         WebSockets.sendText(JsonStream.serialize(response), channel, null)
                         return
                     }
                     val track = player.audioPlayer.playingTrack
                     if (track == null) {
                         LOGGER.warn("Track is null for Guild ID: {} and User ID: {}", seek.guildId, context.userId)
-                        val response = DispatchResponse(context, guildId, "ERROR", NO_TRACK.name)
+                        val response = DispatchResponse(seek.key, guildId, "ERROR", NO_TRACK.name)
                         WebSockets.sendText(JsonStream.serialize(response), channel, null)
                         return
                     }
                     if (!track.isSeekable) {
                         LOGGER.warn("Track is not seekable for Guild ID: {} and User ID: {}", seek.guildId, context.userId)
-                        val response = DispatchResponse(context, guildId, "ERROR", TRACK_NOT_SEEKABLE.name)
+                        val response = DispatchResponse(seek.key, guildId, "ERROR", TRACK_NOT_SEEKABLE.name)
                         WebSockets.sendText(JsonStream.serialize(response), channel, null)
                         return
                     }
                     if (seek.position < 0 || seek.position > track.duration) {
                         LOGGER.warn("Seek position cannot be negative or larger than the duration of the track! Guild ID: {} and User ID: {}",
                                 seek.guildId, context.userId)
-                        val response = DispatchResponse(context, guildId, "ERROR", POSITION_OUT_OF_BOUNDS.name)
+                        val response = DispatchResponse(seek.key, guildId, "ERROR", POSITION_OUT_OF_BOUNDS.name)
                         WebSockets.sendText(JsonStream.serialize(response), channel, null)
                         return
                     }
@@ -287,7 +283,6 @@ class WebSocketListener internal constructor(private val server: BasaltServer): 
                         LOGGER.error("SocketContext is null. This should *never* happen.")
                         return
                     }
-                    context.seq.incrementAndGet()
                     val identifiers = load.identifiers
                     val list = ObjectArrayList<LoadTrackResponse>(identifiers.size)
                     for (str in identifiers) {
@@ -296,7 +291,7 @@ class WebSocketListener internal constructor(private val server: BasaltServer): 
                                 .thenAccept { list.add(it) }
                                 .thenAccept {
                                     if (list.size == identifiers.size) {
-                                        val response = DispatchResponse(context, name = "IDENTIFY_RESPONSE", data = list.toArray())
+                                        val response = DispatchResponse(name = "IDENTIFY_RESPONSE", data = list.toArray())
                                         WebSockets.sendText(JsonStream.serialize(response), channel, null)
                                     }
                                 }

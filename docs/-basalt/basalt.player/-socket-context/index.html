@@ -10,7 +10,7 @@
 <h1>SocketContext</h1>
 <code><span class="keyword">class </span><span class="identifier">SocketContext</span></code>
 <p>Context class which stores a reference to a <a href="../../basalt.server/-basalt-server/index.html">BasaltServer</a>, a WebSocketChannel and the User ID associated
-with that channel, as well as a PlayerMap and a Sequence Number of Sent, Successful Events.</p>
+with that channel, as well as a PlayerMap that indexes <a href="../-basalt-player/index.html">BasaltPlayers</a> by Guild ID.</p>
 <h3>Constructors</h3>
 <table>
 <tbody>
@@ -39,20 +39,11 @@ with that channel, as well as a PlayerMap and a Sequence Number of Sent, Success
 </tr>
 <tr>
 <td>
-<p><a href="seq.html">seq</a></p>
-</td>
-<td>
-<code><span class="keyword">internal</span> <span class="keyword">val </span><span class="identifier">seq</span><span class="symbol">: </span><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/atomic/AtomicLong.html"><span class="identifier">AtomicLong</span></a></code>
-<p>An atomic response sequence counter, used to synchronize requests and successful, dispatched responses.</p>
-</td>
-</tr>
-<tr>
-<td>
 <p><a href="server.html">server</a></p>
 </td>
 <td>
 <code><span class="keyword">val </span><span class="identifier">server</span><span class="symbol">: </span><a href="../../basalt.server/-basalt-server/index.html"><span class="identifier">BasaltServer</span></a></code>
-<p>A BasaltServer reference.</p>
+<p>A <a href="../../basalt.server/-basalt-server/index.html">BasaltServer</a> reference.</p>
 </td>
 </tr>
 <tr>
