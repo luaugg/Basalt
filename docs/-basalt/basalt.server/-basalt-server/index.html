@@ -32,11 +32,29 @@ From this class, the Undertow WebSocket is created and the configuration options
 <tbody>
 <tr>
 <td>
+<p><a href="contexts.html">contexts</a></p>
+</td>
+<td>
+<code><span class="keyword">internal</span> <span class="keyword">val </span><span class="identifier">contexts</span><span class="symbol">: </span><a href="../-socket-context-map.html"><span class="identifier">SocketContextMap</span></a></code>
+<p>The <a href="../-socket-context-map.html">SocketContextMap</a> which indexes <a href="../../basalt.player/-socket-context/index.html">SocketContexts</a> by Undertow WebSocketChannels.</p>
+</td>
+</tr>
+<tr>
+<td>
 <p><a href="listener.html">listener</a></p>
 </td>
 <td>
 <code><span class="keyword">val </span><span class="identifier">listener</span><span class="symbol">: </span><a href="../-web-socket-listener/index.html"><span class="identifier">WebSocketListener</span></a></code>
 <p>The <a href="../-web-socket-listener/index.html">WebSocketListener</a> which every open WebSocketChannel uses to handle incoming requests.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="load-chunk-size.html">loadChunkSize</a></p>
+</td>
+<td>
+<code><span class="keyword">internal</span> <span class="keyword">var </span><span class="identifier">loadChunkSize</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>The amount of identifier load results to fit into each <code>LOAD_TRACK_CHUNK</code> event (1+).</p>
 </td>
 </tr>
 <tr>
