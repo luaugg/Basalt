@@ -326,6 +326,10 @@ class WebSocketListener internal constructor(private val server: BasaltServer): 
                                                 val response = DispatchResponse(load.key, null, "LOAD_TRACK_CHUNK", list.toTypedArray())
                                                 WebSockets.sendText(JsonStream.serialize(response), channel, null)
                                             }
+                                            if (i == chunks) {
+                                                val response = DispatchResponse(load.key, null, "CHUNK_FINISHED")
+                                                WebSockets.sendText(JsonStream.serialize(response), channel, null)
+                                            }
                                         }
                             }
                         }
