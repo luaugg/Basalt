@@ -22,6 +22,6 @@ import com.jsoniter.annotation.JsonProperty
 class InitializeRequest @JsonCreator constructor(@JsonProperty("key", required = true, nullable = false) val key: String,
                                                  @JsonProperty("op", required = true, nullable = false) val op: String,
                                                  @JsonProperty("guildId", required = true, nullable = false) val guildId: String,
-                                                 @JsonProperty("sessionId", required = true, nullable = false) val sessionid: String,
+                                                 @JsonProperty("sessionId", required = true, nullable = false) val sessionId: String,
                                                  @JsonProperty("token", required = true, nullable = false) val token: String,
                                                  @JsonProperty("endpoint", required = true, nullable = false) val endpoint: String)

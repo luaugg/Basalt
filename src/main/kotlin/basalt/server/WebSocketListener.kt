@@ -105,7 +105,7 @@ class WebSocketListener internal constructor(private val server: BasaltServer): 
                             .userId(context.userId)
                             .build()
                     val update = MagmaServerUpdate.builder()
-                            .sessionId(init.sessionid)
+                            .sessionId(init.sessionId)
                             .endpoint(init.endpoint)
                             .token(init.token)
                             .build()
