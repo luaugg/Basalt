@@ -45,10 +45,10 @@ apply plugin: 'idea'
 apply plugin: 'application'
 
 group 'basalt'
-version '2.0.0'
+version '2.0.1'
 description = 'A high-performance, distributed audio node server based on Lavaplayer, Magma and Undertow.'
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+sourceCompatibility = 10
+targetCompatibility = 10
 mainClassName = 'basalt.MainKt'
 
 repositories {
@@ -135,6 +135,7 @@ ext {
     fastutil_version = '8.2.1'
     javassist_version = '3.23.1-GA'
     kotlin_coroutines_version = '0.24.0'
+    commons_lang3_version = '3.7' // for jda async packet provider :/
 }
 
 dependencies {
@@ -152,6 +153,7 @@ dependencies {
     compile group: 'it.unimi.dsi', name: 'fastutil', version: fastutil_version
     compile group: 'org.javassist', name: 'javassist', version: javassist_version
     implementation group: 'org.jetbrains.kotlinx', name: 'kotlinx-coroutines-core', version: kotlin_coroutines_version
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: commons_lang3_version
 }
 
 compileKotlin {

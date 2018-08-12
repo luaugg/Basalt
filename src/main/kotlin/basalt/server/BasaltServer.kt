@@ -166,6 +166,7 @@ class BasaltServer: AbstractVerticle() {
                 channel.close()
                 return@websocket
             }
+            contexts[channel] = SocketContext(this, channel, userId)
             val host = channel.sourceAddress
                     .toString()
                     .replaceFirst("/", "")

@@ -16,6 +16,7 @@ limitations under the License.
 package basalt.player
 
 import basalt.messages.server.*
+import basalt.server.AudioSender
 import com.jsoniter.output.JsonStream
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer
 import com.sedmelluq.discord.lavaplayer.player.event.AudioEventAdapter
@@ -66,6 +67,7 @@ class BasaltPlayer internal constructor(internal val context: SocketContext, pri
     @Volatile private var updateTask: ScheduledFuture<*>? = null
     @Volatile internal var stopKey: String? = null
     @Volatile internal var pauseKey: String? = null
+    @Volatile internal var audioSender: AudioSender? = null
 
     init {
         audioPlayer.addListener(this)
