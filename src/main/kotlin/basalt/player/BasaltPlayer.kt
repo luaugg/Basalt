@@ -53,6 +53,7 @@ import java.util.concurrent.TimeUnit
  * @property startKeys A queue of Request Keys used for providing the right response key.
  * @property stopKey A response key to send to clients, attached to a `TRACK_STOPPED` event.
  * @property pauseKey A response key to send to clients, attached to a `PLAYER_PAUSED` event.
+ * @property audioSender A cached [AudioSender] to use instead of creating entirely new senders for each play request.
  *
  * @author Sam Pritchard
  * @since 1.0

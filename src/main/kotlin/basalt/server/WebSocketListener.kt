@@ -78,6 +78,7 @@ class WebSocketListener internal constructor(private val server: BasaltServer): 
 	 */
 	override fun onFullTextMessage(channel: WebSocketChannel, message: BufferedTextMessage) {
 		val raw = String(message.data.toByteArray(Charset.forName("UTF-8")))
+        LOGGER.info("Received Message: {}", raw)
 		try {
 			val data = JsonIterator.deserialize(raw)
 			when (data["op"]!!.toString()) {
@@ -312,7 +313,7 @@ class WebSocketListener internal constructor(private val server: BasaltServer): 
 					val chunkSize = server.loadChunkSize
 					val identifiers = LinkedList<String>()
 					identifiers.addAll(load.identifiers)
-					val chunks = Math.ceil((identifiers.size / chunkSize).toDouble()).toInt()
+					val chunks = Math.ceil((identifiers.size.toDouble() / chunkSize.toDouble())).toInt()
 					launch {
 						for (i in 1..chunks) {
 							val list = ObjectArrayList<LoadTrackResponse>(chunkSize)

@@ -22,13 +22,19 @@ import com.jsoniter.output.JsonStream
 
 @Suppress("UNUSED")
 class LoadTrackResponse internal constructor(@field:JsonIgnore private val result: LoadResult) {
-    val loadType = result.result.name
-    val tracks = result.tracks
+    @JsonIgnore private val loadType = result.result.name
+    @JsonIgnore private val tracks = result.tracks
 
     @JsonUnwrapper
-    fun unwrapPlaylistInfo(stream: JsonStream) {
-        if (result.playlistInfo != null) {
-            with (stream) {
+    fun unwrapResponse(stream: JsonStream) {
+        with (stream) {
+            writeObjectField("loadType")
+            writeVal(loadType)
+            writeMore()
+            writeObjectField("tracks")
+            writeVal(tracks)
+            result.playlistInfo?.let {
+                writeMore()
                 writeObjectField("playlistInfo")
                 writeVal(PlaylistInfo())
             }
