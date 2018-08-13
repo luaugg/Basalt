@@ -45,7 +45,7 @@ apply plugin: 'idea'
 apply plugin: 'application'
 
 group 'basalt'
-version '2.0.2'
+version '3.0.0'
 description = 'A high-performance, distributed audio node server based on Lavaplayer, Magma and Undertow.'
 sourceCompatibility = 10
 targetCompatibility = 10

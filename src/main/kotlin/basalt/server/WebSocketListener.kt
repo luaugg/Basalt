@@ -140,8 +140,9 @@ class WebSocketListener internal constructor(private val server: BasaltServer): 
 						track.position = play.startTime
 					player.startKeys.add(play.key)
 					player.audioPlayer.playTrack(server.trackUtil.toAudioTrack(play.track))
+                    LOGGER.debug("Playing track: {} for Guild ID: {} and User ID: {}", track.info.title, play.guildId, context.userId)
 				}
-				"pause" -> {
+				"setPaused" -> {
 					val pause = JsonIterator.deserialize(raw, SetPausedRequest::class.java)
 					val context = server.contexts[channel]
 					val guildId = pause.guildId
@@ -177,6 +178,7 @@ class WebSocketListener internal constructor(private val server: BasaltServer): 
 					}
 					player.pauseKey = pause.key
 					player.audioPlayer.isPaused = pause.paused
+                    LOGGER.debug("Set paused to {} for Guild ID: {} and User ID: {}", pause.paused, pause.guildId, context.userId)
 				}
 				"stop" -> {
 					val stop = JsonIterator.deserialize(raw, EmptyRequestBody::class.java)
@@ -203,6 +205,7 @@ class WebSocketListener internal constructor(private val server: BasaltServer): 
 					}
 					player.stopKey = stop.key
 					player.audioPlayer.stopTrack()
+                    LOGGER.debug("Stopped track for Guild ID: {} and User ID: {}", stop.guildId, context.userId)
 				}
 				"destroy" -> {
 					val destroy = JsonIterator.deserialize(raw, EmptyRequestBody::class.java)
@@ -223,6 +226,7 @@ class WebSocketListener internal constructor(private val server: BasaltServer): 
 					}
 					player.audioPlayer.destroy()
 					player.context.players.remove(destroy.guildId)
+                    server.contexts.remove(channel)
 					val member = MagmaMember.builder()
 							.guildId(destroy.guildId)
 							.userId(player.context.userId)
@@ -231,6 +235,7 @@ class WebSocketListener internal constructor(private val server: BasaltServer): 
 					server.magma.closeConnection(member)
 					val response = DispatchResponse(destroy.key, destroy.guildId, "DESTROYED")
 					WebSockets.sendText(JsonStream.serialize(response), channel, null)
+                    LOGGER.debug("Destroyed player for Guild ID: {} and User ID: {}", destroy.guildId, context.userId)
 				}
 				"volume" -> {
 					val volume = JsonIterator.deserialize(raw, SetVolumeRequest::class.java)
@@ -259,6 +264,7 @@ class WebSocketListener internal constructor(private val server: BasaltServer): 
 					player.audioPlayer.volume = volume.volume
 					val response = DispatchResponse(volume.key, volume.guildId, "VOLUME_UPDATE", volume.volume)
 					WebSockets.sendText(JsonStream.serialize(response), channel, null)
+                    LOGGER.debug("Set volume to {} for Guild ID: {} and User ID: {}", volume.volume, volume.guildId, context.userId)
 				}
 				"seek" -> {
 					val seek = JsonIterator.deserialize(raw, SeekRequest::class.java)
@@ -298,10 +304,11 @@ class WebSocketListener internal constructor(private val server: BasaltServer): 
 						return
 					}
 					player.audioPlayer.playingTrack.position = seek.position
-					val response = PlayerUpdate(seek.guildId, seek.position, System.currentTimeMillis())
+					val response = DispatchResponse(seek.key, seek.guildId, "POSITION_UPDATE", seek.position)
 					WebSockets.sendText(JsonStream.serialize(response), channel, null)
+                    LOGGER.debug("Set position of track to {} for Guild ID: {} and User ID: {}", seek.position, guildId, context.userId)
 				}
-				"load" -> {
+				"loadIdentifiers" -> {
 					val load = JsonIterator.deserialize(raw, LoadRequest::class.java)
 					val context = server.contexts[channel]
 					if (context == null) {
@@ -314,6 +321,7 @@ class WebSocketListener internal constructor(private val server: BasaltServer): 
 					val identifiers = LinkedList<String>()
 					identifiers.addAll(load.identifiers)
 					val chunks = Math.ceil((identifiers.size.toDouble() / chunkSize.toDouble())).toInt()
+                    LOGGER.debug("Loaded {} identifiers for User ID: {}", identifiers.size, context.userId)
 					launch {
 						for (i in 1..chunks) {
 							val list = ObjectArrayList<LoadTrackResponse>(chunkSize)
@@ -324,11 +332,11 @@ class WebSocketListener internal constructor(private val server: BasaltServer): 
 										.thenAccept { list.add(it) }
 										.thenAccept {
 											if (index == size) {
-												val response = DispatchResponse(load.key, null, "LOAD_TRACK_CHUNK", list.toTypedArray())
+												val response = DispatchResponse(load.key, null, "LOAD_IDENTIFIERS_CHUNK", list.toTypedArray())
 												WebSockets.sendText(JsonStream.serialize(response), channel, null)
 											}
 											if (i == chunks) {
-												val response = DispatchResponse(load.key, null, "CHUNK_FINISHED")
+												val response = DispatchResponse(load.key, null, "CHUNKS_FINISHED")
 												WebSockets.sendText(JsonStream.serialize(response), channel, null)
 											}
 										}
