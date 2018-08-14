@@ -226,7 +226,6 @@ class WebSocketListener internal constructor(private val server: BasaltServer): 
 					}
 					player.audioPlayer.destroy()
 					player.context.players.remove(destroy.guildId)
-                    server.contexts.remove(channel)
 					val member = MagmaMember.builder()
 							.guildId(destroy.guildId)
 							.userId(player.context.userId)
@@ -350,7 +349,7 @@ class WebSocketListener internal constructor(private val server: BasaltServer): 
 		}
 	}
 
-	/**
+    /**
 	 * @suppress
 	 */
 	companion object {

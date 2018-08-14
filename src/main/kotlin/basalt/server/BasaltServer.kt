@@ -50,7 +50,14 @@ import java.io.File
 
 import io.undertow.Handlers.websocket
 import io.undertow.websockets.core.WebSocketChannel
+import io.undertow.websockets.core.WebSockets
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap
+import java.util.concurrent.Executors
+import java.util.concurrent.ScheduledFuture
+import java.util.concurrent.TimeUnit
+import kotlin.concurrent.thread
+
+import basalt.messages.server.StatsUpdate
 
 /**
  * Type alias which is equal to `Object2ObjectOpenHashMap<WebSocketChannel, SocketContext>`
@@ -75,6 +82,8 @@ typealias SocketContextMap = Object2ObjectOpenHashMap<WebSocketChannel, SocketCo
  * @property sourceManager The Lavaplayer SourceManager used to actually load sources.
  * @property socket The Undertow WebSocket instance.
  * @property trackUtil The [AudioTrackUtil] instance used externally to encode tracks and vice versa.
+ * @property statsExecutor The ScheduledExecutorService used to send statistics to each connected channel.
+ * @property statsTask The task that sends statistics every provided period.
  *
  * @author Sam Pritchard
  * @since 1.0
@@ -98,6 +107,9 @@ class BasaltServer: AbstractVerticle() {
     private lateinit var password: String
     private lateinit var socket: Undertow
 
+    private val statsExecutor = Executors.newSingleThreadScheduledExecutor()
+    private var statsTask: ScheduledFuture<*>? = null
+
     /**
      * Called by Vert.x when this Verticle is deployed (which it is in the Main class).
      */
@@ -117,8 +129,32 @@ class BasaltServer: AbstractVerticle() {
         loadChunkSize = basalt["loadChunkSize"]!!.intValue()
         if (loadChunkSize < 1) {
             LOGGER.error("The size for Load Chunks must be larger than 0! Current Value: {}", loadChunkSize)
-            throw IllegalArgumentException(loadChunkSize.toString())
+            throw UnsupportedOperationException(loadChunkSize.toString())
         }
+
+        val statsInterval = basalt["statsInterval"]!!.intValue()
+        if (statsInterval < 5) {
+            LOGGER.error("Cannot send statistics at a more frequent rate than every 5 seconds!")
+            throw UnsupportedOperationException("Stats interval is too precise or out of bounds! $statsInterval")
+        }
+
+        statsTask = statsExecutor.scheduleAtFixedRate({
+            try {
+                val stats = JsonStream.serialize(StatsUpdate(this))
+                contexts.keys.forEach {
+                    channel ->
+                    if (channel.isOpen)
+                        WebSockets.sendText(stats, channel, null)
+                }
+            } catch (err: Throwable) {
+                LOGGER.error("Error thrown when attempting to send stats!", err)
+            }
+        }, 0, statsInterval.toLong(), TimeUnit.SECONDS)
+
+        Runtime.getRuntime().addShutdownHook(thread(start = false, priority = 5, name = "Basalt-Stats-ShutdownHook") {
+            if (!statsExecutor.isShutdown)
+                statsExecutor.shutdown()
+        })
 
         if (sources["youtube"]?.booleanValue() == true) {
             val manager = YoutubeAudioSourceManager(true)
@@ -142,10 +178,10 @@ class BasaltServer: AbstractVerticle() {
         if (sources["local"]?.booleanValue() == true)
             sourceManager.registerSourceManager(LocalAudioSourceManager())
 
-        val websocketHandler = websocket {exchange, channel ->
+        val websocketHandler = websocket { exchange, channel ->
             val auth = exchange.getRequestHeader("Authorization")
             val userId = exchange.getRequestHeader("User-Id")
-            if (auth == null) {
+            if (auth == null && password.isNotEmpty()) {
                 LOGGER.error("Missing Authorization Header!")
                 channel.closeCode = 4001
                 channel.closeReason = "Missing Headers"
@@ -190,6 +226,8 @@ class BasaltServer: AbstractVerticle() {
         LOGGER.info("Closing the Basalt Server ({} connected sockets)", contexts.size)
         magma.shutdown()
         socket.stop()
+        statsTask?.cancel(false)
+        statsExecutor.shutdown()
     }
 
     /**

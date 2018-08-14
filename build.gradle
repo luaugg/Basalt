@@ -136,6 +136,7 @@ ext {
     javassist_version = '3.23.1-GA'
     kotlin_coroutines_version = '0.24.0'
     commons_lang3_version = '3.7' // for jda async packet provider :/
+    oshi_version = '3.7.2'
 }
 
 dependencies {
@@ -152,8 +153,9 @@ dependencies {
     compile group: 'io.undertow', name: 'undertow-websockets-jsr', version: undertow_websocket_version
     compile group: 'it.unimi.dsi', name: 'fastutil', version: fastutil_version
     compile group: 'org.javassist', name: 'javassist', version: javassist_version
-    implementation group: 'org.jetbrains.kotlinx', name: 'kotlinx-coroutines-core', version: kotlin_coroutines_version
     compile group: 'org.apache.commons', name: 'commons-lang3', version: commons_lang3_version
+    compile group: 'com.github.oshi', name: 'oshi-core', version: oshi_version
+    implementation group: 'org.jetbrains.kotlinx', name: 'kotlinx-coroutines-core', version: kotlin_coroutines_version
 }
 
 compileKotlin {
