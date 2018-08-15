@@ -51,7 +51,8 @@ class WebSocketListener internal constructor(private val server: BasaltServer): 
 	 * @param channel The StreamSourceFrameChannel that was closed.
 	 */
 	override fun onClose(webSocketChannel: WebSocketChannel, channel: StreamSourceFrameChannel) {
-		server.contexts.remove(webSocketChannel)
+		super.onClose(webSocketChannel, channel)
+        server.contexts.remove(webSocketChannel)
 		if (webSocketChannel.isCloseInitiatedByRemotePeer) {
 			val host = webSocketChannel.sourceAddress
 					.toString()

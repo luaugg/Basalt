@@ -58,6 +58,14 @@ import java.util.concurrent.TimeUnit
 import kotlin.concurrent.thread
 
 import basalt.messages.server.StatsUpdate
+import com.fasterxml.jackson.databind.JsonNode
+import io.undertow.websockets.core.StreamSinkFrameChannel
+import io.undertow.websockets.core.WebSocketFrameType
+import org.xnio.ChannelExceptionHandler
+import org.xnio.ChannelListeners
+import org.xnio.IoUtils
+import org.xnio.channels.StreamSinkChannel
+import java.io.IOException
 
 /**
  * Type alias which is equal to `Object2ObjectOpenHashMap<WebSocketChannel, SocketContext>`
@@ -123,7 +131,7 @@ class BasaltServer: AbstractVerticle() {
         val dsn = basalt["sentryDsn"]
         if (dsn != null)
             Sentry.init(dsn.textValue())
-        password = basalt["password"]!!.textValue()
+        password = basalt["password"]?.textValue() ?: ""
         sourceManager = DefaultAudioPlayerManager()
         bufferDurationMs = basalt["bufferDurationMs"]!!.intValue()
         loadChunkSize = basalt["loadChunkSize"]!!.intValue()
@@ -140,6 +148,7 @@ class BasaltServer: AbstractVerticle() {
 
         statsTask = statsExecutor.scheduleAtFixedRate({
             try {
+                LOGGER.debug("Sending statistics to {} channels!", contexts.keys.size)
                 val stats = JsonStream.serialize(StatsUpdate(this))
                 contexts.keys.forEach {
                     channel ->
@@ -150,11 +159,6 @@ class BasaltServer: AbstractVerticle() {
                 LOGGER.error("Error thrown when attempting to send stats!", err)
             }
         }, 0, statsInterval.toLong(), TimeUnit.SECONDS)
-
-        Runtime.getRuntime().addShutdownHook(thread(start = false, priority = 5, name = "Basalt-Stats-ShutdownHook") {
-            if (!statsExecutor.isShutdown)
-                statsExecutor.shutdown()
-        })
 
         if (sources["youtube"]?.booleanValue() == true) {
             val manager = YoutubeAudioSourceManager(true)
@@ -179,27 +183,16 @@ class BasaltServer: AbstractVerticle() {
             sourceManager.registerSourceManager(LocalAudioSourceManager())
 
         val websocketHandler = websocket { exchange, channel ->
-            val auth = exchange.getRequestHeader("Authorization")
+            val auth = exchange.getRequestHeader("Authorization") ?: ""
             val userId = exchange.getRequestHeader("User-Id")
-            if (auth == null && password.isNotEmpty()) {
-                LOGGER.error("Missing Authorization Header!")
-                channel.closeCode = 4001
-                channel.closeReason = "Missing Headers"
-                channel.close()
-                return@websocket
-            }
             if (userId == null) {
                 LOGGER.error("Missing User-Id Header!")
-                channel.closeCode = 4001
-                channel.closeReason = "Missing Headers"
-                channel.close()
+                WebSockets.sendClose(4001, "Missing Headers", channel, null)
                 return@websocket
             }
             if (auth != password) {
                 LOGGER.error("Invalid Authorization Header!")
-                channel.closeCode = 4002
-                channel.closeReason = "Invalid Headers"
-                channel.close()
+                WebSockets.sendClose(4002, "Invalid Headers", channel, null)
                 return@websocket
             }
             contexts[channel] = SocketContext(this, channel, userId)
@@ -224,6 +217,7 @@ class BasaltServer: AbstractVerticle() {
      */
     override fun stop() {
         LOGGER.info("Closing the Basalt Server ({} connected sockets)", contexts.size)
+        contexts.keys.forEach { WebSockets.sendClose(1000, "Server shutting down!", it, null) }
         magma.shutdown()
         socket.stop()
         statsTask?.cancel(false)
