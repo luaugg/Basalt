@@ -55,17 +55,18 @@ import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledFuture
 import java.util.concurrent.TimeUnit
-import kotlin.concurrent.thread
 
 import basalt.messages.server.StatsUpdate
-import com.fasterxml.jackson.databind.JsonNode
-import io.undertow.websockets.core.StreamSinkFrameChannel
-import io.undertow.websockets.core.WebSocketFrameType
-import org.xnio.ChannelExceptionHandler
-import org.xnio.ChannelListeners
-import org.xnio.IoUtils
-import org.xnio.channels.StreamSinkChannel
+import io.undertow.Handlers.path
+import io.undertow.io.IoCallback
+import io.undertow.io.Sender
+import io.undertow.server.HttpServerExchange
+import io.undertow.util.Headers
 import java.io.IOException
+
+import basalt.player.AudioLoadHandler
+import basalt.messages.server.LoadTrackResponse
+import basalt.messages.server.JsonTrack
 
 /**
  * Type alias which is equal to `Object2ObjectOpenHashMap<WebSocketChannel, SocketContext>`
@@ -126,6 +127,7 @@ class BasaltServer: AbstractVerticle() {
         JsonStream.setMode(EncodingMode.DYNAMIC_MODE)
         val config = mapper.readTree(File("basalt.yml"))
         val basalt = config["basalt"]!!
+        val http = basalt["http"]!!
         val ws = basalt["socket"]!!
         val sources = basalt["sources"]!!
         val dsn = basalt["sentryDsn"]
@@ -182,17 +184,114 @@ class BasaltServer: AbstractVerticle() {
         if (sources["local"]?.booleanValue() == true)
             sourceManager.registerSourceManager(LocalAudioSourceManager())
 
+        val authHandler: ((HttpServerExchange) -> Boolean) = {
+            exchange ->
+            val authHeaders = exchange.requestHeaders[Headers.AUTHORIZATION]
+            val auth = if (authHeaders == null || authHeaders.isEmpty()) "" else authHeaders.first
+            auth == password
+        }
+
+        val ioCallback = object: IoCallback {
+            override fun onComplete(exchange: HttpServerExchange, sender: Sender) {
+                exchange.endExchange()
+            }
+
+            override fun onException(exchange: HttpServerExchange, sender: Sender, exception: IOException) {
+                LOGGER.error("Error when sending response content!", exception)
+                exchange.endExchange() // always have to clean up even when exceptions are thrown
+            }
+        }
+
+        val path = path()
+        path.addPrefixPath("/loadidentifiers") { exchange ->
+            if (!authHandler(exchange)) {
+                LOGGER.warn("Invalid Authorization Header!")
+                exchange.statusCode = 401
+                exchange.responseHeaders.add(Headers.WWW_AUTHENTICATE, "None realm=\"Loading of identifiers. Supply server password.\"")
+                exchange.responseHeaders.add(Headers.CONTENT_TYPE, "text/plain")
+                exchange.responseSender.send("Unauthorized -- Invalid Authorization Header", ioCallback)
+                return@addPrefixPath
+            }
+            val identifiers = exchange.queryParameters["identifier"]
+            if (identifiers == null) {
+                LOGGER.warn("Missing Identifier Query Parameters!")
+                exchange.statusCode = 400
+                exchange.responseHeaders.add(Headers.CONTENT_TYPE, "text/plain")
+                exchange.responseSender.send("Bad Request -- Missing identifiers!", ioCallback)
+                return@addPrefixPath
+            }
+            val runnable = {
+                val response = arrayOfNulls<LoadTrackResponse>(identifiers.size)
+                identifiers.forEachIndexed {
+                    index, identifier ->
+                    AudioLoadHandler(this).load(identifier)
+                            .thenApply { LoadTrackResponse(it) }
+                            .thenAccept { response[index] = it }
+                            .thenAccept {
+                                if (index + 1 == identifiers.size) {
+                                    exchange.responseHeaders.add(Headers.CONTENT_TYPE, "application/json")
+                                    exchange.responseSender.send(JsonStream.serialize(response), ioCallback)
+                                }
+                            }
+                }
+            }
+            if (exchange.isInIoThread)
+                exchange.dispatch(runnable)
+            else
+                runnable()
+        }
+
+        path.addPrefixPath("/decodetracks") { exchange ->
+            if (!authHandler(exchange)) {
+                LOGGER.warn("Invalid Authorization Header!")
+                exchange.statusCode = 401
+                exchange.responseHeaders.add(Headers.WWW_AUTHENTICATE, "None realm=\"Decoding of tracks. Supply server password.\"")
+                exchange.responseHeaders.add(Headers.CONTENT_TYPE, "text/plain")
+                exchange.responseSender.send("Unauthorized -- Invalid Authorization Header", ioCallback)
+                return@addPrefixPath
+            }
+            val tracks = exchange.queryParameters["track"]
+            if (tracks == null) {
+                LOGGER.warn("Missing Encoded Track Strings!")
+                exchange.statusCode = 400
+                exchange.responseHeaders.add(Headers.CONTENT_TYPE, "text/plain")
+                exchange.responseSender.send("Bad Request -- Missing tracks!", ioCallback)
+                return@addPrefixPath
+            }
+            val runnable = {
+                try {
+                    val response = arrayOfNulls<JsonTrack>(tracks.size)
+                    tracks.forEachIndexed { index, track ->
+                        response[index] = JsonTrack(trackUtil.toAudioTrack(track))
+                    }
+                    exchange.responseHeaders.add(Headers.CONTENT_TYPE, "application/json")
+                    exchange.responseSender.send(JsonStream.serialize(response), ioCallback)
+                } catch (err: Throwable) {
+                    LOGGER.error("Error decoding tracks!", err)
+                    exchange.statusCode = 500
+                    exchange.responseHeaders.add(Headers.CONTENT_TYPE, "text/plain")
+                    exchange.responseSender.send("Internal Server Error", ioCallback)
+                }
+            }
+            if (exchange.isInIoThread)
+                exchange.dispatch(runnable)
+            else
+                runnable()
+        }
+
         val websocketHandler = websocket { exchange, channel ->
             val auth = exchange.getRequestHeader("Authorization") ?: ""
             val userId = exchange.getRequestHeader("User-Id")
             if (userId == null) {
-                LOGGER.error("Missing User-Id Header!")
+                LOGGER.warn("Missing User-Id Header!")
                 WebSockets.sendClose(4001, "Missing Headers", channel, null)
+                exchange.endExchange()
                 return@websocket
             }
             if (auth != password) {
-                LOGGER.error("Invalid Authorization Header!")
+                LOGGER.warn("Invalid Authorization Header!")
                 WebSockets.sendClose(4002, "Invalid Headers", channel, null)
+                exchange.endExchange()
                 return@websocket
             }
             contexts[channel] = SocketContext(this, channel, userId)
@@ -204,8 +303,10 @@ class BasaltServer: AbstractVerticle() {
             channel.receiveSetter.set(listener)
             channel.resumeReceives()
         }
-        magma = MagmaApi.of {AsyncPacketProviderFactory.adapt(NativeAudioSendFactory(bufferDurationMs))}
+
+        magma = MagmaApi.of { AsyncPacketProviderFactory.adapt(NativeAudioSendFactory(bufferDurationMs)) }
         socket = Undertow.builder()
+                .addHttpListener(http["port"]!!.intValue(), http["host"]!!.textValue(), path)
                 .addHttpListener(ws["port"]!!.intValue(), ws["host"]!!.textValue(), websocketHandler)
                 .build()
         socket.start()

@@ -321,21 +321,21 @@ class WebSocketListener internal constructor(private val server: BasaltServer): 
 					val identifiers = LinkedList<String>()
 					identifiers.addAll(load.identifiers)
 					val chunks = Math.ceil((identifiers.size.toDouble() / chunkSize.toDouble())).toInt()
-                    LOGGER.debug("Loaded {} identifiers for User ID: {}", identifiers.size, context.userId)
 					launch {
-						for (i in 1..chunks) {
-							val list = ObjectArrayList<LoadTrackResponse>(chunkSize)
+						for (i in 0 until chunks) {
+							val array = arrayOfNulls<LoadTrackResponse>(chunkSize)
 							val size = min(identifiers.size, chunkSize)
 							for (index in 1..size) {
 								AudioLoadHandler(server).load(identifiers.poll())
 										.thenApply { LoadTrackResponse(it) }
-										.thenAccept { list.add(it) }
+										.thenAccept { array[i] = it }
 										.thenAccept {
 											if (index == size) {
-												val response = DispatchResponse(load.key, null, "LOAD_IDENTIFIERS_CHUNK", list.toTypedArray())
+												val response = DispatchResponse(load.key, null, "LOAD_IDENTIFIERS_CHUNK", array)
 												WebSockets.sendText(JsonStream.serialize(response), channel, null)
 											}
-											if (i == chunks) {
+											if (i + 1 == chunks) {
+                                                LOGGER.debug("Loaded {} identifiers for User ID: {}", identifiers.size, context.userId)
 												val response = DispatchResponse(load.key, null, "CHUNKS_FINISHED")
 												WebSockets.sendText(JsonStream.serialize(response), channel, null)
 											}
