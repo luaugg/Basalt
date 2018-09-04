@@ -18,14 +18,12 @@ package basalt.server
 import basalt.messages.client.*
 import basalt.messages.server.DispatchResponse
 import basalt.messages.server.LoadTrackResponse
-import basalt.messages.server.PlayerUpdate
 import basalt.player.AudioLoadHandler
 import basalt.player.BasaltPlayer
 import basalt.server.ErrorResponses.*
 import com.jsoniter.JsonIterator
 import com.jsoniter.output.JsonStream
 import io.undertow.websockets.core.*
-import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import kotlinx.coroutines.experimental.launch
 import org.slf4j.LoggerFactory
 import space.npstr.magma.MagmaMember
@@ -323,8 +321,8 @@ class WebSocketListener internal constructor(private val server: BasaltServer): 
 					val chunks = Math.ceil((identifiers.size.toDouble() / chunkSize.toDouble())).toInt()
 					launch {
 						for (i in 0 until chunks) {
-							val array = arrayOfNulls<LoadTrackResponse>(chunkSize)
 							val size = min(identifiers.size, chunkSize)
+							val array = arrayOfNulls<LoadTrackResponse>(size)
 							for (index in 1..size) {
 								AudioLoadHandler(server).load(identifiers.poll())
 										.thenApply { LoadTrackResponse(it) }
