@@ -18,7 +18,7 @@ buildscript {
     ext {
         dokka_version = '0.9.17'
         shadow_version = '2.0.4'
-        kotlin_version = '1.2.61'
+        kotlin_version = '1.3.0-rc-198'
         versions_version = '0.20.0'
     }
     repositories {
@@ -95,7 +95,7 @@ task updateDocs(type: Copy, dependsOn: javadocJar) {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '4.9'
+    gradleVersion = '4.10.2'
 }
 
 shadowJar {
@@ -123,25 +123,23 @@ artifacts {
 }
 
 ext {
-    vertx_version = '3.5.3'
-    magma_version = '0.5.0'
-    jda_async_provider_version = '1.3'
-    jda_native_audio_send_version = '1.0.6'
-    lavaplayer_version = '1.3.7'
-    jsoniter_version = '0.9.23'
-    jackson_yaml_version = '2.9.6'
-    sentry_logback_version = '1.7.5'
-    undertow_websocket_version = '2.0.12.Final'
-    fastutil_version = '8.2.1'
-    javassist_version = '3.23.1-GA'
-    kotlin_coroutines_version = '0.24.0'
-    commons_lang3_version = '3.7' // for jda async packet provider :/
-    oshi_version = '3.7.2'
+    vertx_version = '3.5.4' // v.x framework
+    magma_version = '0.6.1' // better jda-audio
+    jda_async_provider_version = '1.3' // async packet provider
+    jda_native_audio_send_version = '1.0.6' // native audio send
+    lavaplayer_version = '1.3.9' // lavaplayer
+    jsoniter_version = '0.9.23' // json encoding/decoding
+    jackson_yaml_version = '2.9.7' // parsing config file
+    sentry_logback_version = '1.7.13' // logging
+    javassist_version = '3.23.1-GA' // codegen for jsoniter
+    kotlin_coroutines_version = '1.0.0-RC1' // coroutines in kotlin
+    commons_lang3_version = '3.8.1' // for jda async packet provider :/
+    oshi_version = '3.9.1' // stats
+    jedis_version = '2.9.0' // redis client (for caching)
 }
 
 dependencies {
     compile group: 'space.npstr', name: 'Magma', version: magma_version
-    compile group: 'io.vertx', name: 'vertx-core', version: vertx_version
     compile group: 'io.vertx', name: 'vertx-lang-kotlin', version: vertx_version
     compile group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib-jdk8', version: kotlin_version
     compile group: 'com.github.shredder121', name: 'jda-async-packetprovider', version: jda_async_provider_version
@@ -150,11 +148,10 @@ dependencies {
     compile group: 'com.jsoniter', name: 'jsoniter', version: jsoniter_version
     compile group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: jackson_yaml_version
     compile group: 'io.sentry', name: 'sentry-logback', version: sentry_logback_version
-    compile group: 'io.undertow', name: 'undertow-websockets-jsr', version: undertow_websocket_version
-    compile group: 'it.unimi.dsi', name: 'fastutil', version: fastutil_version
     compile group: 'org.javassist', name: 'javassist', version: javassist_version
     compile group: 'org.apache.commons', name: 'commons-lang3', version: commons_lang3_version
     compile group: 'com.github.oshi', name: 'oshi-core', version: oshi_version
+    compile group: 'redis.clients', name: 'jedis', version: jedis_version
     implementation group: 'org.jetbrains.kotlinx', name: 'kotlinx-coroutines-core', version: kotlin_coroutines_version
 }
 
