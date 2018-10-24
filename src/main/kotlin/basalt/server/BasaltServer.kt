@@ -6,13 +6,15 @@ import basalt.messages.client.*
 import basalt.messages.server.DispatchResponse
 import basalt.messages.server.JsonTrack
 import basalt.messages.server.LoadTrackResponse
+import basalt.messages.server.StatsUpdate
 import basalt.player.AudioLoadHandler
 import basalt.player.BasaltPlayer
 import basalt.player.SocketContext
 import basalt.util.AudioTrackUtil
+import ch.qos.logback.classic.Level
+import ch.qos.logback.classic.Logger
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.databind.node.JsonNodeType
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import com.github.shredder121.asyncaudio.jda.AsyncPacketProviderFactory
 import com.jsoniter.JsonIterator
@@ -27,12 +29,13 @@ import com.sedmelluq.discord.lavaplayer.source.soundcloud.SoundCloudAudioSourceM
 import com.sedmelluq.discord.lavaplayer.source.twitch.TwitchStreamAudioSourceManager
 import com.sedmelluq.discord.lavaplayer.source.vimeo.VimeoAudioSourceManager
 import com.sedmelluq.discord.lavaplayer.source.youtube.YoutubeAudioSourceManager
+import io.sentry.Sentry
 import io.vertx.core.AbstractVerticle
 import io.vertx.core.Future
+import io.vertx.core.http.HttpServer
 import io.vertx.core.http.WebSocketBase
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import space.npstr.magma.MagmaApi
 import space.npstr.magma.MagmaMember
@@ -79,7 +82,12 @@ class BasaltServer: AbstractVerticle() {
     lateinit var trackUtil: AudioTrackUtil
     lateinit var socketContextMap: HashMap<String, SocketContext>
     lateinit var playerManager: DefaultAudioPlayerManager
-    var loadChunkSize = 25 // lateinit doesn't work on primitives unfortunately
+    lateinit var httpServer: HttpServer
+    lateinit var webSocketServer: HttpServer
+
+    var sessionExpirationSeconds = -1
+    var loadChunkSize = -1 // lateinit doesn't work on primitives unfortunately
+    var statsTimerId: Long? = null
 
     override fun start(startFuture: Future<Void>) {
         val mapper = ObjectMapper(YAMLFactory())
@@ -90,10 +98,6 @@ class BasaltServer: AbstractVerticle() {
 
         val playerConfig = config.getNotNull("players")
         val sources = playerConfig.getNotNull("sources")
-
-        val socketAddress = socket.getNotNull("address")
-        val socketPort = socket.getNotNull("port")
-        // note to self: check if http is enabled then validate
 
         playerManager = DefaultAudioPlayerManager()
         if (sources.getNotNull("youtube").booleanValue()) {
@@ -142,7 +146,7 @@ class BasaltServer: AbstractVerticle() {
         /* -- HTTP Connection -- */
 
         if (options.getNotNull("httpEnabled").booleanValue()) {
-            val httpServer = vertx.createHttpServer()
+            httpServer = vertx.createHttpServer()
             httpServer.requestHandler { request ->
                 val auth = request.getHeader("Authorization") ?: ""
                 val response = request.response()
@@ -220,7 +224,7 @@ class BasaltServer: AbstractVerticle() {
 
         /* -- WebSocket Connection -- */
 
-        val webSocketServer = vertx.createHttpServer()
+        webSocketServer = vertx.createHttpServer()
         webSocketServer.websocketHandler { ws ->
             val headers = ws.headers()
             val auth = headers["Authorization"] ?: ""
@@ -239,19 +243,74 @@ class BasaltServer: AbstractVerticle() {
 
             val context = socketContextMap[userId]
             if (context != null) {
-                context.webSocket.close(1001, "Socket resumed connection!")
+                context.resumeTimer?.let { vertx.cancelTimer(it) }
                 context.webSocket = ws
             } else {
                 socketContextMap[userId] = SocketContext(userId, ws)
             }
-            ws.textMessageHandler { handleTextMessage(ws, userId, it) }
+            ws.frameHandler { frame ->
+                when {
+                    frame.isClose -> handleClose(userId, frame.closeStatusCode().toInt(), frame.closeReason())
+                    frame.isText -> handleTextMessage(ws, userId, frame.textData())
+                }
+            }
+            ws.exceptionHandler { err ->
+                LOGGER.error("Error during WebSocket communication!", err)
+                ws.send(MessageTypes.ERROR, null, err.message ?: "No message.")
+            }
             ws.accept()
+        }
+        webSocketServer.listen(socket.getNotNull("port").intValue(), socket.getNotNull("address").textValue())
+
+        LOGGER.level = Level.toLevel(options.getNotNull("loggingLevel").textValue(), Level.INFO)
+        if (!options.isNull("sentryDsn")) {
+            val dsn = options.get("sentryDsn").textValue()
+            if (!dsn.isBlank() && !dsn.isEmpty())
+                Sentry.init(dsn)
+        }
+
+        sessionExpirationSeconds = options.getNotNull("sessionExpirationSeconds").intValue()
+        val contexts = socketContextMap.values
+        statsTimerId = vertx.setPeriodic(options.getNotNull("statsIntervalSeconds").longValue() * 1000) {
+            contexts.forEach { context ->
+                if (context.resumeTimer == null) // means socket is open
+                    context.webSocket.writeTextMessage(JsonStream.serialize(StatsUpdate(this)))
+            }
         }
         startFuture.complete()
     }
 
     override fun stop(stopFuture: Future<Void>) {
+        LOGGER.info("Closing Basalt Server!")
+        if (this::httpServer.isInitialized)
+            httpServer.close()
+        if (this::webSocketServer.isInitialized)
+            webSocketServer.close()
+        if (this::socketContextMap.isInitialized)
+            socketContextMap.clear()
+        statsTimerId?.let { vertx.cancelTimer(it) }
+        stopFuture.complete()
+    }
 
+    private fun handleClose(userId: String, closeCode: Int, closeMessage: String?) {
+        LOGGER.info("Socket closed with close code: {} and reason: {}", closeCode, closeMessage ?: "No specified reason.")
+        when (closeCode) {
+            4001, 4002, 4003 -> {
+                LOGGER.info("Connection to User ID: {} closed manually. Your session cannot be resumed.", userId)
+                val context = socketContextMap[userId]!!
+                context.players.values.forEach { it.audioSender = null; it.player.destroy()}
+                context.resumeTimer?.let { vertx.cancelTimer(it) }
+                socketContextMap.remove(userId)
+            }
+            else -> {
+                val context = socketContextMap[userId]!!
+                context.resumeTimer = vertx.setTimer((sessionExpirationSeconds * 1000).toLong()) { _ ->
+                    LOGGER.info("Destroyed unresumed session for User ID: {} after {} seconds!", userId, sessionExpirationSeconds)
+                    context.players.values.forEach { it.audioSender = null; it.player.destroy()}
+                    socketContextMap.remove(userId)
+                }
+            }
+        }
     }
 
     private fun handleTextMessage(socket: WebSocketBase, userId: String, msg: String) {
@@ -456,22 +515,24 @@ class BasaltServer: AbstractVerticle() {
                         }
                     }
                 }
+                else -> LOGGER.warn("Unhandled Request with Name: {}", name)
+
             }
         }
     }
 
     companion object {
-        private val LOGGER: Logger = LoggerFactory.getLogger(BasaltServer::class.java)
+        private val LOGGER: Logger = LoggerFactory.getLogger(BasaltServer::class.java) as Logger
     }
 }
 
-
-fun JsonNode.getNotNull(name: String): JsonNode {
+fun JsonNode.isNull(name: String): Boolean {
     val node = get(name)
-    if (node == null || node.nodeType === JsonNodeType.NULL || node.nodeType === JsonNodeType.MISSING)
-        throw ConfigurationException(name)
-    return node
+    return node == null || node.isNull || node.isMissingNode
 }
+
+fun JsonNode.getNotNull(name: String): JsonNode = if (isNull(name)) throw ConfigurationException(name) else get(name)
+
 
 fun WebSocketBase.send(type: MessageType, guildId: String?, data: Any?, key: String? = null) = writeTextMessage(JsonStream.serialize(DispatchResponse(guildId, type.type, data, key)))
 fun WebSocketBase.error(guildId: String?, error: String) = send(MessageTypes.ERROR, guildId, error)
