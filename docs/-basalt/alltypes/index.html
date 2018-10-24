@@ -20,8 +20,7 @@
 <td>
 <a href="../basalt.server/-audio-sender/index.html">basalt.server.AudioSender</a></td>
 <td>
-<p>Sender class which takes in Opus frames from Lavaplayer and passes them to Magma, where they are then
-subsequently sent to Discord.</p>
+<p>The AudioSendHandler used by Magma to actually send audio in the first place.</p>
 </td>
 </tr>
 <tr>
@@ -35,21 +34,38 @@ subsequently sent to Discord.</p>
 <td>
 <a href="../basalt.player/-basalt-player/index.html">basalt.player.BasaltPlayer</a></td>
 <td>
-<p>A player class associated with a <a href="../basalt.player/-socket-context/index.html">SocketContext</a> and a Guild ID, with a "lifecycle" determined by incoming requests.</p>
+<p>A player class which contains methods that react to lavaplayer events. Represents a unique audio stream for a specific guild.</p>
 </td>
 </tr>
 <tr>
 <td>
 <a href="../basalt.server/-basalt-server/index.html">basalt.server.BasaltServer</a></td>
 <td>
-<p>Server instance which is the starting point for every other part of Basalt.</p>
+<p>The main entry class for Basalt which is responsible for every single last part of the application.
+As of v4, this class handles most things, such as HTTP and WebSocket connections and timers, itself without shipping
+those tasks off to other classes.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../basalt.exceptions/-configuration-exception/index.html">basalt.exceptions.ConfigurationException</a></td>
+<td>
+<p>Represents an issue with the Basalt configuration file, most commonly thrown when a certain field is null.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../basalt.server/-error-response/index.html">basalt.server.ErrorResponse</a></td>
+<td>
+<p>Inline class meant to restrict types without performance hits.
+This is all optimized heavily by Kotlin's compiler.</p>
 </td>
 </tr>
 <tr>
 <td>
 <a href="../basalt.server/-error-responses/index.html">basalt.server.ErrorResponses</a></td>
 <td>
-<p>An enum of responses that are returned in Dispatched <code>ERROR</code> Responses, as they're written here.</p>
+<p>An object containing responses that are returned in Dispatched <code>ERROR</code> Responses, as they're written here.</p>
 </td>
 </tr>
 <tr>
@@ -61,9 +77,24 @@ subsequently sent to Discord.</p>
 </tr>
 <tr>
 <td>
-<a href="../basalt.player/-player-map.html">basalt.player.PlayerMap</a></td>
+<a href="../basalt.server/-message-type/index.html">basalt.server.MessageType</a></td>
 <td>
-<p>Type alias equivalent to an <code>Object2ObjectOpenHashMap&lt;String, BasaltPlayer&gt;</code></p>
+<p>An inline class which represents the type of message response sent back to clients.
+Inline classes are optimized heavily by the Kotlin compiler, so no performance hits occur.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../basalt.server/-message-types/index.html">basalt.server.MessageTypes</a></td>
+<td>
+<p>An object containing a bunch of message types that indicate the type of event being sent back to clients.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../basalt.exceptions/-missing-context-exception/index.html">basalt.exceptions.MissingContextException</a></td>
+<td>
+<p>Thrown when an "impossible" event occurs where a connected socket doesn't have an associated <a href="../basalt.player/-socket-context/index.html">basalt.player.SocketContext</a>.</p>
 </td>
 </tr>
 <tr>
@@ -77,22 +108,8 @@ subsequently sent to Discord.</p>
 <td>
 <a href="../basalt.player/-socket-context/index.html">basalt.player.SocketContext</a></td>
 <td>
-<p>Context class which stores a reference to a <a href="../basalt.server/-basalt-server/index.html">BasaltServer</a>, a WebSocketChannel and the User ID associated
-with that channel, as well as a PlayerMap that indexes <a href="../basalt.player/-basalt-player/index.html">BasaltPlayers</a> by Guild ID.</p>
-</td>
-</tr>
-<tr>
-<td>
-<a href="../basalt.server/-socket-context-map.html">basalt.server.SocketContextMap</a></td>
-<td>
-<p>Type alias which is equal to <code>Object2ObjectOpenHashMap&lt;WebSocketChannel, SocketContext&gt;</code></p>
-</td>
-</tr>
-<tr>
-<td>
-<a href="../basalt.server/-web-socket-listener/index.html">basalt.server.WebSocketListener</a></td>
-<td>
-<p>The listener class which responds to WebSocket Events, including (but not limited to) incoming messages.</p>
+<p>A SocketContext meant to associate a User ID with a WebSocket connection and a map of players as well as the ID
+of a timer to be scheduled for resume purposes when the connection closes.</p>
 </td>
 </tr>
 </tbody>

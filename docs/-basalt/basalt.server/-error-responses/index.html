@@ -8,8 +8,8 @@
 <a href="../../index.html">Basalt</a>&nbsp;/&nbsp;<a href="../index.html">basalt.server</a>&nbsp;/&nbsp;<a href="./index.html">ErrorResponses</a><br/>
 <br/>
 <h1>ErrorResponses</h1>
-<code><span class="keyword">enum</span> <span class="keyword">class </span><span class="identifier">ErrorResponses</span></code>
-<p>An enum of responses that are returned in Dispatched <code>ERROR</code> Responses, as they're written here.</p>
+<code><span class="keyword">object </span><span class="identifier">ErrorResponses</span></code>
+<p>An object containing responses that are returned in Dispatched <code>ERROR</code> Responses, as they're written here.</p>
 <p>This means that, for example, if you tried to set the volume of a player to -5, an <code>ERROR</code> event would be
 dispatched (as in wrapped in a Dispatch Response and sent back) in response with the value being
 "VOLUME_OUT_OF_BOUNDS".</p>
@@ -17,7 +17,7 @@ dispatched (as in wrapped in a Dispatch Response and sent back) in response with
 Sam Pritchard</p>
 <p><strong>Since</strong><br/>
 1.1.0</p>
-<h3>Enum Values</h3>
+<h3>Properties</h3>
 <table>
 <tbody>
 <tr>
@@ -25,39 +25,8 @@ Sam Pritchard</p>
 <p><a href="-n-o_-t-r-a-c-k.html">NO_TRACK</a></p>
 </td>
 <td>
+<code><span class="keyword">val </span><span class="identifier">NO_TRACK</span><span class="symbol">: </span><a href="../-error-response/index.html"><span class="identifier">ErrorResponse</span></a></code>
 <p>Returned if no track was playing upon an attempt to update it (i.e seeking).</p>
-</td>
-</tr>
-<tr>
-<td>
-<p><a href="-t-r-a-c-k_-n-o-t_-s-e-e-k-a-b-l-e.html">TRACK_NOT_SEEKABLE</a></p>
-</td>
-<td>
-<p>Returned if the currently playing track isn't seekable upon attempting to seek.</p>
-</td>
-</tr>
-<tr>
-<td>
-<p><a href="-p-o-s-i-t-i-o-n_-o-u-t_-o-f_-b-o-u-n-d-s.html">POSITION_OUT_OF_BOUNDS</a></p>
-</td>
-<td>
-<p>Returned if an attempt was made to seek to a position below 0 or longer than the duration of the track.</p>
-</td>
-</tr>
-<tr>
-<td>
-<p><a href="-v-o-l-u-m-e_-o-u-t_-o-f_-b-o-u-n-d-s.html">VOLUME_OUT_OF_BOUNDS</a></p>
-</td>
-<td>
-<p>Returned if an attempt was made to set the volume to below 0 or above 1000.</p>
-</td>
-</tr>
-<tr>
-<td>
-<p><a href="-p-l-a-y-e-r_-n-o-t_-i-n-i-t-i-a-l-i-z-e-d.html">PLAYER_NOT_INITIALIZED</a></p>
-</td>
-<td>
-<p>Returned if an attempt was made to update a non-existent player (before initializing).</p>
 </td>
 </tr>
 <tr>
@@ -65,6 +34,7 @@ Sam Pritchard</p>
 <p><a href="-p-l-a-y-e-r_-a-l-r-e-a-d-y_-i-n-i-t-i-a-l-i-z-e-d.html">PLAYER_ALREADY_INITIALIZED</a></p>
 </td>
 <td>
+<code><span class="keyword">val </span><span class="identifier">PLAYER_ALREADY_INITIALIZED</span><span class="symbol">: </span><a href="../-error-response/index.html"><span class="identifier">ErrorResponse</span></a></code>
 <p>Returned if an attempt was made to initialize an already-initialized player.</p>
 </td>
 </tr>
@@ -73,6 +43,7 @@ Sam Pritchard</p>
 <p><a href="-p-l-a-y-e-r_-a-l-r-e-a-d-y_-p-a-u-s-e-d.html">PLAYER_ALREADY_PAUSED</a></p>
 </td>
 <td>
+<code><span class="keyword">val </span><span class="identifier">PLAYER_ALREADY_PAUSED</span><span class="symbol">: </span><a href="../-error-response/index.html"><span class="identifier">ErrorResponse</span></a></code>
 <p>Returned if an attempt was made to pause a player if it is already paused.</p>
 </td>
 </tr>
@@ -81,15 +52,44 @@ Sam Pritchard</p>
 <p><a href="-p-l-a-y-e-r_-a-l-r-e-a-d-y_-r-e-s-u-m-e-d.html">PLAYER_ALREADY_RESUMED</a></p>
 </td>
 <td>
+<code><span class="keyword">val </span><span class="identifier">PLAYER_ALREADY_RESUMED</span><span class="symbol">: </span><a href="../-error-response/index.html"><span class="identifier">ErrorResponse</span></a></code>
 <p>Returned if an attempt was made to resume a player if it has already been resumed.</p>
 </td>
 </tr>
 <tr>
 <td>
-<p><a href="-s-o-c-k-e-t_-c-o-n-t-e-x-t_-n-u-l-l.html">SOCKET_CONTEXT_NULL</a></p>
+<p><a href="-p-l-a-y-e-r_-n-o-t_-i-n-i-t-i-a-l-i-z-e-d.html">PLAYER_NOT_INITIALIZED</a></p>
 </td>
 <td>
-<p>Returned if, for some reason, the internal <a href="../../basalt.player/-socket-context/index.html">SocketContext</a> associated with the WebSocket Connection is <code>null</code>.</p>
+<code><span class="keyword">val </span><span class="identifier">PLAYER_NOT_INITIALIZED</span><span class="symbol">: </span><a href="../-error-response/index.html"><span class="identifier">ErrorResponse</span></a></code>
+<p>Returned if an attempt was made to update a non-existent player (before initializing).</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-p-o-s-i-t-i-o-n_-o-u-t_-o-f_-b-o-u-n-d-s.html">POSITION_OUT_OF_BOUNDS</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">POSITION_OUT_OF_BOUNDS</span><span class="symbol">: </span><a href="../-error-response/index.html"><span class="identifier">ErrorResponse</span></a></code>
+<p>Returned if an attempt was made to seek to a position below 0 or longer than the duration of the track.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-t-r-a-c-k_-n-o-t_-s-e-e-k-a-b-l-e.html">TRACK_NOT_SEEKABLE</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">TRACK_NOT_SEEKABLE</span><span class="symbol">: </span><a href="../-error-response/index.html"><span class="identifier">ErrorResponse</span></a></code>
+<p>Returned if the currently playing track isn't seekable upon attempting to seek.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-v-o-l-u-m-e_-o-u-t_-o-f_-b-o-u-n-d-s.html">VOLUME_OUT_OF_BOUNDS</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">VOLUME_OUT_OF_BOUNDS</span><span class="symbol">: </span><a href="../-error-response/index.html"><span class="identifier">ErrorResponse</span></a></code>
+<p>Returned if an attempt was made to set the volume to below 0 or above 1000.</p>
 </td>
 </tr>
 </tbody>

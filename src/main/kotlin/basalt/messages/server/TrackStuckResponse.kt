@@ -23,6 +23,5 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack
 class TrackStuckResponse internal constructor(@field:JsonIgnore private val server: BasaltServer,
                                               @field:JsonIgnore private val tr: AudioTrack,
                                               val thresholdMs: Long) {
-    val serverBufferDuration = server.bufferDurationMs
     val track = server.trackUtil.fromAudioTrack(tr)
 }

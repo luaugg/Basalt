@@ -8,10 +8,13 @@
 <a href="../../index.html">Basalt</a>&nbsp;/&nbsp;<a href="../index.html">basalt.player</a>&nbsp;/&nbsp;<a href="index.html">SocketContext</a>&nbsp;/&nbsp;<a href="./-init-.html">&lt;init&gt;</a><br/>
 <br/>
 <h1>&lt;init&gt;</h1>
-<a name="basalt.player.SocketContext$&lt;init&gt;(basalt.server.BasaltServer, io.undertow.websockets.core.WebSocketChannel, kotlin.String)"></a>
-<code><span class="keyword">internal</span> <span class="identifier">SocketContext</span><span class="symbol">(</span><span class="identifier" id="basalt.player.SocketContext$<init>(basalt.server.BasaltServer, io.undertow.websockets.core.WebSocketChannel, kotlin.String)/server">server</span><span class="symbol">:</span>&nbsp;<a href="../../basalt.server/-basalt-server/index.html"><span class="identifier">BasaltServer</span></a><span class="symbol">, </span><span class="identifier" id="basalt.player.SocketContext$<init>(basalt.server.BasaltServer, io.undertow.websockets.core.WebSocketChannel, kotlin.String)/channel">channel</span><span class="symbol">:</span>&nbsp;<span class="identifier">WebSocketChannel</span><span class="symbol">, </span><span class="identifier" id="basalt.player.SocketContext$<init>(basalt.server.BasaltServer, io.undertow.websockets.core.WebSocketChannel, kotlin.String)/userId">userId</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span></code>
-<p>Constructs a SocketContext from a <a href="../../basalt.server/-basalt-server/index.html">BasaltServer</a>, a WebSocketChannel and a User ID String.</p>
-<p><strong>Constructor</strong><br/>
-Constructs a SocketContext from a <a href="../../basalt.server/-basalt-server/index.html">BasaltServer</a>, a WebSocketChannel and a User ID String.</p>
+<a name="basalt.player.SocketContext$&lt;init&gt;(io.vertx.core.http.ServerWebSocket)"></a>
+<code><span class="identifier">SocketContext</span><span class="symbol">(</span><span class="identifier" id="basalt.player.SocketContext$<init>(io.vertx.core.http.ServerWebSocket)/webSocket">webSocket</span><span class="symbol">:</span>&nbsp;<span class="identifier">ServerWebSocket</span><span class="symbol">)</span></code>
+<p>A SocketContext meant to associate a User ID with a WebSocket connection and a map of players as well as the ID
+of a timer to be scheduled for resume purposes when the connection closes.</p>
+<p><strong>Author</strong><br/>
+Sam Pritchard</p>
+<p><strong>Since</strong><br/>
+4.0.0</p>
 </BODY>
 </HTML>

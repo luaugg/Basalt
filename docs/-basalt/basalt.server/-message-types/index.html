@@ -1,0 +1,131 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>MessageTypes - Basalt</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">Basalt</a>&nbsp;/&nbsp;<a href="../index.html">basalt.server</a>&nbsp;/&nbsp;<a href="./index.html">MessageTypes</a><br/>
+<br/>
+<h1>MessageTypes</h1>
+<code><span class="keyword">object </span><span class="identifier">MessageTypes</span></code>
+<p>An object containing a bunch of message types that indicate the type of event being sent back to clients.</p>
+<p><strong>Author</strong><br/>
+Sam Pritchard</p>
+<p><strong>Since</strong><br/>
+4.0.0</p>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-c-h-u-n-k-s_-f-i-n-i-s-h-e-d.html">CHUNKS_FINISHED</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">CHUNKS_FINISHED</span><span class="symbol">: </span><a href="../-message-type/index.html"><span class="identifier">MessageType</span></a></code>
+<p>Indicates that the chunks finished for the requested identifier (not specified).</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-d-e-s-t-r-o-y-e-d.html">DESTROYED</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">DESTROYED</span><span class="symbol">: </span><a href="../-message-type/index.html"><span class="identifier">MessageType</span></a></code>
+<p>Indicates a player was successfully destroyed.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-e-r-r-o-r.html">ERROR</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">ERROR</span><span class="symbol">: </span><a href="../-message-type/index.html"><span class="identifier">MessageType</span></a></code>
+<p>Indicates an error occurred. List of <em>most</em> errors can be found in the docs for <a href="../-error-responses/index.html">ErrorResponses</a>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-i-n-i-t-i-a-l-i-z-e-d.html">INITIALIZED</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">INITIALIZED</span><span class="symbol">: </span><a href="../-message-type/index.html"><span class="identifier">MessageType</span></a></code>
+<p>Indicates a player was successfully initialized.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-l-o-a-d_-i-d-e-n-t-i-f-i-e-r-s_-c-h-u-n-k.html">LOAD_IDENTIFIERS_CHUNK</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">LOAD_IDENTIFIERS_CHUNK</span><span class="symbol">: </span><a href="../-message-type/index.html"><span class="identifier">MessageType</span></a></code>
+<p>Indicates a track load chunk (only sent when requesting tracks via WebSocket)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-p-l-a-y-e-r_-p-a-u-s-e.html">PLAYER_PAUSE</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">PLAYER_PAUSE</span><span class="symbol">: </span><a href="../-message-type/index.html"><span class="identifier">MessageType</span></a></code>
+<p>Indicates that a player was paused or resumed.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-p-o-s-i-t-i-o-n_-u-p-d-a-t-e.html">POSITION_UPDATE</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">POSITION_UPDATE</span><span class="symbol">: </span><a href="../-message-type/index.html"><span class="identifier">MessageType</span></a></code>
+<p>Indicates a player's position was successfully set.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-t-r-a-c-k_-e-n-d.html">TRACK_END</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">TRACK_END</span><span class="symbol">: </span><a href="../-message-type/index.html"><span class="identifier">MessageType</span></a></code>
+<p>Indicates that a track ended.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-t-r-a-c-k_-e-x-c-e-p-t-i-o-n.html">TRACK_EXCEPTION</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">TRACK_EXCEPTION</span><span class="symbol">: </span><a href="../-message-type/index.html"><span class="identifier">MessageType</span></a></code>
+<p>Indicates that an exception was thrown within track playback.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-t-r-a-c-k_-s-t-a-r-t.html">TRACK_START</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">TRACK_START</span><span class="symbol">: </span><a href="../-message-type/index.html"><span class="identifier">MessageType</span></a></code>
+<p>Indicates that a track started.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-t-r-a-c-k_-s-t-u-c-k.html">TRACK_STUCK</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">TRACK_STUCK</span><span class="symbol">: </span><a href="../-message-type/index.html"><span class="identifier">MessageType</span></a></code>
+<p>Indicates that a track got stuck before it could be finished.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-v-o-l-u-m-e_-u-p-d-a-t-e.html">VOLUME_UPDATE</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">VOLUME_UPDATE</span><span class="symbol">: </span><a href="../-message-type/index.html"><span class="identifier">MessageType</span></a></code>
+<p>Indicates a player's volume was successfully set.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

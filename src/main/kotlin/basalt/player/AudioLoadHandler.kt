@@ -15,8 +15,8 @@ limitations under the License.
  */
 package basalt.player
 
-import basalt.server.BasaltServer
 import basalt.messages.server.TrackPair
+import basalt.server.BasaltServer
 import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist
@@ -57,7 +57,7 @@ class AudioLoadHandler internal constructor(private val server: BasaltServer): A
             LOGGER.error("AudioLoadHandler can only be used once!")
             throw IllegalStateException("AudioLoadHandler can only be used once!")
         }
-        server.sourceManager.loadItem(identifier, this)
+        server.playerManager.loadItem(identifier, this)
         return future
     }
 

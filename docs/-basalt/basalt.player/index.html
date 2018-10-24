@@ -27,7 +27,7 @@
 </td>
 <td>
 <code><span class="keyword">class </span><span class="identifier">BasaltPlayer</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">AudioEventAdapter</span></code>
-<p>A player class associated with a <a href="-socket-context/index.html">SocketContext</a> and a Guild ID, with a "lifecycle" determined by incoming requests.</p>
+<p>A player class which contains methods that react to lavaplayer events. Represents a unique audio stream for a specific guild.</p>
 </td>
 </tr>
 <tr>
@@ -54,22 +54,8 @@
 </td>
 <td>
 <code><span class="keyword">class </span><span class="identifier">SocketContext</span></code>
-<p>Context class which stores a reference to a <a href="../basalt.server/-basalt-server/index.html">BasaltServer</a>, a WebSocketChannel and the User ID associated
-with that channel, as well as a PlayerMap that indexes <a href="-basalt-player/index.html">BasaltPlayers</a> by Guild ID.</p>
-</td>
-</tr>
-</tbody>
-</table>
-<h3>Type Aliases</h3>
-<table>
-<tbody>
-<tr>
-<td>
-<p><a href="-player-map.html">PlayerMap</a></p>
-</td>
-<td>
-<code><span class="keyword">typealias </span><span class="identifier">PlayerMap</span>&nbsp;<span class="symbol">=</span>&nbsp;<span class="identifier">Object2ObjectOpenHashMap</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">,</span>&nbsp;<a href="-basalt-player/index.html"><span class="identifier">BasaltPlayer</span></a><span class="symbol">&gt;</span></code>
-<p>Type alias equivalent to an <code>Object2ObjectOpenHashMap&lt;String, BasaltPlayer&gt;</code></p>
+<p>A SocketContext meant to associate a User ID with a WebSocket connection and a map of players as well as the ID
+of a timer to be scheduled for resume purposes when the connection closes.</p>
 </td>
 </tr>
 </tbody>

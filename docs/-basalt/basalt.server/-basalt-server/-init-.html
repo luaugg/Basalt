@@ -10,9 +10,12 @@
 <h1>&lt;init&gt;</h1>
 <a name="basalt.server.BasaltServer$&lt;init&gt;()"></a>
 <code><span class="identifier">BasaltServer</span><span class="symbol">(</span><span class="symbol">)</span></code>
-<p>Server instance which is the starting point for every other part of Basalt.</p>
-<p>This class is only meant to run/started up once, although it <em>technically</em> allows multiple start ups.
-From this class, the Undertow WebSocket is created and the configuration options are parsed and applied.</p>
-<p>The Jsoniter options are also set upon this server being started, as well as Magma being setup too.</p>
+<p>The main entry class for Basalt which is responsible for every single last part of the application.
+As of v4, this class handles most things, such as HTTP and WebSocket connections and timers, itself without shipping
+those tasks off to other classes.</p>
+<p><strong>Author</strong><br/>
+Sam Pritchard</p>
+<p><strong>Since</strong><br/>
+4.0.0</p>
 </BODY>
 </HTML>

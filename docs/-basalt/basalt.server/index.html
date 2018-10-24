@@ -19,8 +19,7 @@ as well as the <code>BasaltServer</code> class itself.</p>
 </td>
 <td>
 <code><span class="keyword">class </span><span class="identifier">AudioSender</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">AudioSendHandler</span></code>
-<p>Sender class which takes in Opus frames from Lavaplayer and passes them to Magma, where they are then
-subsequently sent to Discord.</p>
+<p>The AudioSendHandler used by Magma to actually send audio in the first place.</p>
 </td>
 </tr>
 <tr>
@@ -29,7 +28,19 @@ subsequently sent to Discord.</p>
 </td>
 <td>
 <code><span class="keyword">class </span><span class="identifier">BasaltServer</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">AbstractVerticle</span></code>
-<p>Server instance which is the starting point for every other part of Basalt.</p>
+<p>The main entry class for Basalt which is responsible for every single last part of the application.
+As of v4, this class handles most things, such as HTTP and WebSocket connections and timers, itself without shipping
+those tasks off to other classes.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-error-response/index.html">ErrorResponse</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">ErrorResponse</span></code>
+<p>Inline class meant to restrict types without performance hits.
+This is all optimized heavily by Kotlin's compiler.</p>
 </td>
 </tr>
 <tr>
@@ -37,31 +48,27 @@ subsequently sent to Discord.</p>
 <p><a href="-error-responses/index.html">ErrorResponses</a></p>
 </td>
 <td>
-<code><span class="keyword">enum</span> <span class="keyword">class </span><span class="identifier">ErrorResponses</span></code>
-<p>An enum of responses that are returned in Dispatched <code>ERROR</code> Responses, as they're written here.</p>
+<code><span class="keyword">object </span><span class="identifier">ErrorResponses</span></code>
+<p>An object containing responses that are returned in Dispatched <code>ERROR</code> Responses, as they're written here.</p>
 </td>
 </tr>
 <tr>
 <td>
-<p><a href="-web-socket-listener/index.html">WebSocketListener</a></p>
+<p><a href="-message-type/index.html">MessageType</a></p>
 </td>
 <td>
-<code><span class="keyword">class </span><span class="identifier">WebSocketListener</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">AbstractReceiveListener</span></code>
-<p>The listener class which responds to WebSocket Events, including (but not limited to) incoming messages.</p>
+<code><span class="keyword">class </span><span class="identifier">MessageType</span></code>
+<p>An inline class which represents the type of message response sent back to clients.
+Inline classes are optimized heavily by the Kotlin compiler, so no performance hits occur.</p>
 </td>
 </tr>
-</tbody>
-</table>
-<h3>Type Aliases</h3>
-<table>
-<tbody>
 <tr>
 <td>
-<p><a href="-socket-context-map.html">SocketContextMap</a></p>
+<p><a href="-message-types/index.html">MessageTypes</a></p>
 </td>
 <td>
-<code><span class="keyword">typealias </span><span class="identifier">SocketContextMap</span>&nbsp;<span class="symbol">=</span>&nbsp;<span class="identifier">Object2ObjectOpenHashMap</span><span class="symbol">&lt;</span><span class="identifier">WebSocketChannel</span><span class="symbol">,</span>&nbsp;<a href="../basalt.player/-socket-context/index.html"><span class="identifier">SocketContext</span></a><span class="symbol">&gt;</span></code>
-<p>Type alias which is equal to <code>Object2ObjectOpenHashMap&lt;WebSocketChannel, SocketContext&gt;</code></p>
+<code><span class="keyword">object </span><span class="identifier">MessageTypes</span></code>
+<p>An object containing a bunch of message types that indicate the type of event being sent back to clients.</p>
 </td>
 </tr>
 </tbody>
