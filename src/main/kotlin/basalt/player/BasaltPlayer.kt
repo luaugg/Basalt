@@ -2,6 +2,7 @@ package basalt.player
 
 import basalt.messages.server.DispatchResponse
 import basalt.messages.server.PlayerUpdate
+import basalt.server.AudioSender
 import com.jsoniter.output.JsonStream
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer
 import com.sedmelluq.discord.lavaplayer.player.event.*
@@ -15,6 +16,7 @@ import kotlinx.coroutines.launch
 
 class BasaltPlayer(private val vertx: Vertx, private val webSocket: WebSocketBase, val player: AudioPlayer, val guildId: String): AudioEventAdapter() {
     private var updateSchedulerId: Long? = null
+    var audioSender: AudioSender? = null
 
     override fun onTrackStart(player: AudioPlayer, track: AudioTrack) {
         GlobalScope.launch {

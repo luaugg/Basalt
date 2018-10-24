@@ -8,7 +8,7 @@ package basalt.server
  * @since 4.0.0
  * @author Sam Pritchard
  */
-inline class MessageType(private val type: String)
+inline class MessageType(val type: String)
 
 /**
  * An object containing a bunch of message types that indicate the type of event being sent back to clients.
@@ -23,7 +23,7 @@ object MessageTypes {
 
     /** Indicates a player was successfully initialized. */
     val INITIALIZED = MessageType("INITIALIZED")
-    
+
     /** Indicates a player was successfully destroyed. */
     val DESTROYED = MessageType("DESTROYED")
 

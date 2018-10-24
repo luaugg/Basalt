@@ -22,7 +22,8 @@ import com.jsoniter.output.JsonStream
 @Suppress("UNUSED")
 class DispatchResponse internal constructor(@field:JsonIgnore val guildId: String? = null,
                                             @field:JsonIgnore val name: String,
-                                            @field:JsonIgnore val data: Any? = null) {
+                                            @field:JsonIgnore val data: Any? = null,
+                                            @field:JsonIgnore val key: String? = null) {
     @JsonUnwrapper
     fun unwrapData(stream: JsonStream) {
         with (stream) {
@@ -33,6 +34,7 @@ class DispatchResponse internal constructor(@field:JsonIgnore val guildId: Strin
             writeVal(name)
             guildId?.let { writeMore(); writeObjectField("guildId"); writeVal(it) }
             data?.let { writeMore(); writeObjectField("data"); writeVal(data) }
+            key?.let { writeMore(); writeObjectField("key"); writeVal(key) }
         }
     }
 }
