@@ -38,10 +38,10 @@ class StatsUpdate internal constructor(@field:JsonIgnore private val server: Bas
     val cpu = Cpu()
 
     init {
-        for (context in server.contexts.values) {
+        for (context in server.socketContextMap.values) {
             for (player in context.players.values) {
                 players++
-                if (!player.audioPlayer.isPaused && player.audioPlayer.playingTrack != null)
+                if (!player.player.isPaused && player.player.playingTrack != null)
                     playingPlayers++
             }
         }

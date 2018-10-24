@@ -1,3 +1,18 @@
+/*
+Copyright 2018 Sam Pritchard
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+ */
 package basalt.server
 
 import basalt.exceptions.ConfigurationException
@@ -42,38 +57,28 @@ import space.npstr.magma.MagmaMember
 import space.npstr.magma.MagmaServerUpdate
 import java.io.File
 import java.util.*
+import kotlin.concurrent.thread
 import kotlin.math.ceil
 import kotlin.math.min
 
-/*
-basalt:
-  server:
-    socket:
-      address: localhost
-      port: 8017
-    http:
-      address: localhost
-      port: 4591
-    options:
-      password:
-      sessionExpirationSeconds: 120
-      statsIntervalSeconds: 30
-      bufferDurationMs: 400
-      httpEnabled: true
-      loggingLevel: INFO
-      sentryDsn:
-      youtubePageLimit: 10
-      loadChunkSize: 25
-  players:
-    sources:
-      youtube: true
-      soundcloud: true
-      bandcamp: true
-      vimeo: true
-      twitch: true
-      mixer: true
-      http: true
-      local: false
+/**
+ * The main entry class for Basalt which is responsible for every single last part of the application.
+ * As of v4, this class handles most things, such as HTTP and WebSocket connections and timers, itself without shipping
+ * those tasks off to other classes.
+ *
+ * @author Sam Pritchard
+ * @since 4.0.0
+ *
+ * @property password The password that every connection made to Basalt must supply. Case-sensitive.
+ * @property magma The Magma API class responsible for the actual audio part of Basalt.
+ * @property trackUtil The [AudioTrackUtil] class responsible for encoding and decoding tracks.
+ * @property socketContextMap The map containing all the connected sessions (including ones to be resumed).
+ * @property playerManager The player manager which loads sources and is used to create the player.
+ * @property httpServer The HTTP Server which can be turned on/off in the configuration file.
+ * @property webSocketServer The WebSocket Server which is enabled by default and is the main way to communicate with Basalt.
+ * @property sessionExpirationSeconds The amount of seconds to wait before destroying a session associated with a User ID.
+ * @property loadChunkSize The amount of identifiers to fit in a single load chunk.
+ * @property statsTimerId The ID of the Vert.x timer used to schedule stats updates.
  */
 
 class BasaltServer: AbstractVerticle() {
@@ -89,6 +94,9 @@ class BasaltServer: AbstractVerticle() {
     var loadChunkSize = -1 // lateinit doesn't work on primitives unfortunately
     var statsTimerId: Long? = null
 
+    /**
+     * @suppress
+     */
     override fun start(startFuture: Future<Void>) {
         val mapper = ObjectMapper(YAMLFactory())
         val config = mapper.readTree(File("basalt.yml")).getNotNull("basalt")
@@ -246,7 +254,7 @@ class BasaltServer: AbstractVerticle() {
                 context.resumeTimer?.let { vertx.cancelTimer(it) }
                 context.webSocket = ws
             } else {
-                socketContextMap[userId] = SocketContext(userId, ws)
+                socketContextMap[userId] = SocketContext(ws)
             }
             ws.frameHandler { frame ->
                 when {
@@ -277,21 +285,35 @@ class BasaltServer: AbstractVerticle() {
                     context.webSocket.writeTextMessage(JsonStream.serialize(StatsUpdate(this)))
             }
         }
+
+        Runtime.getRuntime().addShutdownHook(thread(start = false) {
+            stop()
+        })
+
         startFuture.complete()
     }
 
-    override fun stop(stopFuture: Future<Void>) {
+    /**
+     * @suppress
+     */
+    override fun stop() {
         LOGGER.info("Closing Basalt Server!")
         if (this::httpServer.isInitialized)
             httpServer.close()
         if (this::webSocketServer.isInitialized)
             webSocketServer.close()
-        if (this::socketContextMap.isInitialized)
+        if (this::socketContextMap.isInitialized) {
+            socketContextMap.values.forEach { context ->
+                context.webSocket.close(4003)
+            }
             socketContextMap.clear()
+        }
         statsTimerId?.let { vertx.cancelTimer(it) }
-        stopFuture.complete()
     }
 
+    /**
+     * @suppress
+     */
     private fun handleClose(userId: String, closeCode: Int, closeMessage: String?) {
         LOGGER.info("Socket closed with close code: {} and reason: {}", closeCode, closeMessage ?: "No specified reason.")
         when (closeCode) {
@@ -313,6 +335,9 @@ class BasaltServer: AbstractVerticle() {
         }
     }
 
+    /**
+     * @suppress
+     */
     private fun handleTextMessage(socket: WebSocketBase, userId: String, msg: String) {
         GlobalScope.launch {
             val data = JsonIterator.deserialize(msg)
@@ -521,19 +546,43 @@ class BasaltServer: AbstractVerticle() {
         }
     }
 
+    /**
+     * @suppress
+     */
     companion object {
+        /**
+         * @suppress
+         */
         private val LOGGER: Logger = LoggerFactory.getLogger(BasaltServer::class.java) as Logger
     }
 }
+
+/**
+ * @suppress
+ */
 
 fun JsonNode.isNull(name: String): Boolean {
     val node = get(name)
     return node == null || node.isNull || node.isMissingNode
 }
 
+/**
+ * @suppress
+ */
 fun JsonNode.getNotNull(name: String): JsonNode = if (isNull(name)) throw ConfigurationException(name) else get(name)
 
 
+/**
+ * @suppress
+ */
 fun WebSocketBase.send(type: MessageType, guildId: String?, data: Any?, key: String? = null) = writeTextMessage(JsonStream.serialize(DispatchResponse(guildId, type.type, data, key)))
+
+/**
+ * @suppress
+ */
 fun WebSocketBase.error(guildId: String?, error: String) = send(MessageTypes.ERROR, guildId, error)
+
+/**
+ * @suppress
+ */
 fun WebSocketBase.error(guildId: String?, error: ErrorResponse) = send(MessageTypes.ERROR, guildId, error.name)
