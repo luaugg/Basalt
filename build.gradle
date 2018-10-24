@@ -158,11 +158,6 @@ dependencies {
 compileKotlin {
     kotlinOptions {
         jvmTarget = "1.8"
-    }
-}
-
-kotlin {
-    experimental {
-        coroutines 'enable'
+        freeCompilerArgs = ["-XXLanguage:+InlineClasses"]
     }
 }
