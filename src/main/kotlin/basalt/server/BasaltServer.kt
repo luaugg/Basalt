@@ -1,16 +1,18 @@
 package basalt.server
 
 import basalt.exceptions.ConfigurationException
+import basalt.messages.client.InitializeRequest
 import basalt.messages.server.JsonTrack
 import basalt.messages.server.LoadTrackResponse
 import basalt.player.AudioLoadHandler
-import basalt.player.BasaltPlayer
+import basalt.player.SocketContext
 import basalt.util.AudioTrackUtil
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.node.JsonNodeType
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import com.github.shredder121.asyncaudio.jda.AsyncPacketProviderFactory
+import com.jsoniter.JsonIterator
 import com.jsoniter.output.JsonStream
 import com.sedmelluq.discord.lavaplayer.jdaudp.NativeAudioSendFactory
 import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager
@@ -22,13 +24,11 @@ import com.sedmelluq.discord.lavaplayer.source.soundcloud.SoundCloudAudioSourceM
 import com.sedmelluq.discord.lavaplayer.source.twitch.TwitchStreamAudioSourceManager
 import com.sedmelluq.discord.lavaplayer.source.vimeo.VimeoAudioSourceManager
 import com.sedmelluq.discord.lavaplayer.source.youtube.YoutubeAudioSourceManager
-import com.sedmelluq.discord.lavaplayer.track.playback.AudioFrame
 import io.vertx.core.AbstractVerticle
 import io.vertx.core.Future
-import io.vertx.core.http.WebSocket
+import io.vertx.core.http.WebSocketBase
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import net.dv8tion.jda.core.audio.AudioSendHandler
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import space.npstr.magma.MagmaApi
@@ -69,6 +69,7 @@ class BasaltServer: AbstractVerticle() {
     lateinit var password: String
     lateinit var magma: MagmaApi
     lateinit var trackUtil: AudioTrackUtil
+    lateinit var socketContextMap: HashMap<String, SocketContext>
     var loadChunkSize = 25 // lateinit doesn't work on primitives unfortunately
 
     override fun start(startFuture: Future<Void>) {
@@ -127,11 +128,12 @@ class BasaltServer: AbstractVerticle() {
         loadChunkSize = options.getNotNull("loadChunkSize").intValue()
         password = options.getNotNull("password").textValue()
         trackUtil = AudioTrackUtil(this)
+        socketContextMap = HashMap()
 
         /* -- HTTP Connection -- */
 
-        val httpServer = vertx.createHttpServer()
         if (options.getNotNull("httpEnabled").booleanValue()) {
+            val httpServer = vertx.createHttpServer()
             httpServer.requestHandler { request ->
                 val auth = request.getHeader("Authorization") ?: ""
                 val response = request.response()
@@ -203,23 +205,48 @@ class BasaltServer: AbstractVerticle() {
                     }
                 }
             }
+            val http = serverConfig.getNotNull("http")
+            httpServer.listen(http.getNotNull("port").intValue(), http.getNotNull("address").textValue())
         }
-        
+
         /* -- WebSocket Connection -- */
 
+        val webSocketServer = vertx.createHttpServer()
+        webSocketServer.websocketHandler { ws ->
+            val headers = ws.headers()
+            val auth = headers["Authorization"] ?: ""
+            if (auth != password) {
+                LOGGER.warn("Invalid Authorization header!")
+                ws.reject(4001)
+                return@websocketHandler
+            }
+
+            val userId = headers["User-Id"]
+            if (userId == null) {
+                LOGGER.warn("Missing User-Id header!")
+                ws.reject(4002)
+                return@websocketHandler
+            }
+
+            val context = socketContextMap[userId]
+            if (context != null) {
+                context.webSocket.close(1001, "Socket resumed connection!")
+                context.webSocket = ws
+            } else {
+                socketContextMap[userId] = SocketContext(userId, ws)
+            }
+            ws.textMessageHandler { handleTextMessage(ws, userId, it) }
+            ws.accept()
+        }
+        startFuture.complete()
     }
 
     override fun stop(stopFuture: Future<Void>) {
 
     }
 
-    class SocketContext(val userId: String, val webSocket: WebSocket, val sender: AudioSender)
-    class AudioSender(val player: BasaltPlayer): AudioSendHandler {
-        var frame: AudioFrame? = null
+    private fun handleTextMessage(socket: WebSocketBase, userId: String, msg: String) {
 
-        override fun provide20MsAudio() = frame?.data
-        override fun canProvide() = frame?.let { frame = player.audioPlayer.provide(); frame != null } == true
-        override fun isOpus() = true
     }
 
     companion object {

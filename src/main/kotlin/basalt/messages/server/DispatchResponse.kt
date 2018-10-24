@@ -20,8 +20,7 @@ import com.jsoniter.annotation.JsonUnwrapper
 import com.jsoniter.output.JsonStream
 
 @Suppress("UNUSED")
-class DispatchResponse internal constructor(@field:JsonIgnore val key: String? = null,
-                                            @field:JsonIgnore val guildId: String? = null,
+class DispatchResponse internal constructor(@field:JsonIgnore val guildId: String? = null,
                                             @field:JsonIgnore val name: String,
                                             @field:JsonIgnore val data: Any? = null) {
     @JsonUnwrapper
@@ -32,7 +31,6 @@ class DispatchResponse internal constructor(@field:JsonIgnore val key: String? =
             writeMore()
             writeObjectField("name")
             writeVal(name)
-            key?.let { writeMore(); writeObjectField("key"); writeVal(it) }
             guildId?.let { writeMore(); writeObjectField("guildId"); writeVal(it) }
             data?.let { writeMore(); writeObjectField("data"); writeVal(data) }
         }
